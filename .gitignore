@@ -274,3 +274,10 @@ TSWLatexianTemp*
 
 # Makeindex log files
 *.lpz
+
+# Never publish generated presentation output or object inventories.
+/main.pdf
+/main-en.pdf
+/manual.pdf
+/_git_objects.txt
+*.listing
