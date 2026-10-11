@@ -320,7 +320,9 @@
 %\setmainfont[SmallCapsFont]{cmcsc10.mf}
 % 设置无衬线字体为 Computer Modern Unicode Bright 字体族(Opentype 格式).
 %\setsansfont{CMU Sans Serif}
-\setsansfont{Kurier}
+% Kurier 在部分 TeX Live 环境中未注册到字体缓存，直接使用 Latin Modern Sans
+% 可避免 XeLaTeX 反复尝试生成不存在的 Kurier TFM 文件。
+\setsansfont{Latin Modern Sans}
 
 % 数学字体设置.
 \if\EqualOptionsBeamer{MathFont}{XITS}%
