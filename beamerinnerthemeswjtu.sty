@@ -49,56 +49,80 @@
 \beamer@swjtu@len@authorwidthmin=0.75\paperwidth
 % DIMEN:: author 框顶部到 title 框底部距离 - len@titletoauthor.
 \newdimen\beamer@swjtu@len@titletoauthor
-\beamer@swjtu@len@titletoauthor=\dimexpr\beamer@swjtu@len@authorhigh-\beamer@swjtu@len@titlelow+0.2pt\relax
+\beamer@swjtu@len@titletoauthor=\dimexpr\beamer@swjtu@len@authorhigh-\beamer@swjtu@len@titlelow+\swjtudim{0.2pt}\relax
 % DIMEN:: author 框高度 - len@titletoauthor.
 \newdimen\beamer@swjtu@len@authorheight
 
 % 封面样式定义.
-\defbeamertemplate*{title page}{SWJTU title page theme}{%  
-  \newsavebox{\beamer@swjtu@authorbox}
-  \sbox{\beamer@swjtu@authorbox}{\parbox{.72\paperwidth}{%
-    \setlength{\baselineskip}{10pt}%
-    {\usebeamerfont{author}\insertauthor\par}%
-    {\vskip6pt}%
-    {\usebeamerfont{institute}\insertinstitute}%
-  }}% savebox 存储
-  \settototalheight{\beamer@swjtu@len@authorheight}{\usebox{\beamer@swjtu@authorbox}}% 计算高度
-  \beamer@swjtu@len@authorheight=\dimexpr\beamer@swjtu@len@authorheight+0.036\paperwidth\relax% 补齐上下空白部分
+\defbeamertemplate*{title page}{SWJTU title page theme}{%
   \begin{beamercolorbox}[wd=\paperwidth,ht=\paperheight]{}%
-    \begin{tikzpicture}[overlay, yshift=-13.3pt]%
-      \node[anchor=north west, inner sep=0pt, outer sep=0pt]%
-        at (16pt, \dimexpr\paperheight-14pt\relax) {\pgfuseimage{lg-name}};% 绘制 logo-name
-      \node[anchor=south east, inner sep=0pt, outer sep=0pt]%
-        at (\paperwidth, \beamer@swjtu@len@titlehigh) {\pgfuseimage{building}};% 绘制校楼背景
-      \fill[PrimaryC] (0, \beamer@swjtu@len@titlelow) rectangle (\paperwidth, \beamer@swjtu@len@titlehigh); % 绘制 title 框
-      \node[anchor=north west, inner sep=0pt, outer sep=0pt,%
-        text width=.9\paperwidth] at (16pt, \beamer@swjtu@len@titletexthigh) {%
-        {\usebeamerfont{title}\usebeamercolor[bg]{title}\inserttitle\par}%
-        {\vskip6pt}%
-        {\usebeamerfont{subtitle}\usebeamercolor[bg]{subtitle}\insertsubtitle\par}%
-      };% 绘制 title | subtitle 文字
-      \fill[PrimaryC!10!BackgroundC] (0, \beamer@swjtu@len@authorhigh)%
-        -- (\beamer@swjtu@len@authorwidthmin, \beamer@swjtu@len@authorhigh)%
-        -- ++ (0.5\beamer@swjtu@len@authorheight, -\beamer@swjtu@len@authorheight)%
-        -- (0, \dimexpr\beamer@swjtu@len@authorhigh-\beamer@swjtu@len@authorheight\relax)%
-        -- cycle;% 绘制 author 框
-      \fill[BackgroundC] (0, \beamer@swjtu@len@authorhigh)%
-        -- (\dimexpr\beamer@swjtu@len@authorwidthmin+1.56pt\relax, \beamer@swjtu@len@authorhigh)%
-        -- ++ (\dimexpr0.5\beamer@swjtu@len@titletoauthor\relax, -\beamer@swjtu@len@titletoauthor)%
-        -- ++ (-1.6pt, 0)%
-        -- ++ (-\dimexpr0.5\beamer@swjtu@len@titletoauthor-0.8pt\relax, \dimexpr\beamer@swjtu@len@titletoauthor-1.6pt\relax)%
-        -- (0, \dimexpr\beamer@swjtu@len@authorhigh-1.6pt\relax) -- cycle;% 绘制装饰线
-      \node[anchor=north west, inner sep=0pt, outer sep=0pt]%
-        at (16pt, \beamer@swjtu@len@authortexthigh) (AuthorText) {\usebox{\beamer@swjtu@authorbox}};% 绘制 author | institute 文字
-      \node[anchor=south west, inner sep=0pt, outer sep=0pt] at (16pt, 14pt) {\usebeamerfont{date}\insertdate};% 绘制 date 文字
-      \node[anchor=south east, inner sep=0pt, outer sep=0pt] at (\dimexpr\paperwidth-16pt\relax, 14pt) {\pgfuseimage{verify}};% 绘制 verify 校训
-      % \node[anchor=south west,draw] at (0, 0) {00};
+    \begin{tikzpicture}[remember picture,overlay]%
+      % SVG 负责封面装饰；标题由 LaTeX 按 SVG 坐标系居中排版。
+      \node[anchor=center,inner sep=0pt,outer sep=0pt] at (current page.center) {%
+        \pgfuseimage{swjtu-cover-bg}%
+      };
+      % SVG 标题基线位于画布中心上方约 3pt；x 坐标严格对齐画布中心。
+      \node[anchor=base,align=center,text width=.90\paperwidth,
+        inner sep=0pt,outer sep=0pt,text=PrimaryC] at
+        ([yshift=\swjtudim{3pt}]current page.center) {%
+        {\usebeamerfont{title}\swjtutitlefont\swjtufont{cover-title}\bfseries\inserttitle}%
+      };
+      % 横线在封面高度的 525.5/941 处；正文从其下方开始。
+      \node[anchor=north,align=center,text width=.75\paperwidth,
+        inner sep=0pt,outer sep=0pt,text=NormalTextC] at
+        ([yshift=-.095\paperheight]current page.center) {%
+        \swjtubodyfont
+        \ifx\insertsubtitle\@empty\else
+          {\usebeamerfont{subtitle}\insertsubtitle\par}\medskip
+        \fi
+        % 标签右对齐、内容左对齐；冒号共享同一列边界。
+        \ifx\insertauthor\@empty
+          \ifx\insertinstitute\@empty\else
+            \begin{tabular}{@{}r@{}l@{}}
+              \swjtubodyfont 汇报单位： & \swjtubodyfont\insertinstitute
+            \end{tabular}\par
+          \fi
+        \else
+          \begin{tabular}{@{}r@{}l@{}}
+            \swjtubodyfont 汇报人： & \swjtubodyfont\insertauthor
+            \ifx\insertinstitute\@empty\else
+              \\ \swjtubodyfont 汇报单位： & \swjtubodyfont\insertinstitute
+            \fi
+          \end{tabular}\par
+        \fi
+        \ifx\insertdate\@empty\else \smallskip\insertdate\par\fi
+      };
     \end{tikzpicture}%
   \end{beamercolorbox}%
 }
 \setbeamertemplate{title page}[SWJTU title page theme]
 % ----------------
 
+% ClosingPage：复用统一字体与配色，局部隐藏页眉、页脚和导航。
+% 无参数时使用课题组汇报结束语；两个花括号参数用于自定义文字。
+\NewDocumentCommand{\ClosingPage}{ G{汇报完毕} G{敬请批评指正} }{%
+  \begingroup
+    \setbeamertemplate{background}{}%
+    \setbeamercolor{background canvas}{bg=BackgroundC}%
+    \setbeamertemplate{headline}{}%
+    \setbeamertemplate{footline}{}%
+    \setbeamertemplate{navigation symbols}{}%
+    \begin{frame}[plain,noframenumbering]
+      \begin{tikzpicture}[remember picture,overlay]
+        \node[anchor=center,inner sep=0pt,outer sep=0pt] at (current page.center) {%
+          \begin{minipage}{.8\paperwidth}
+            \centering
+            {\color{PrimaryC}\swjtufont{closing-title}\bfseries #1\par}%
+            \vspace{7mm}%
+            {\color{AuxiliaryC}\rule{35mm}{0.8pt}\par}%
+            \vspace{7mm}%
+            {\color{TableBodyTextC}\swjtufont{closing-subtitle}\mdseries #2\par}%
+          \end{minipage}%
+        };
+      \end{tikzpicture}%
+    \end{frame}
+  \endgroup
+}
 
 %%%% ----------------------------------------------------------------
 \endinput

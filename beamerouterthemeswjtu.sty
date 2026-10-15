@@ -33,7 +33,6 @@
 % KEY:: NavigationTool.
 % VALUE:: none | 1 | 2 | 3 | 1-2 | 1-3 | 2-3 | 1-2-3.
 \DeclareOptionBeamer{NavigationTool}{\def\beamer@swjtu@NavigationTool{#1}}
-
 \ExecuteOptionsBeamer{%
   Miniframes=follow,%
   NavigationTool=1-2-3%
@@ -79,20 +78,21 @@
 % ----------------
 % DIMEN:: Headline 高度 - ht@headline.
 \newdimen\beamer@swjtu@ht@headline
-\beamer@swjtu@ht@headline=13pt
+\beamer@swjtu@ht@headline=\swjtudim{13pt}
 % DIMEN:: Headline 页边距宽度 - wd@headlineskip.
 \newdimen\beamer@swjtu@wd@headlineskip
-\beamer@swjtu@wd@headlineskip=9pt
+\beamer@swjtu@wd@headlineskip=\swjtudim{9pt}
 % DIMEN:: 章节导航栏宽度(窄边) - wd@secbar.
 \newdimen\beamer@swjtu@wd@secbar
 \if\EqualOptionsBeamer{LanguageMode}{cn}%
-  \beamer@swjtu@wd@secbar=0.64\paperwidth%
+  % 中文章节名较长，给顶部章节导航预留足够宽度，避免导航盒子溢出。
+  \beamer@swjtu@wd@secbar=0.70\paperwidth%
 \else\if\EqualOptionsBeamer{LanguageMode}{en}%
   \beamer@swjtu@wd@secbar=0.52\paperwidth%
 \fi\fi
 % DIMEN:: 小节-标题分隔线宽度(窄边) - wd@sectotitleline.
 \newdimen\beamer@swjtu@wd@sectotitleline
-\beamer@swjtu@wd@sectotitleline=\dimexpr\the\paperwidth-\beamer@swjtu@wd@secbar-20pt\relax
+\beamer@swjtu@wd@sectotitleline=\dimexpr\the\paperwidth-\beamer@swjtu@wd@secbar-\swjtudim{20pt}\relax
 % DIMEN:: 小节导航栏宽度 - wd@sectotitleline.
 \newdimen\beamer@swjtu@wd@subsecbar
 \beamer@swjtu@wd@subsecbar=0pt
@@ -110,25 +110,25 @@
   \begin{tikzpicture}%
     % 绘图辅助节点定义.
     \coordinate (横向分隔线-西南) at (0, -\beamer@swjtu@ht@headline);% 小节-标题分隔线 西南节点
-    \coordinate (横向分隔线-西北) at ([yshift=2pt]横向分隔线-西南);% 小节-标题分隔线 西北节点
+    \coordinate (横向分隔线-西北) at ([yshift=\swjtudim{2pt}]横向分隔线-西南);% 小节-标题分隔线 西北节点
     \coordinate (横向分隔线-东北) at (\beamer@swjtu@wd@sectotitleline, -\beamer@swjtu@ht@headline);% 小节-标题分隔线 东北节点
     \coordinate (章节栏-东北) at (\the\paperwidth, 0);% 章节栏 东北节点
     \coordinate (章节栏-东南) at (\the\paperwidth, -\beamer@swjtu@ht@headline);% 章节栏 东南节点
     \coordinate (章节栏-西南) at ([xshift=-\beamer@swjtu@wd@secbar]章节栏-东南);% 章节栏 西南节点
-    \coordinate (章节栏-西北) at ([xshift=-6.5pt, yshift=13pt]章节栏-西南);% 章节栏 西北节点
-    \coordinate (深色装饰-西北) at ([xshift=-4pt]章节栏-西北);% 深色装饰 西北节点
-    \coordinate (深色装饰-东南) at ([xshift=3.5pt, yshift=-7pt]章节栏-西北);% 深色装饰 东南节点
-    \coordinate (浅色装饰-西北) at ([xshift=-4pt]深色装饰-东南);%  浅色装饰 西北节点
-    \coordinate (浅色装饰-东南) at ([xshift=2pt, yshift=-4pt]深色装饰-东南);% 浅色装饰 东南节点
+    \coordinate (章节栏-西北) at ([xshift=-\swjtudim{6.5pt}, yshift=\swjtudim{13pt}]章节栏-西南);% 章节栏 西北节点
+    \coordinate (深色装饰-西北) at ([xshift=-\swjtudim{4pt}]章节栏-西北);% 深色装饰 西北节点
+    \coordinate (深色装饰-东南) at ([xshift=\swjtudim{3.5pt}, yshift=-\swjtudim{7pt}]章节栏-西北);% 深色装饰 东南节点
+    \coordinate (浅色装饰-西北) at ([xshift=-\swjtudim{4pt}]深色装饰-东南);%  浅色装饰 西北节点
+    \coordinate (浅色装饰-东南) at ([xshift=\swjtudim{2pt}, yshift=-\swjtudim{4pt}]深色装饰-东南);% 浅色装饰 东南节点
     % 颜色图形绘制.
     \fill[PrimaryC] (章节栏-东北) -- (章节栏-东南)%
       -- (章节栏-西南) -- (章节栏-西北) -- cycle;% 章节栏背景
     \fill[IntersperseC] (深色装饰-西北) -- (章节栏-西北)%
-      -- (深色装饰-东南) -- ++ (-4pt, 0) -- cycle;% 深色装饰
+      -- (深色装饰-东南) -- ++ (-\swjtudim{4pt}, 0) -- cycle;% 深色装饰
     \fill[AuxiliaryC] (浅色装饰-西北) -- (深色装饰-东南)%
-      -- (浅色装饰-东南) -- ++ (-4pt, 0) -- cycle;% 浅色装饰
+      -- (浅色装饰-东南) -- ++ (-\swjtudim{4pt}, 0) -- cycle;% 浅色装饰
     \fill[PrimaryC] (横向分隔线-西北) -- (横向分隔线-西南)%
-      -- (横向分隔线-东北) -- ++ (-1pt, 2pt) -- cycle;% 小节与标题间分隔线
+      -- (横向分隔线-东北) -- ++ (-\swjtudim{1pt}, \swjtudim{2pt}) -- cycle;% 小节与标题间分隔线
   \end{tikzpicture}%
 }%
 
@@ -294,9 +294,10 @@
   \beamer@swjtu@wd@subsecbar=\wd\beamer@swjtu@box@subsecbar% 设置小节导航栏宽度
   \beamer@swjtu@len@secbarY=\dimexpr.5\beamer@swjtu@ht@headline%
     -.5\ht\beamer@swjtu@box@secbar+.25\dp\beamer@swjtu@box@secbar\relax% 设置章节导航栏 y 值
-  \beamer@swjtu@len@subsecbarY=\dimexpr.5\beamer@swjtu@ht@headline+1pt%
+  \beamer@swjtu@len@subsecbarY=\dimexpr.5\beamer@swjtu@ht@headline+\swjtudim{1pt}%
     -.5\ht\beamer@swjtu@box@subsecbar+.5\dp\beamer@swjtu@box@subsecbar\relax% 设置小节导航栏 y 值
   % 使用 picture 环境定位及绘制 Headline.
+  \setlength{\unitlength}{\swjtudim{1pt}}%
   \begin{picture}(0, 0)%
     \put(0, 0){\usebox{\beamer@swjtu@box@headlineBg}}% 绘制 Headline 底图
     \put(\paperwidth, \beamer@swjtu@len@secbarY){%
@@ -307,19 +308,19 @@
     \if\EqualOptionsBeamer{Miniframes}{follow}%
       \setbox\beamer@swjtu@box@miniframes=\hbox{\parbox{%
         \dimexpr\beamer@swjtu@wd@sectotitleline-\beamer@swjtu@wd@subsecbar\relax}{%
-          \insert@subsecminiframes{3.6pt}{1.6pt}}}% 设置迷你帧盒子
+          \insert@subsecminiframes{\swjtudim{3.6pt}}{\swjtudim{1.6pt}}}}% 设置迷你帧盒子
       \beamer@swjtu@len@miniframesX=\dimexpr\beamer@swjtu@wd@headlineskip%
-        +\beamer@swjtu@wd@subsecbar+2.4pt\relax% 设置迷你帧 x 值
-      \beamer@swjtu@len@miniframesY=\dimexpr.5\beamer@swjtu@ht@headline+1pt-.75pt%
+        +\beamer@swjtu@wd@subsecbar+\swjtudim{2.4pt}\relax% 设置迷你帧 x 值
+      \beamer@swjtu@len@miniframesY=\dimexpr.5\beamer@swjtu@ht@headline+\swjtudim{1pt}-\swjtudim{.75pt}%
         -.5\ht\beamer@swjtu@box@miniframes+.5\dp\beamer@swjtu@box@miniframes\relax% 设置迷你帧 y 值
       \put(\beamer@swjtu@len@miniframesX, \beamer@swjtu@len@miniframesY){%
         \box\beamer@swjtu@box@miniframes}% 绘制小节迷你帧
     % 迷你帧分离模式.
     \else\if\EqualOptionsBeamer{Miniframes}{separate}%
       \setbox\beamer@swjtu@box@miniframes=\hbox{%
-        \insert@subsecminiframes{3.6pt}{1.6pt}}% 设置迷你帧盒子
+        \insert@subsecminiframes{\swjtudim{3.6pt}}{\swjtudim{1.6pt}}}% 设置迷你帧盒子
       \beamer@swjtu@len@miniframesX=\dimexpr\paperwidth%
-        -\beamer@swjtu@wd@headlineskip+1.6pt\relax% 设置迷你帧 x 值
+        -\beamer@swjtu@wd@headlineskip+\swjtudim{1.6pt}\relax% 设置迷你帧 x 值
       \put(\beamer@swjtu@len@miniframesX, -6){%
         \makebox[0pt][r]{\box\beamer@swjtu@box@miniframes}}% 绘制小节迷你帧
     % 迷你帧取消模式.
@@ -332,7 +333,7 @@
 % 设置 Headline 主题模板.
 \defbeamertemplate*{headline}{SWJTU headline theme}{%
   \begin{beamercolorbox}[wd=\paperwidth, ht=\beamer@swjtu@ht@headline]{}%
-    \beamer@swjtu@headline%
+    \makebox[0pt][l]{\beamer@swjtu@headline}%
   \end{beamercolorbox}%
 }
 \setbeamertemplate{headline}[SWJTU headline theme]
@@ -351,11 +352,12 @@
 % ----------------
 % 设置 Frametitle 主题模板.
 \defbeamertemplate*{frametitle}{SWJTU frametitle theme}{%
-  \vskip-2pt% 消除 Headline 和 Frametitle 间空白距离
+  \vskip-\swjtudim{2pt}% 消除 Headline 和 Frametitle 间空白距离
   \ifx\insertframesubtitle\@empty%
     \begin{beamercolorbox}[wd=\paperwidth, ht=2.2ex,%
       leftskip=\beamer@swjtu@wd@headlineskip]{}%{frametitle}
       \usebeamerfont{frametitle}%
+      \swjtufont{frame-title}\bfseries%
       \usebeamercolor[fg]{frametitle}%
       \insertframetitle%
     \end{beamercolorbox}%
@@ -363,6 +365,7 @@
     \begin{beamercolorbox}[wd=\paperwidth, ht=2.2ex,%
       leftskip=\beamer@swjtu@wd@headlineskip]{}%{frametitle}
       \usebeamerfont{frametitle}%
+      \swjtufont{frame-title}\bfseries%
       \usebeamercolor[fg]{frametitle}%
       \insertframetitle~%
       \textcolor{SecondaryAuxiliaryC}{\rule[-.2ex]{.08em}{1.8ex}}~%
@@ -394,10 +397,10 @@
 % ----------------
 % DIMEN:: Footline 高度 - ht@footline.
 \newdimen\beamer@swjtu@ht@footline
-\beamer@swjtu@ht@footline=12pt
-% DIMEN:: Logo 宽度(窄边) - wd@Logobar.
+\beamer@swjtu@ht@footline=\swjtudim{12pt}
+% DIMEN:: 左下角标识块宽度；现版移除 SWJTU 标识，进度条从页面左端开始。
 \newdimen\beamer@swjtu@wd@Logobar
-\beamer@swjtu@wd@Logobar=48pt
+\beamer@swjtu@wd@Logobar=0pt
 % DIMEN:: Acrobat 页面跳转页码导航栏宽度 - wd@pagebar.
 \newdimen\beamer@swjtu@wd@pagebar
 % DIMEN:: ProgressBar 宽度 - wd@probar.
@@ -420,27 +423,7 @@
 
 % SAVEBOX:: TikZ Footline 底图盒子 - box@footlineBg.
 \newsavebox{\beamer@swjtu@box@footlineBg}
-\sbox{\beamer@swjtu@box@footlineBg}{%
-  \begin{tikzpicture}%
-    % 绘图辅助节点定义.
-    \coordinate (Logo-西北) at (0, \beamer@swjtu@ht@footline);% Logo 西北节点
-    \coordinate (Logo-东北) at (\beamer@swjtu@wd@Logobar, \beamer@swjtu@ht@footline);% Logo 东北节点
-    \coordinate (Logo-东南) at (54pt, 0);% Logo 东南节点
-    \coordinate (浅色装饰-东南) at (58pt, 0);% 浅色装饰 东南节点
-    \coordinate (浅色装饰-东北) at (55.5pt, 5pt);% 浅色装饰 东北节点
-    \coordinate (浅色装饰-西北) at (51.5pt, 5pt);% 浅色装饰 西北节点
-    \coordinate (深色装饰-东北) at (53.5pt, 9pt);% 深色装饰 东北节点
-    \coordinate (深色装饰-西北) at (49.5pt, 9pt);% 深色装饰 西北节点
-    % 颜色图形绘制.
-    \fill[PrimaryC] (0, 0) -- (Logo-西北)%
-      -- (Logo-东北) -- (Logo-东南) -- cycle;% Logo 背景
-    \node[inner sep=0pt, outer sep=0pt] at (25pt, 6pt) {\pgfuseimage{lg}};
-    \fill[AuxiliaryC] (Logo-东南) -- (浅色装饰-西北)%
-      -- (浅色装饰-东北) -- (浅色装饰-东南) -- cycle;% 浅色装饰
-    \fill[IntersperseC] (浅色装饰-西北) -- (深色装饰-西北)%
-      -- (深色装饰-东北) -- (浅色装饰-东北) -- cycle;% 深色装饰
-  \end{tikzpicture}%
-}%
+\sbox{\beamer@swjtu@box@footlineBg}{\begin{tikzpicture}\end{tikzpicture}}%
 
 % 设置帧页码计数器(正文/附录).
 \def\beamer@swjtu@framenumber{%
@@ -487,25 +470,25 @@
     \IfInteger{\group}{%
       \ifnum\group=1%
         % 上一小节 | 当前小节开始 | 下一小节.
-        \setfontswjtu{5}%
+        \swjtufont{navigation}%
         \hyperlinksubsectionendprev{\faCaretLeft}\hskip#1%
         \hyperlinksubsectionstart{\faStream}\hskip#1%
         \hyperlinksubsectionstartnext{\faCaretRight}%
       \else\ifnum\group=2%
         % 初始页 | 查找 | 结尾页.
-        \setfontswjtu{5}%
+        \swjtufont{navigation}%
         \hyperlinkpresentationstart{\faCaretLeft\hskip-.05em\faCaretLeft}\hskip#1%
-        \setfontswjtu{4.5}%
+        \swjtufont{navigation-small}%
         \Acrobatmenu{Find}{\faSearch}\hskip#1%
-        \setfontswjtu{5}%
+        \swjtufont{navigation}%
         \hyperlinkpresentationend{\faCaretRight\hskip-.05em\faCaretRight}%
       \else\ifnum\group=3%
         % 上一视图 | 全屏 | 下一视图.
-        \setfontswjtu{4.5}%
+        \swjtufont{navigation-small}%
         \Acrobatmenu{GoBack}{\faReply}\hskip#1%
-        \setfontswjtu{5}%
+        \swjtufont{navigation}%
         \Acrobatmenu{FullScreen}{\faExpand}\hskip#1%
-        \setfontswjtu{4.5}%
+        \swjtufont{navigation-small}%
         \Acrobatmenu{GoForward}{\reflectbox{\faReply}}%
       \fi\fi\fi%
       \ifnum\c<\numexpr\NavigationTool@len+1\relax%
@@ -544,26 +527,27 @@
     \insert@framenumberwithbutton}% 设置页脚页码导航栏盒子
   % 设置 dimen.
   \beamer@swjtu@wd@pagebar=\wd\beamer@swjtu@box@pagebar% 设置页码导航栏宽度
-  \beamer@swjtu@len@secbarY=\dimexpr.5\beamer@swjtu@ht@footline-1.5pt%
+  \beamer@swjtu@len@secbarY=\dimexpr.5\beamer@swjtu@ht@footline-\swjtudim{1.5pt}%
     -.5\ht\beamer@swjtu@box@titlebar+.25\dp\beamer@swjtu@box@titlebar\relax% 设置标题导航栏 y 值
   \beamer@swjtu@len@pagebarX=\dimexpr\paperwidth%
     -\beamer@swjtu@wd@headlineskip\relax% 设置页码导航栏 x 值
-  \beamer@swjtu@len@pagebarY=\dimexpr.5\beamer@swjtu@ht@footline-1.5pt%
+  \beamer@swjtu@len@pagebarY=\dimexpr.5\beamer@swjtu@ht@footline-\swjtudim{1.5pt}%
     -.5\ht\beamer@swjtu@box@pagebar+.25\dp\beamer@swjtu@box@pagebar\relax% 设置页码导航栏 y 值
   % 使用 picture 环境定位及绘制 Footline.
+  \setlength{\unitlength}{\swjtudim{1pt}}%
   \begin{picture}(0, 0)%
     \put(0, 0){\usebox{\beamer@swjtu@box@footlineBg}}% 绘制 footline 底图
-    \put(64pt, \beamer@swjtu@len@secbarY){\box\beamer@swjtu@box@titlebar}% 绘制 Beamer 标题
+    \put(\swjtudim{9pt}, \beamer@swjtu@len@secbarY){\box\beamer@swjtu@box@titlebar}% 绘制 Beamer 标题
     \put(\beamer@swjtu@len@pagebarX, \beamer@swjtu@len@pagebarY){%
       \makebox[0pt][r]{\box\beamer@swjtu@box@pagebar}}% 绘制带有 Acrobat 页面跳转按钮的页码
     \if\EqualOptionsBeamer{NavigationTool}{none}%
       \relax%
     \else%
       \setbox\beamer@swjtu@box@navbar=\hbox{%
-        \insert@footnavigationtool{1.6pt}{4.2pt}}% 设置功能导航栏盒子
+        \insert@footnavigationtool{\swjtudim{1.6pt}}{\swjtudim{4.2pt}}}% 设置功能导航栏盒子
       \beamer@swjtu@len@navbarX=\dimexpr\beamer@swjtu@len@pagebarX%
-        -\beamer@swjtu@wd@pagebar-6pt\relax% 设置功能导航栏 x 值
-      \beamer@swjtu@len@navbarY=\dimexpr.5\beamer@swjtu@ht@footline-1.5pt%
+        -\beamer@swjtu@wd@pagebar-\swjtudim{6pt}\relax% 设置功能导航栏 x 值
+      \beamer@swjtu@len@navbarY=\dimexpr.5\beamer@swjtu@ht@footline-\swjtudim{1.5pt}%
         -.5\ht\beamer@swjtu@box@navbar+.25\dp\beamer@swjtu@box@navbar\relax% 设置功能导航栏 y 值
       \put(\beamer@swjtu@len@navbarX, \beamer@swjtu@len@navbarY){%
         \makebox[0pt][r]{\box\beamer@swjtu@box@navbar}}% 绘制 Navigation Tools
@@ -576,20 +560,26 @@
   % #1:: 未放映部分颜色.
   % #2:: 已放映部分颜色.
   % #3:: 辅助色.
-  \beamer@swjtu@len@probartmp=\beamer@swjtu@wd@probar%
-  \divide\beamer@swjtu@len@probartmp by 1000%
-  \multiply\beamer@swjtu@len@probartmp by \beamer@swjtu@count@currentframe%
-  \divide\beamer@swjtu@len@probartmp by \beamer@swjtu@count@totalframe%
-  \multiply\beamer@swjtu@len@probartmp by 1000%
+  % Compute a bounded fraction; first-pass navigation totals may still be 1.
+  % Direct mul/div also avoids the old truncation and large-canvas overflow.
+  \ifnum\beamer@swjtu@count@totalframe>0
+    \ifnum\beamer@swjtu@count@currentframe<\beamer@swjtu@count@totalframe
+      \beamer@swjtu@len@probartmp=\dimexpr\beamer@swjtu@wd@probar
+        *\beamer@swjtu@count@currentframe/\beamer@swjtu@count@totalframe\relax
+    \else
+      \beamer@swjtu@len@probartmp=\beamer@swjtu@wd@probar
+    \fi
+  \else
+    \beamer@swjtu@len@probartmp=0pt
+  \fi
   \begin{tikzpicture}[very thin, overlay, remember picture]%
     % 绘图辅助节点定义.
     \coordinate (SouthWest) at (current page.south west);% 西南节点
-    \coordinate (ProBar) at ([xshift=48pt, yshift=9pt]SouthWest);% 初始节点
+    \coordinate (ProBar) at ([xshift=0pt, yshift=\swjtudim{9pt}]SouthWest);% 初始节点
     % 图形绘制.
-    \fill[#1] (ProBar) rectangle ++ (\beamer@swjtu@wd@probar, 3pt);% 未放映部分
-    \fill[#2] ([yshift=9pt]SouthWest) rectangle ++ (\beamer@swjtu@wd@Logobar, 3pt);
-    \fill[#2] (ProBar) rectangle ++ (\beamer@swjtu@len@probartmp, 3pt);% 已放映部分
-    \fill[#3, draw=#2, line width=.48pt] ([xshift=\beamer@swjtu@len@probartmp, yshift=1.5pt]ProBar) circle (1.26pt);
+    \fill[#1] (ProBar) rectangle ++ (\beamer@swjtu@wd@probar, \swjtudim{3pt});% 未放映部分
+    \fill[#2] (ProBar) rectangle ++ (\beamer@swjtu@len@probartmp, \swjtudim{3pt});% 已放映部分
+    \fill[#3, draw=#2, line width=\swjtudim{.48pt}] ([xshift=\beamer@swjtu@len@probartmp, yshift=\swjtudim{1.5pt}]ProBar) circle (\swjtudim{1.26pt});
   \end{tikzpicture}%
 }
 
@@ -599,9 +589,11 @@
 % 设置 Footline 主题模板.
 \defbeamertemplate*{footline}{SWJTU footline theme}{%
   \begin{beamercolorbox}[wd=\paperwidth, ht=\beamer@swjtu@ht@footline, dp=0pt]{}%
-    \beamer@swjtu@framenumber% 优先调用计数器设置
-    \beamer@swjtu@progressbar{AuxiliaryC}{PrimaryC}{BackgroundC}%
-    \beamer@swjtu@footline%
+    \makebox[0pt][l]{%
+      \beamer@swjtu@framenumber% 优先调用计数器设置
+      \beamer@swjtu@progressbar{AuxiliaryC}{PrimaryC}{BackgroundC}%
+      \beamer@swjtu@footline%
+    }%
   \end{beamercolorbox}%
 }
 \setbeamertemplate{footline}[SWJTU footline theme]

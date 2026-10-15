@@ -1,0 +1,140 @@
+% Central canvas, dimensions and font sizes for the SWJTU theme.
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamerstyleswjtu}[2026/10/13 PPT canvas and unified font interface]
+\RequirePackage{expl3}
+\RequirePackage{xparse}
+
+% 33.866667 x 19.05 cm is exactly 127/60 times the old 16 x 9 cm canvas.
+\def\swjtu@scale@num{127}
+\def\swjtu@scale@den{60}
+\DeclareOption{ppt}{\def\swjtu@scale@num{127}\def\swjtu@scale@den{60}}
+\DeclareOption{beamer}{\def\swjtu@scale@num{1}\def\swjtu@scale@den{1}}
+\ExecuteOptions{ppt}
+\ProcessOptions*\relax
+\providecommand{\swjtudim}[1]{#1}
+\renewcommand{\swjtudim}[1]{\the\dimexpr#1*\swjtu@scale@num/\swjtu@scale@den\relax}
+\ifnum\swjtu@scale@num=127
+  \setlength{\beamer@paperwidth}{33.866667cm}
+  \setlength{\beamer@paperheight}{19.05cm}
+  \geometry{papersize={\beamer@paperwidth,\beamer@paperheight}}
+\fi
+
+\ExplSyntaxOn
+\clist_map_inline:nn
+  {body,frame-title,card-title,header,footer,cover-title,cover-subtitle,
+   cover-author,cover-date,caption,table,diagram,chart-label,chart-title,code,code-title,
+   code-number,badge,navigation,navigation-small,small,footnote,tiny,
+   large,larger,display,huge,huge-title,label,closing-title,closing-subtitle}
+  {
+    \dim_new:c {l_swjtu_font_#1_dim}
+    \dim_new:c {l_swjtu_leading_#1_dim}
+    \keys_define:nn {swjtu/fonts}
+      {
+        #1 .code:n =
+          {
+            \dim_set:cn {l_swjtu_font_#1_dim} {##1}
+            \dim_set:cn {l_swjtu_leading_#1_dim}
+              {\dimexpr\dim_use:c {l_swjtu_font_#1_dim}*124/100\relax}
+          },
+        #1-leading .code:n = {\dim_set:cn {l_swjtu_leading_#1_dim} {##1}}
+      }
+  }
+\NewDocumentCommand{\swjtusetfonts}{m}{\keys_set:nn {swjtu/fonts}{#1}}
+\NewDocumentCommand{\swjtufont}{m}
+  {
+    \fontsize{\dim_use:c {l_swjtu_font_#1_dim}}
+      {\dim_use:c {l_swjtu_leading_#1_dim}}\selectfont
+  }
+\ExplSyntaxOff
+
+% --------统一字号配置：修改字号只需编辑此处，不需要修改 .tex--------
+% 数值为当前 PPT 画幅上的实际字号；不随卡片宽度变化。
+% 每个角色可单独设置 -leading 行距，省略时采用字号的 1.24 倍。
+% 当前整数编号直接使用 card-title，封面汇报人、单位和日期直接使用 body。
+% badge、cover-author、cover-date 仅保留给旧代码兼容，当前组件不使用它们。
+\ifnum\swjtu@scale@num=127
+\swjtusetfonts{
+  body=20pt,body-leading=32pt,
+  frame-title=28pt,frame-title-leading=30pt,
+  card-title=24pt,card-title-leading=28pt,
+  header=17pt,header-leading=20pt,footer=17pt,footer-leading=20pt,
+  caption=17pt,table=21pt,diagram=19pt,chart-label=23pt,chart-title=21pt,
+  code=17pt,code-title=21pt,code-number=13pt,badge=21pt,
+  cover-title=65pt,cover-title-leading=80pt,
+  closing-title=75pt,closing-title-leading=90pt,
+  closing-subtitle=60pt,closing-subtitle-leading=76pt,
+  cover-subtitle=21pt,cover-author=21pt,cover-date=19pt,
+  navigation=12pt,navigation-small=12pt,
+  small=21pt,footnote=19pt,tiny=13pt,label=13pt,
+  large=25pt,larger=30pt,display=37pt,huge=44pt,huge-title=53pt
+}
+\else
+% SlideSize=beamer：保留旧画幅的原始字号和行距。
+\swjtusetfonts{
+  body=10.95pt,body-leading=13.6pt,
+  frame-title=12pt,frame-title-leading=14pt,
+  card-title=12pt,card-title-leading=13pt,
+  header=8pt,header-leading=9.5pt,
+  footer=8pt,footer-leading=9.5pt,
+  cover-title=30.5pt,cover-title-leading=38pt,
+  closing-title=30pt,closing-title-leading=35pt,
+  closing-subtitle=28pt,closing-subtitle-leading=36pt,
+  cover-subtitle=10pt,cover-subtitle-leading=12pt,
+  cover-author=10pt,cover-author-leading=12pt,
+  cover-date=9pt,cover-date-leading=11pt,
+  caption=8pt,caption-leading=9.5pt,
+  table=10pt,table-leading=12pt,
+  diagram=9pt,diagram-leading=11pt,
+  chart-label=10.95pt,chart-label-leading=13.6pt,
+  chart-title=10pt,chart-title-leading=12pt,
+  code=8pt,code-leading=9.5pt,
+  code-title=10pt,code-title-leading=12pt,
+  code-number=6pt,code-number-leading=7pt,
+  badge=10pt,badge-leading=12pt,
+  navigation=5pt,navigation-leading=4pt,
+  navigation-small=4.5pt,navigation-small-leading=4pt,
+  small=10pt,small-leading=12pt,
+  footnote=9pt,footnote-leading=11pt,
+  tiny=6pt,tiny-leading=7pt,
+  large=12pt,large-leading=14pt,
+  larger=14.4pt,larger-leading=18pt,
+  display=17.28pt,display-leading=22pt,
+  huge=20.74pt,huge-leading=25pt,
+  huge-title=24.88pt,huge-title-leading=30pt,
+  label=6pt,label-leading=7pt
+}
+\fi
+
+% Standard LaTeX size commands share the same interface, including TOC/lists.
+\renewcommand{\normalsize}{\swjtufont{body}}
+\renewcommand{\small}{\swjtufont{small}}
+\renewcommand{\footnotesize}{\swjtufont{footnote}}
+\renewcommand{\scriptsize}{\swjtufont{caption}}
+\renewcommand{\tiny}{\swjtufont{tiny}}
+\renewcommand{\large}{\swjtufont{large}}
+\renewcommand{\Large}{\swjtufont{larger}}
+\renewcommand{\LARGE}{\swjtufont{display}}
+\renewcommand{\huge}{\swjtufont{huge}}
+\renewcommand{\Huge}{\swjtufont{huge-title}}
+\newcommand{\swjtubodyfont}{\swjtufont{body}\bfseries}
+\newcommand{\swjtucardtitlefont}{\swjtufont{card-title}\bfseries}
+% Compatibility commands no longer override the user's central font settings.
+\newcommand{\swjtustandardtext}{\swjtubodyfont}
+\newcommand{\swjtufocustext}{\swjtubodyfont}
+\addtobeamertemplate{frame begin}{\swjtubodyfont}{}
+
+% Scale existing absolute list/display/paragraph spacing once, not by width.
+\ExplSyntaxOn
+\clist_map_inline:nn
+  {smallskipamount,medskipamount,bigskipamount,abovedisplayskip,
+   belowdisplayskip,abovedisplayshortskip,belowdisplayshortskip,topsep,
+   partopsep,itemsep,parsep,parskip}
+  {\skip_set:cn {#1}
+    {\glueexpr\skip_use:c {#1}*\swjtu@scale@num/\swjtu@scale@den\relax}}
+\clist_map_inline:nn
+  {leftmargini,leftmarginii,leftmarginiii,leftmarginiv,
+   leftmarginv,leftmarginvi,labelsep,labelwidth,footnotesep}
+  {\dim_set:cn {#1} {\swjtudim{\dim_use:c {#1}}}}
+\ExplSyntaxOff
+\normalsize
+\endinput

@@ -8,6 +8,7 @@
 \usetheme[
   ColorDisplay=BSblue,
   Miniframes=follow,
+  ContentMuticols=true,
   BIBMode=none,
   Background=false,
 ]{swjtu}
@@ -16,78 +17,473 @@
 \usepackage{booktabs}
 \usepackage{graphicx}
 \usepackage{tabularx}
+\usepackage{pgfplots}
+\usetikzlibrary{arrows.meta}
+\pgfplotsset{compat=1.18,every axis/.append style={font=\swjtufont{chart-label}}}
+\pgfplotscreateplotcyclelist{swjtuChartCycle}{%
+  {ChartPrimaryC,solid,thick},%
+  {ChartSecondaryC,dashed,thick},%
+  {ChartContrastC,dashdotted,thick},%
+  {ChartFourthC,densely dashdotted,thick}%
+}
+\pgfplotsset{%
+  swjtu chart/.style={%
+    cycle list name=swjtuChartCycle,
+    axis background/.style={fill=white},
+    axis line style={draw=ChartAxisC},
+    tick label style={color=ChartAxisC},
+    label style={color=ChartAxisC},
+    grid style={draw=ChartGridC},
+    legend style={draw=BorderC,fill=white,text=NormalTextC}
+  }%
+}
+
+% 调色板示例页使用的色块标签。
+\newcommand{\swjtuswatch}[3]{%
+  \noindent\tikz[baseline=-.5ex]\filldraw[draw=BorderC,fill=#1]
+    (0,0) rectangle (.85em,.65em);%
+  \hspace{.35em}{\swjtufont{label}\texttt{#1}}\enspace{\swjtufont{label} #3}\enspace{\swjtufont{caption} #2}\par%
+}
 
 % --------封面信息--------
-\title[西南交通大学 Beamer 模板]{西南交通大学 Beamer 模板}
-\subtitle{科研汇报示例}
-\author[作者姓名]{作者姓名}
+\title[汇报题目]{汇报题目}
+\subtitle{ 副标题（可选）}
+\author[ 作者姓名]{作者姓名}
 \institute{单位名称}
 \date{\today}
 
 \begin{document}
 
-% --------目录--------
-\begin{frame}{目录}
-  \tableofcontents
-\end{frame}
+% --------主题与导航--------
+\section{主题与导航}
+\subsection{章节目录与页面布局}
 
-% --------模板说明--------
-\section{模板说明}
-
-\begin{frame}{模板说明}
+\begin{frame}{主题结构与目录}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{.48\textwidth}
+      \begin{ResearchCard}{自动目录}
+        主目录列出大章；顶部导航同步显示当前进度。
+      \end{ResearchCard}
+    \end{column}
+    \begin{column}{.48\textwidth}
+      \begin{ResearchCard}{页面导航}
+        章节导航、页码和大章目录由主题统一管理。
+      \end{ResearchCard}
+    \end{column}
+  \end{columns}
+  \vspace{.5em}
   \begin{itemize}
-    \item 本模板面向西南交通大学科研汇报场景。
-    \item 主题文件为 \texttt{beamerthemeswjtu.sty} 及其配套的颜色、内部和外部主题文件。
-    \item 校徽、校楼和验证图片位于 \texttt{resources/swjtu\_*.{pdf,png}}。
-    \item 默认使用 XeLaTeX 编译；当前示例不启用参考文献。
+    \item 在 \texttt{main.tex} 中填写标题，章节名称自动生成目录。
+    \item 封面装饰由 \texttt{resources/cover.svg} 提供。
   \end{itemize}
 \end{frame}
 
-\begin{frame}{建议的文件组织}
-  \begin{block}{主文件}
-    在 \texttt{main.tex} 中填写标题、作者、单位、日期和正文内容。
-  \end{block}
-  \begin{block}{资源文件}
-    将图片放入 \texttt{resources/}、\texttt{figure/} 或 \texttt{figures/}，主题会自动搜索这些目录。
-  \end{block}
-  \begin{alertblock}{编译提示}
-    如果启用参考文献，请将主题选项改为 \texttt{BIBMode=biber}，并使用 XeLaTeX + Biber 编译。
-  \end{alertblock}
-\end{frame}
-
-% --------内容示例--------
-\section{内容示例}
-
-\begin{frame}{公式与表格示例}
-  \begin{block}{六自由度响应示例}
-    \[
-      \boldsymbol{\eta}(t)=
-      \begin{bmatrix}
-        x(t) & y(t) & z(t) & \phi(t) & \theta(t) & \psi(t)
-      \end{bmatrix}^{\mathsf T}.
-    \]
-  \end{block}
-
-  \begin{table}
-    \centering
-    \begin{tabular}{lcc}
-      \toprule
-      工况 & 波高 $H$ & 周期 $T$ \\
-      \midrule
-      规则波基准 & $H_1$ & $T_1$ \\
-      减摇水舱 & $H_2$ & $T_2$ \\
-      \bottomrule
-    \end{tabular}
-  \end{table}
-\end{frame}
-
-\begin{frame}{开始编写你的汇报}
+\subsection{基础区块与列表}
+\begin{frame}{基础 Beamer 组件}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{.32\textwidth}
+      \begin{ResearchCard}{普通区块}
+        一般说明。
+      \end{ResearchCard}
+    \end{column}
+    \begin{column}{.32\textwidth}
+      \begin{ResearchCard}{示例区块}
+        方法案例。
+      \end{ResearchCard}
+    \end{column}
+    \begin{column}{.32\textwidth}
+      \begin{ResearchCard}{强调区块}
+        重要提醒。
+      \end{ResearchCard}
+    \end{column}
+  \end{columns}
   \begin{enumerate}
-    \item 修改封面信息；
-    \item 按研究问题组织章节和小节；
-    \item 将图表和数据处理结果放入对应资源目录；
-    \item 编译并检查中文字体、图片路径和参考文献。
+    \item 资源放入 \texttt{resources/} 等目录。
+    \item 使用 XeLaTeX；文献模块再启用 Biber。
   \end{enumerate}
 \end{frame}
+
+\subsection{统一字号与强调}
+\begin{frame}{统一字号接口与局部强调}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{.48\textwidth}
+      {\swjtustandardtext
+      \begin{ResearchCard}{统一正文接口}
+        深灰蓝正文；\alert{砖橙一级重点}，\swjtuemphblue{工程蓝二级重点}。
+      \end{ResearchCard}}
+    \end{column}
+    \begin{column}{.48\textwidth}
+      {\swjtufocustext
+      \begin{ResearchCard}{统一标题字号}
+        页面标题和卡片标题均通过统一接口设置。
+      \end{ResearchCard}}
+    \end{column}
+  \end{columns}
+  \vspace{.35em}
+  \centering 正文 23pt，页面标题与卡片标题 25pt；所有组件字号集中配置。
+\end{frame}
+
+\begin{frame}{ResearchCard：完整卡片与可选编号}
+  \begin{ResearchCard}[1]{完整卡片：有数字编号}
+    卡片样式统一；整数编号是可选的显示属性。
+  \end{ResearchCard}
+  \vspace{.35em}
+  \begin{ResearchCard}{完整卡片：无数字编号}
+    不提供整数序号时，不绘制圆形编号。
+  \end{ResearchCard}
+\end{frame}
+
+% --------统一卡片：按显示布局展示--------
+\section{统一研究卡片}
+\subsection{双栏卡片}
+\begin{frame}{双栏卡片：文字内容}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{.48\textwidth}
+      \begin{ResearchCard}{定义：示例概念}
+        此处填写核心术语的定义。
+      \end{ResearchCard}
+    \end{column}
+    \begin{column}{.48\textwidth}
+      \begin{ResearchCard}{条件：适用条件}
+        此处填写方法或结论成立所需的前提条件。
+      \end{ResearchCard}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\subsection{双栏卡片：不同标题内容}
+\begin{frame}{双栏卡片：不同标题内容}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{.48\textwidth}
+      \begin{ResearchCard}{定理：定理示例}
+        此处填写定理陈述及其适用前提。
+      \end{ResearchCard}
+    \end{column}
+    \begin{column}{.48\textwidth}
+      \begin{ResearchCard}{符号约定}
+        明确变量含义、方向约定和计量单位。
+      \end{ResearchCard}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\subsection{双栏与通栏组合}
+\begin{frame}{双栏与通栏卡片}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{.48\textwidth}
+      \begin{ResearchCard}{公式：通用函数关系}
+        \[
+          y = f(x;\theta).
+        \]
+      \end{ResearchCard}
+    \end{column}
+    \begin{column}{.48\textwidth}
+      \begin{ResearchCard}{示例：示例案例}
+        此处填写代表性算例。
+      \end{ResearchCard}
+    \end{column}
+  \end{columns}
+  \begin{ResearchCard}{结论：结论示例}
+    概括主要发现与适用范围。
+  \end{ResearchCard}
+\end{frame}
+
+\subsection{单栏卡片}
+\begin{frame}{单栏卡片：研究问题}
+  \begin{ResearchCard}{问题：核心问题}
+    此处填写本研究需要回答的核心问题。
+  \end{ResearchCard}
+  \vspace{.5em}
+  \begin{itemize}
+    \item 可在此处列出研究假设或待验证的问题。
+    \item 问题表述应与研究目标保持一致。
+  \end{itemize}
+\end{frame}
+
+% --------表格与程序模块--------
+\section{表格与程序}
+\subsection{表头与交替行}
+\begin{frame}{表格配色模块}
+  \begin{table}
+    \centering
+    \swjtufont{table}
+    \swjtutablebegin
+    \begin{tabular}{lcc}
+      \swjtutabletoprule
+      \rowcolor{TableHeaderC}
+      \swjtutableheader{项目} & \swjtutableheader{设置} & \swjtutableheader{结果} \\
+      \swjtutableheadrule
+      条目 A & 待填写 & 待填写 \\
+      \swjtutablebodyrule
+      条目 B & 待填写 & 待填写 \\
+      \swjtutablebodyrule
+      条目 C & 待填写 & 待填写 \\
+      \swjtutablebottomrule
+    \end{tabular}
+    \swjtutableend
+  \end{table}
+  \vspace{.5em}
+  \begin{ResearchCard}{表格颜色}
+    表头、正文与规则线均由主题颜色变量统一控制。
+  \end{ResearchCard}
+\end{frame}
+
+\subsection{代码与重点行高亮}
+\begin{frame}[fragile]{代码高亮模块}
+  \begin{CodePanel}{数据处理示例}{Python}[2,3]
+values = [1.0, 2.0, 3.0]
+mean = sum(values) / len(values)
+print(f"mean: {mean:.2f}")
+  \end{CodePanel}
+  \vspace{.35em}
+  \begin{CodeLine}{峰值响应提取}{Python}
+peak = np.max(np.abs(response))
+  \end{CodeLine}
+\end{frame}
+
+% --------图表与色板--------
+\section{科研图表与色板}
+\subsection{图表主线与对比线}
+\begin{frame}{图表配色模块}
+  \centering
+  \begin{tikzpicture}[x=\swjtudim{1cm},y=\swjtudim{1cm}]
+    \begin{axis}[
+      swjtu chart,
+      width=.86\linewidth,
+      height=.54\textheight,
+      xlabel={自变量 $x$},
+      ylabel={输出量 $y$},
+      legend columns=3,
+      legend to name=swjtu-main-chart-legend,
+      clip mode=individual,
+      grid=major,
+    ]
+      \addplot coordinates {(0,0.10) (1,0.35) (2,0.55) (3,0.62) (4,0.48)};
+      \node[anchor=south west,text=PrimaryC,font=\swjtufont{caption}] at (axis cs:3,0.62) {示例点};
+      \addlegendentry{方案 A}
+      \addplot coordinates {(0,0.08) (1,0.25) (2,0.42) (3,0.50) (4,0.40)};
+      \addlegendentry{方案 B}
+      \addplot coordinates {(0,0.03) (1,0.18) (2,0.30) (3,0.38) (4,0.32)};
+      \addlegendentry{方案 C}
+    \end{axis}
+  \end{tikzpicture}
+  \par\smallskip
+  \pgfplotslegendfromname{swjtu-main-chart-legend}
+  \par\smallskip
+  {\swjtufont{caption}\color{AuxiliaryC}示意数据仅用于展示图表样式，使用时请替换为实际数据。}
+\end{frame}
+
+\subsection{研究流程图}
+\begin{frame}{研究流程图模块}
+  \centering
+  \begin{tikzpicture}[x=\swjtudim{1cm},y=\swjtudim{1cm},
+    flow step/.style={
+      draw=AuxiliaryC,
+      rounded corners=\swjtudim{1.4mm},
+      line width=\swjtudim{.75pt},
+      minimum width=\swjtudim{2.10cm},
+      minimum height=\swjtudim{1.42cm},
+      text width=\swjtudim{1.88cm},
+      align=center,
+      inner sep=\swjtudim{3.5pt},
+      font=\swjtufont{diagram},
+      text=NormalTextC
+    },
+    flow arrow/.style={-{Stealth[length=\swjtudim{2mm}]},draw=IntersperseC,line width=\swjtudim{1pt}},
+    flow feedback/.style={-{Stealth[length=\swjtudim{1.8mm}]},draw=AuxiliaryC,line width=\swjtudim{.8pt}}
+  ]
+    \node[flow step,fill=BlockQuestionC] (question) at (-4.8,0) {\textcolor{PrimaryC}{\bfseries 01\quad 研究目标}\\[-\swjtudim{1pt}]\swjtufont{caption} 明确目标与研究范围};
+    \node[flow step,fill=BlockDefinitionC] (theory) at (-2.4,0) {\textcolor{PrimaryC}{\bfseries 02\quad 研究方案}\\[-\swjtudim{1pt}]\swjtufont{caption} 确定假设与方法};
+    \node[flow step,fill=BlockFormulaC] (model) at (0,0) {\textcolor{PrimaryC}{\bfseries 03\quad 分析实施}\\[-\swjtudim{1pt}]\swjtufont{caption} 开展分析或计算};
+    \node[flow step,fill=BlockExampleC] (validation) at (2.4,0) {\textcolor{PrimaryC}{\bfseries 04\quad 结果验证}\\[-\swjtudim{1pt}]\swjtufont{caption} 检查结果与误差};
+    \node[flow step,fill=BlockConclusionC] (conclusion) at (4.8,0) {\textcolor{PrimaryC}{\bfseries 05\quad 主要结论}\\[-\swjtudim{1pt}]\swjtufont{caption} 整理主要发现};
+
+    \draw[flow arrow] (question.east) -- (theory.west);
+    \draw[flow arrow] (theory.east) -- (model.west);
+    \draw[flow arrow] (model.east) -- (validation.west);
+    \draw[flow arrow] (validation.east) -- (conclusion.west);
+    \draw[flow feedback] (validation.south) -- ++(0,-.48) -|
+      node[pos=.56,below=\swjtudim{1pt},fill=BackgroundC,inner sep=\swjtudim{1.5pt},font=\swjtufont{caption},text=NormalTextC]
+      {检查后调整方法并复算} (model.south);
+  \end{tikzpicture}
+
+  \vspace{.7em}
+  {\swjtufont{caption}\color{AuxiliaryC}流程节点可按实际工作内容增删，并调整顺序与反馈关系。}
+\end{frame}
+
+\subsection{主题色与模块色总览}
+\begin{frame}{完整配色变量总览}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{.32\textwidth}
+      \textbf{基础颜色}\par\smallskip
+      \swjtuswatch{PrimaryC}{学术深蓝}{\#173B75}
+      \swjtuswatch{AuxiliaryC}{工程蓝}{\#235F9E}
+      \swjtuswatch{SecondaryAuxiliaryC}{海松绿}{\#146F68}
+      \swjtuswatch{IntersperseC}{砖橙色}{\#B45929}
+      \swjtuswatch{NormalTextC}{正文色}{\#243B55}
+      \swjtuswatch{AlertedTextC}{重要数据}{\#B45929}
+      \swjtuswatch{MutedTextC}{次要文字}{\#52606C}
+      \swjtuswatch{BackgroundC}{背景色}{\#FFFFFF}
+      \swjtuswatch{BorderC}{分隔线}{\#7895AF}
+    \end{column}
+    \begin{column}{.34\textwidth}
+      \textbf{内容模块}\par\smallskip
+      \swjtuswatch{BlockNormalBgC}{普通/定理}{\#FFFFFF}
+      \swjtuswatch{BlockWarmBgC}{结论白底}{\#FFFFFF}
+      \swjtuswatch{BlockCoolBgC}{理论/问题白底}{\#FFFFFF}
+      \swjtuswatch{BlockDefinitionC}{定义}{\#FFFFFF}
+      \swjtuswatch{BlockTheoremC}{定理}{\#FFFFFF}
+      \swjtuswatch{BlockLemmaC}{引理}{\#FFFFFF}
+      \swjtuswatch{BlockConditionC}{条件}{\#FFFFFF}
+      \swjtuswatch{BlockExampleC}{示例}{\#FFFFFF}
+      \swjtuswatch{BlockFormulaC}{公式}{\#FFFFFF}
+      \swjtuswatch{BlockConclusionC}{结论}{\#FFFFFF}
+      \swjtuswatch{BlockQuestionC}{问题}{\#FFFFFF}
+    \end{column}
+    \begin{column}{.34\textwidth}
+      \textbf{表格、图表与代码}\par\smallskip
+      \swjtuswatch{TableHeaderC}{表头背景}{\#F2F6FB}
+      \swjtuswatch{TableRuleC}{顶部/底部线}{\#235F9E}
+      \swjtuswatch{TableRowRuleC}{表头分界线}{\#7294B5}
+      \swjtuswatch{ChartPrimaryC}{主曲线}{\#235F9E}
+      \swjtuswatch{ChartSecondaryC}{第二曲线}{\#B45929}
+      \swjtuswatch{ChartContrastC}{第三曲线}{\#146F68}
+      \swjtuswatch{ChartFourthC}{第四曲线}{\#70528B}
+      \swjtuswatch{ChartAxisC}{坐标轴}{\#243B55}
+      \swjtuswatch{ChartGridC}{网格线}{\#A5B4C2}
+      \swjtuswatch{CodeCommentC}{代码注释}{\#146F68}
+      \swjtuswatch{HighlightCodeLineC}{重点行}{\#E6F0FA}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% --------通用研究方案示例--------
+\section{研究方案示例}
+\subsection{模型示意与参数设置}
+\begin{frame}{模型示意与参数设置}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{.52\textwidth}
+      \centering
+      \begin{tikzpicture}[x=\swjtudim{1cm},y=\swjtudim{1cm},
+        model box/.style={draw=AuxiliaryC,line width=\swjtudim{.8pt},
+          rounded corners=\swjtudim{1mm},minimum height=\swjtudim{1cm},text width=\swjtudim{1.35cm},
+          align=center,font=\swjtufont{caption},text=NormalTextC},
+        model arrow/.style={-{Stealth[length=\swjtudim{1.8mm}]},draw=IntersperseC,line width=\swjtudim{.8pt}}
+      ]
+        \node[model box,fill=BlockConditionC] (input) at (-2.15,0) {输入参数};
+        \node[model box,fill=BlockDefinitionC,minimum width=\swjtudim{1.8cm}] (model) at (0,0) {研究对象\\模型};
+        \node[model box,fill=BlockExampleC] (output) at (2.15,0) {输出结果};
+        \draw[model arrow] (input.east) -- (model.west);
+        \draw[model arrow] (model.east) -- (output.west);
+      \end{tikzpicture}
+      \par\vspace{.2em}
+      {\swjtufont{caption}\color{AuxiliaryC}通用模型示意，可替换为理论模型、计算模型或有限元网格。}
+    \end{column}
+    \begin{column}{.45\textwidth}
+      \begin{ResearchCard}{假设：示例假设}
+        此处填写模型假设、适用范围和需要说明的限制。
+      \end{ResearchCard}
+      \vspace{.35em}
+      \swjtufont{table}
+      \swjtutablebegin
+      \begin{tabular}{@{}ll@{}}
+        \swjtutabletoprule
+        \rowcolor{TableHeaderC}
+        \swjtutableheader{参数项} & \swjtutableheader{符号 / 来源} \\
+        \swjtutableheadrule
+        参数 A & $p_A$ / 数据来源 \\
+        \swjtutablebodyrule
+        参数 B & $p_B$ / 数据来源 \\
+        \swjtutablebodyrule
+        控制变量 & $c$ / 工况设置 \\
+        \swjtutablebottomrule
+      \end{tabular}
+      \swjtutableend
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\subsection{试验验证与参数敏感性}
+\begin{frame}{试验验证与参数敏感性}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{.48\textwidth}
+      \centering
+      \begin{tikzpicture}[x=\swjtudim{1cm},y=\swjtudim{1cm},
+        rig box/.style={draw=AuxiliaryC,rounded corners=\swjtudim{1mm},
+          fill=BlockConditionC,minimum height=\swjtudim{8mm},text=NormalTextC,
+          font=\swjtufont{caption},align=center},
+        rig arrow/.style={-{Stealth[length=\swjtudim{1.8mm}]},draw=IntersperseC,line width=\swjtudim{.8pt}}
+      ]
+        \node[rig box,minimum width=\swjtudim{1.5cm}] (drive) at (-1.8,.45) {输入 / 加载};
+        \node[draw=PrimaryC,line width=\swjtudim{1pt},fill=BlockDefinitionC,circle,
+          minimum size=\swjtudim{1.12cm},font=\swjtufont{caption},text=PrimaryC] (object) at (0,.45) {研究对象};
+        \node[rig box,minimum width=\swjtudim{1.5cm}] (acq) at (1.85,.45) {测量 / 采集};
+        \draw[rig arrow] (drive.east) -- (object.west);
+        \draw[rig arrow] (object.east) -- (acq.west);
+        \draw[AuxiliaryC,line width=\swjtudim{2pt}] (-.68,-.48) -- (.68,-.48);
+        \node[font=\swjtufont{caption},text=NormalTextC] at (0,-.7) {试验平台};
+        \draw[rig arrow] (.32,-.36) -- (.32,.05)
+          node[midway,right=\swjtudim{1pt},text=NormalTextC,font=\swjtufont{caption}] {$u$};
+      \end{tikzpicture}
+      \par\vspace{.2em}
+      {\swjtufont{caption}\color{AuxiliaryC}装置示意可替换为实际设备图、测点或实验流程。}
+      \vspace{.4em}
+      \swjtutablebegin
+      \begin{tabular}{@{}lc@{}}
+        \swjtutabletoprule
+        \rowcolor{TableHeaderC}
+        \swjtutableheader{评价指标} & \swjtutableheader{实测 / 计算} \\
+        \swjtutableheadrule
+        指标 A & 待填写 \\
+        \swjtutablebodyrule
+        指标 B & 待填写 \\
+        \swjtutablebodyrule
+        指标 C & 待填写 \\
+        \swjtutablebottomrule
+      \end{tabular}
+      \swjtutableend
+    \end{column}
+    \begin{column}{.49\textwidth}
+      \centering
+      \begin{tikzpicture}[x=\swjtudim{1cm},y=\swjtudim{1cm}]
+        \begin{axis}[
+          swjtu chart,
+          width=\linewidth,
+          height=.49\textheight,
+          xlabel={参数变化率（\%）},
+          ylabel={归一化输出},
+          xmin=-22,xmax=22,ymin=.65,ymax=1.4,
+          xtick={-20,-10,0,10,20},
+          ytick={.7,.9,1.1,1.3},
+          grid=major,
+          title={敏感性分析示意},
+          title style={font=\swjtufont{chart-title},text=PrimaryC}
+        ]
+          \addplot+[ChartPrimaryC,mark=*,line width=\swjtudim{1.1pt}]
+            coordinates {(-20,.76) (-10,.88) (0,1.00) (10,1.14) (20,1.30)};
+        \end{axis}
+      \end{tikzpicture}
+      \par\vspace{-.2em}
+      {\swjtufont{caption}\color{AuxiliaryC}示意数据仅用于展示敏感性分析图样式。}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% --------结束页--------
+\section{使用建议}
+\begin{frame}{开始编写你的汇报}
+  \begin{ResearchCard}{推荐流程}
+    先在主文件中组织章节，再填充对应模块，最后检查目录、图表和编译结果。
+  \end{ResearchCard}
+  \begin{enumerate}
+    \item 在 \texttt{main.tex} 中修改标题和正文；
+    \item 用 \texttt{section}/\texttt{subsection} 组织内容与目录；
+    \item 将图表放入 \texttt{figure/} 或 \texttt{resources/}；
+    \item 使用 XeLaTeX 编译两遍，让自动目录完整更新。
+  \end{enumerate}
+\end{frame}
+
+% --------科研汇报结束页--------
+\ClosingPage{汇报完毕}{感谢各位专家批评指正}
 
 \end{document}
