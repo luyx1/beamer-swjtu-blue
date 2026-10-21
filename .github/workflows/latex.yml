@@ -46,6 +46,8 @@ jobs:
           path: |
             main.pdf
             main.log
+            vehicle-motion-equations.pdf
+            vehicle-motion-equations.log
             layout-smoke.pdf
             tests/layout-smoke.pdf
             tests/layout-smoke.log
