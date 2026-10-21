@@ -132,7 +132,7 @@
   \begin{column}{.61\textwidth}
     \begin{PPTPanel}{车辆结构与悬挂示意}
       \centering
-      \begin{tikzpicture}[x=.98cm,y=.98cm,>=Stealth,line cap=round,line join=round]
+      \begin{tikzpicture}[x=.98cm,y=1.1cm,>=Stealth,line cap=round,line join=round]
         % Car body
         \fill[PanelFill,rounded corners=3pt] (.5,5.7) rectangle (18.0,7.0);
         \draw[AuxiliaryC,rounded corners=3pt,line width=1.2pt] (.5,5.7) rectangle (18.0,7.0);
@@ -215,7 +215,7 @@
   \begin{column}{.62\textwidth}
     \begin{PPTPanel}{车辆空间运动的自由度}
       \centering
-      \begin{tikzpicture}[x=1cm,y=1cm,>=Stealth,line cap=round,line join=round]
+      \begin{tikzpicture}[x=1.1cm,y=1.15cm,>=Stealth,line cap=round,line join=round]
         % 3D body/cube
         \fill[PanelFill] (6.2,3.4)--(9.0,3.4)--(10.0,4.2)--(7.2,4.2)--cycle;
         \fill[AuxiliaryC!12] (6.2,3.4)--(6.2,5.2)--(7.2,6.0)--(7.2,4.2)--cycle;
@@ -357,8 +357,6 @@
 \end{SlideBody}
 
 % P4 — 简化车辆动力学模型的建立
-\subsection{简单车辆模型的建立}
-
 \begin{SlideBody}
 \begin{columns}[T,onlytextwidth]
   \begin{column}{.36\textwidth}
@@ -385,7 +383,7 @@
   \begin{column}{.62\textwidth}
     \begin{PPTPanel}{二自由度竖向车辆模型}
       \centering
-      \begin{tikzpicture}[x=1cm,y=1cm,>=Stealth,line cap=round,line join=round]
+      \begin{tikzpicture}[x=1cm,y=1.15cm,>=Stealth,line cap=round,line join=round]
         \fill[PanelFill,rounded corners=3pt] (4.1,5.3) rectangle (10.8,6.6);
         \draw[AuxiliaryC,rounded corners=3pt,line width=1.4pt] (4.1,5.3) rectangle (10.8,6.6);
         \node[font=\swjtufont{larger}\bfseries,text=PrimaryC] at (7.45,5.95) {\(m_s\)};
@@ -431,8 +429,6 @@
 \end{SlideBody}
 
 % P5 — 车辆运动方程推导与矩阵表达
-\subsection{车辆运动方程的建立}
-
 \begin{SlideBody}
 \begin{columns}[T,onlytextwidth]
   \begin{column}{.29\textwidth}
@@ -504,7 +500,6 @@
 \end{SlideBody}
 
 % P6 — 车辆运动方程与车桥耦合的联系
-\section{车辆运动与车桥耦合}
 \subsection{车辆方程与轮轨接口}
 
 \begin{SlideBody}
@@ -532,7 +527,7 @@
   \begin{column}{.63\textwidth}
     \begin{PPTPanel}{车辆—轮轨—轨道—桥梁}
       \centering
-      \begin{tikzpicture}[x=.92cm,y=.92cm,>=Stealth,line cap=round,line join=round]
+      \begin{tikzpicture}[x=.92cm,y=1.05cm,>=Stealth,line cap=round,line join=round]
         % train body and suspension
         \fill[PanelFill,rounded corners=3pt] (1.0,5.5) rectangle (16.8,6.8);
         \draw[AuxiliaryC,rounded corners=3pt,line width=1.2pt] (1.0,5.5) rectangle (16.8,6.8);
@@ -678,7 +673,7 @@
 \begin{SlideBody}
 \begin{columns}[T,onlytextwidth]
   \begin{column}{.34\textwidth}
-    \begin{minipage}[t][9.45cm][s]{\linewidth}
+    \begin{minipage}[t][10.2cm][s]{\linewidth}
       \begin{PPTPanel}{研究问题}
         \PanelBulletsStart
           \item 三维车轨桥系统时变耦合
@@ -703,7 +698,7 @@
     \end{minipage}
   \end{column}
   \begin{column}{.64\textwidth}
-    \begin{minipage}[t][9.45cm][s]{\linewidth}
+    \begin{minipage}[t][10.2cm][s]{\linewidth}
       \begin{PPTPanel}{三维车辆—轨道—桥梁分区模型}
         \centering
         \begin{tikzpicture}[x=.9cm,y=.9cm,>=Stealth,line cap=round,line join=round]
@@ -788,40 +783,47 @@
     \end{minipage}
   \end{column}
   \begin{column}{.62\textwidth}
-    \begin{PPTPanel}{对照计算与敏感性分析}
-      \centering
-      \begin{tikzpicture}[x=.95cm,y=.95cm,>=Stealth,line cap=round,line join=round]
-        % left model
-        \fill[PanelFill,rounded corners=3pt] (.3,5.0) rectangle (7.9,6.2);
-        \draw[AuxiliaryC,rounded corners=3pt,line width=1.1pt] (.3,5.0) rectangle (7.9,6.2);
-        \node[font=\swjtufont{card-title}\bfseries,text=PrimaryC] at (4.1,5.8) {基准模型};
-        \node[font=\swjtufont{diagram},text=NormalTextC] at (4.1,5.35) {常规接触运动学};
-        % right model
-        \fill[SoftGreen,rounded corners=3pt] (9.5,5.0) rectangle (17.1,6.2);
-        \draw[SecondaryAuxiliaryC,rounded corners=3pt,line width=1.1pt] (9.5,5.0) rectangle (17.1,6.2);
-        \node[font=\swjtufont{card-title}\bfseries,text=PrimaryC] at (13.3,5.8) {改进模型};
-        \node[font=\swjtufont{diagram},text=NormalTextC] at (13.3,5.35) {显式保留速度项};
-        \draw[->,AuxiliaryC,line width=1.5pt] (8.0,5.6)--(9.4,5.6);
-        % shared inputs
-        \fill[PanelFill,rounded corners=3pt] (2.0,3.5) rectangle (15.5,4.35);
-        \draw[AuxiliaryC!60!white,rounded corners=3pt] (2.0,3.5) rectangle (15.5,4.35);
-        \node[font=\swjtufont{diagram},text=PrimaryC] at (8.75,3.92)
-          {同一车速、桥跨、车辆参数与轨道不平顺样本};
-        \draw[->,AuxiliaryC,line width=1.3pt] (4.1,5.0)--(4.1,4.4);
-        \draw[->,AuxiliaryC,line width=1.3pt] (13.3,5.0)--(13.3,4.4);
-        % outputs
-        \draw[->,IntersperseC,line width=1.3pt] (5.0,3.45)--(5.0,2.8);
-        \draw[->,IntersperseC,line width=1.3pt] (12.5,3.45)--(12.5,2.8);
-        \node[font=\swjtufont{diagram},text=IntersperseC,align=center] at (5.0,2.25)
-          {桥梁位移与加速度\\轮轨力};
-        \node[font=\swjtufont{diagram},text=IntersperseC,align=center] at (12.5,2.25)
-          {概率分布与高分位数\\计算耗时};
-        % bottom compare arrow
-        \draw[<->,PrimaryC,line width=1.5pt] (5.9,1.1)--(11.6,1.1);
-        \node[font=\swjtufont{diagram}\bfseries,text=PrimaryC] at (8.75,.55)
-          {误差敏感性与适用边界};
-      \end{tikzpicture}
-    \end{PPTPanel}
+    \begin{minipage}[t][10.55cm][s]{\linewidth}
+      \begin{PPTPanel}{对照计算与敏感性分析}
+        \centering
+        \begin{tikzpicture}[x=.95cm,y=.95cm,>=Stealth,line cap=round,line join=round]
+          % left model
+          \fill[PanelFill,rounded corners=3pt] (.3,5.0) rectangle (7.9,6.2);
+          \draw[AuxiliaryC,rounded corners=3pt,line width=1.1pt] (.3,5.0) rectangle (7.9,6.2);
+          \node[font=\swjtufont{card-title}\bfseries,text=PrimaryC] at (4.1,5.8) {基准模型};
+          \node[font=\swjtufont{diagram},text=NormalTextC] at (4.1,5.35) {常规接触运动学};
+          % right model
+          \fill[SoftGreen,rounded corners=3pt] (9.5,5.0) rectangle (17.1,6.2);
+          \draw[SecondaryAuxiliaryC,rounded corners=3pt,line width=1.1pt] (9.5,5.0) rectangle (17.1,6.2);
+          \node[font=\swjtufont{card-title}\bfseries,text=PrimaryC] at (13.3,5.8) {改进模型};
+          \node[font=\swjtufont{diagram},text=NormalTextC] at (13.3,5.35) {显式保留速度项};
+          \draw[->,AuxiliaryC,line width=1.5pt] (8.0,5.6)--(9.4,5.6);
+          % shared inputs
+          \fill[PanelFill,rounded corners=3pt] (2.0,3.5) rectangle (15.5,4.35);
+          \draw[AuxiliaryC!60!white,rounded corners=3pt] (2.0,3.5) rectangle (15.5,4.35);
+          \node[font=\swjtufont{diagram},text=PrimaryC] at (8.75,3.92)
+            {同一车速、桥跨、车辆参数与轨道不平顺样本};
+          \draw[->,AuxiliaryC,line width=1.3pt] (4.1,5.0)--(4.1,4.4);
+          \draw[->,AuxiliaryC,line width=1.3pt] (13.3,5.0)--(13.3,4.4);
+          % outputs
+          \draw[->,IntersperseC,line width=1.3pt] (5.0,3.45)--(5.0,2.8);
+          \draw[->,IntersperseC,line width=1.3pt] (12.5,3.45)--(12.5,2.8);
+          \node[font=\swjtufont{diagram},text=IntersperseC,align=center] at (5.0,2.25)
+            {桥梁位移与加速度\\轮轨力};
+          \node[font=\swjtufont{diagram},text=IntersperseC,align=center] at (12.5,2.25)
+            {概率分布与高分位数\\计算耗时};
+          \draw[<->,PrimaryC,line width=1.5pt] (5.9,1.1)--(11.6,1.1);
+          \node[font=\swjtufont{diagram}\bfseries,text=PrimaryC] at (8.75,.55)
+            {误差敏感性与适用边界};
+        \end{tikzpicture}
+      \end{PPTPanel}
+      \vfill
+      \begin{PPTPanel}{评价输出}
+        \textcolor{PrimaryC}{动力特性：}时变频率、阻尼比\par
+        \textcolor{IntersperseC}{工程响应：}桥梁位移与加速度、轮轨力\par
+        \textcolor{SecondaryAuxiliaryC}{效率指标：}响应误差与计算耗时
+      \end{PPTPanel}
+    \end{minipage}
   \end{column}
 \end{columns}
 \vfill
