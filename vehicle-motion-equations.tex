@@ -1,0 +1,839 @@
+% !TeX encoding = UTF-8
+% !TeX TS-program = xelatex
+% 车辆运动方程课堂汇报：独立正文稿
+% 基于仓库现有 SWJTU Beamer 主题；不修改母版文件。
+% 仅包含正文区域：无封面、页眉、导航栏、页面标题、页脚及页码。
+% Compile from repository root:
+%   xelatex -interaction=nonstopmode -halt-on-error vehicle-motion-equations.tex
+%   xelatex -interaction=nonstopmode -halt-on-error vehicle-motion-equations.tex
+
+\documentclass[UTF8,aspectratio=169]{beamer}
+
+\usetheme[
+  ColorDisplay=BSblue,
+  Miniframes=none,
+  ContentMuticols=false,
+  BIBMode=none,
+  Background=false,
+  ResearchCardTitleAlign=left,
+  SectionTOC=hide
+]{swjtu}
+
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usetikzlibrary{arrows.meta,calc,positioning,decorations.pathmorphing,patterns}
+
+% Keep the existing SWJTU theme, but suppress all outer-matter elements
+% for these body-only slides.
+\setbeamertemplate{headline}{}
+\setbeamertemplate{footline}{}
+\setbeamertemplate{frametitle}{}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{background}{}
+\setbeamercolor{background canvas}{bg=white}
+\setbeamersize{text margin left=.7cm,text margin right=.7cm}
+
+% Main body typography is 22 pt or larger. Citation text is intentionally
+% secondary but remains comfortably readable on the full-size PPT canvas.
+\swjtusetfonts{
+  body=22pt,body-leading=27pt,
+  card-title=25pt,card-title-leading=29pt,
+  diagram=22pt,chart-label=20pt,chart-title=22pt,
+  caption=18pt,table=21pt,
+  large=27pt,larger=31pt,display=35pt
+}
+\renewcommand{\normalsize}{\swjtufont{body}}
+\colorlet{PanelFill}{AuxiliaryC!5!white}
+\colorlet{PanelHead}{AuxiliaryC!10!white}
+\colorlet{PanelBorder}{AuxiliaryC!55!white}
+\colorlet{SoftOrange}{IntersperseC!10!white}
+\colorlet{SoftGreen}{SecondaryAuxiliaryC!8!white}
+
+\newtcolorbox{PPTPanel}[1]{
+  enhanced,
+  colback=PanelFill,
+  colframe=PanelBorder,
+  colbacktitle=PanelHead,
+  coltitle=PrimaryC,
+  title={#1},
+  fonttitle=\swjtufont{card-title}\bfseries,
+  boxrule=.65pt,
+  arc=1.6mm,
+  left=2.5mm,right=2.5mm,
+  top=1.4mm,bottom=1.6mm,
+  before skip=0pt,after skip=0pt
+}
+\newenvironment{BottomBand}{
+  \begin{tcolorbox}[
+    enhanced,
+    colback=AuxiliaryC!7!white,
+    colframe=AuxiliaryC!45!white,
+    boxrule=.65pt,arc=1.5mm,
+    left=3mm,right=3mm,top=2mm,bottom=2mm
+  ]
+}{
+  \end{tcolorbox}
+}
+\newenvironment{SlideBody}{
+  \begin{frame}[plain,noframenumbering]
+  \vspace*{1.8cm}
+  \begin{minipage}[t][13.65cm][t]{\linewidth}
+  \vspace{0pt}
+}{
+  \end{minipage}
+  \end{frame}
+}
+\newcommand{\PanelBulletsStart}{%
+  \begin{itemize}
+  \setlength{\itemsep}{.12cm}
+  \setlength{\topsep}{.08cm}
+  \setlength{\parskip}{0pt}
+}
+\newcommand{\PanelBulletsEnd}{\end{itemize}}
+\newcommand{\BlueArrow}{\textcolor{AuxiliaryC}{\(\boldsymbol{\longrightarrow}\)}}
+\newcommand{\ForceColor}[1]{\textcolor{IntersperseC}{#1}}
+\newcommand{\KeyColor}[1]{\textcolor{SecondaryAuxiliaryC}{#1}}
+
+\begin{document}
+
+% ============================================================
+% Section 1: 基本知识体系
+% ============================================================
+\section{基本知识体系}
+\subsection{车辆结构与运动自由度}
+
+% P1 — 车辆结构体系与动力传递路径
+\begin{SlideBody}
+\begin{columns}[T,onlytextwidth]
+  \begin{column}{.37\textwidth}
+    \begin{minipage}[t][10.65cm][s]{\linewidth}
+      \begin{PPTPanel}{车辆动力学组成}
+        \PanelBulletsStart
+          \item 车体：承载质量与车体振动
+          \item 转向架：支承、导向与载荷分配
+          \item 轮对：轮轨接触与动力输入
+        \PanelBulletsEnd
+      \end{PPTPanel}
+      \vfill
+      \begin{PPTPanel}{两级悬挂系统}
+        \PanelBulletsStart
+          \item 一系悬挂：轮对 \(\leftrightarrow\) 转向架
+          \item 二系悬挂：转向架 \(\leftrightarrow\) 车体
+        \PanelBulletsEnd
+      \end{PPTPanel}
+      \vfill
+      \begin{PPTPanel}{主要动力学参数}
+        质量与转动惯量；悬挂刚度 \(k\)；阻尼 \(c\)。
+      \end{PPTPanel}
+    \end{minipage}
+  \end{column}
+  \begin{column}{.61\textwidth}
+    \begin{PPTPanel}{车辆结构与悬挂示意}
+      \centering
+      \begin{tikzpicture}[x=.98cm,y=.98cm,>=Stealth,line cap=round,line join=round]
+        % Car body
+        \fill[PanelFill] (.5,5.7) rounded rectangle (18.0,7.0);
+        \draw[AuxiliaryC,line width=1.2pt] (.5,5.7) rounded rectangle (18.0,7.0);
+        \foreach \x in {1.0,2.8,4.6,6.4,8.2,10.0,11.8,13.6,15.4,17.0}{
+          \filldraw[fill=white,draw=AuxiliaryC,line width=.7pt]
+            (\x,6.15) rectangle ++(1.15,.48);
+        }
+        \node[font=\swjtufont{diagram}\bfseries,text=PrimaryC] at (9.2,6.65) {车体};
+        % Secondary suspensions
+        \foreach \x in {3.7,5.0,13.3,14.6}{
+          \draw[IntersperseC,line width=1.2pt]
+            (\x,5.68)--(\x,5.47)--++(.16,-.15)--++(-.32,-.18)
+            --++(.32,-.18)--++(-.32,-.18)--++(.16,-.15)--(\x,4.43);
+        }
+        \draw[MutedTextC,line width=1pt] (2.5,4.35) rectangle (6.2,4.65);
+        \draw[MutedTextC,line width=1pt] (12.1,4.35) rectangle (15.8,4.65);
+        \node[font=\swjtufont{diagram},text=NormalTextC] at (9.2,4.0) {转向架};
+        % Primary suspensions and wheels
+        \foreach \x in {3.0,4.4,12.6,14.0}{
+          \draw[SecondaryAuxiliaryC,line width=1.2pt]
+            (\x,4.33)--(\x,4.12)--++(.14,-.14)--++(-.28,-.16)
+            --++(.28,-.16)--++(-.28,-.16)--++(.14,-.14)--(\x,3.2);
+        }
+        \foreach \x in {2.8,4.5,12.4,14.1}{
+          \filldraw[fill=white,draw=PrimaryC,line width=1.1pt] (\x,2.85) circle (.42);
+          \filldraw[fill=PanelFill,draw=AuxiliaryC,line width=.7pt] (\x,2.85) circle (.16);
+        }
+        \draw[NormalTextC,line width=2pt] (.5,2.25)--(18,2.25);
+        \foreach \x in {1.0,2.2,...,17.6}{
+          \draw[MutedTextC,line width=.9pt] (\x,2.1)--++(.38,.3);
+        }
+        \node[font=\swjtufont{diagram},text=SecondaryAuxiliaryC] at (9.2,1.55) {轮轨接触};
+        \draw[->,IntersperseC,line width=1.2pt] (9.2,1.72)--(9.2,2.55);
+        \node[font=\swjtufont{caption},text=IntersperseC,anchor=west] at (9.5,2.0) {轮轨力};
+        \node[font=\swjtufont{caption},text=NormalTextC] at (2.2,5.0) {二系悬挂};
+        \node[font=\swjtufont{caption},text=NormalTextC] at (2.1,3.65) {一系悬挂};
+        \node[font=\swjtufont{caption},text=NormalTextC] at (16.4,3.0) {轮对};
+      \end{tikzpicture}
+    \end{PPTPanel}
+  \end{column}
+\end{columns}
+\vfill
+\begin{BottomBand}
+  \centering
+  \textcolor{PrimaryC}{\bfseries 动力传递路径}\quad
+  轮轨力 \(\leftrightarrow\) 轮对 \(\leftrightarrow\) 一系悬挂
+  \(\leftrightarrow\) 转向架 \(\leftrightarrow\) 二系悬挂
+  \(\leftrightarrow\) 车体
+\end{BottomBand}
+\end{SlideBody}
+
+% P2 — 车辆运动自由度
+\subsection{车辆自由度与建模方法}
+
+\begin{SlideBody}
+\begin{columns}[T,onlytextwidth]
+  \begin{column}{.36\textwidth}
+    \begin{minipage}[t][10.55cm][s]{\linewidth}
+      \begin{PPTPanel}{平移自由度}
+        \PanelBulletsStart
+          \item 纵向 \(x\)：沿线路方向
+          \item 横向 \(y\)：垂直线路方向
+          \item 竖向 \(z\)：沉浮运动
+        \PanelBulletsEnd
+      \end{PPTPanel}
+      \vfill
+      \begin{PPTPanel}{转动自由度}
+        \PanelBulletsStart
+          \item 侧滚 \(\phi\)：绕纵轴
+          \item 点头 \(\theta\)：绕横轴
+          \item 摇头 \(\psi\)：绕竖轴
+        \PanelBulletsEnd
+      \end{PPTPanel}
+      \vfill
+      \begin{PPTPanel}{自由度选择}
+        由研究方向、目标响应和计算成本共同决定。
+      \end{PPTPanel}
+    \end{minipage}
+  \end{column}
+  \begin{column}{.62\textwidth}
+    \begin{PPTPanel}{车辆空间运动的自由度}
+      \centering
+      \begin{tikzpicture}[x=1cm,y=1cm,>=Stealth,line cap=round,line join=round]
+        % 3D body/cube
+        \fill[PanelFill] (6.2,3.4)--(9.0,3.4)--(10.0,4.2)--(7.2,4.2)--cycle;
+        \fill[AuxiliaryC!12] (6.2,3.4)--(6.2,5.2)--(7.2,6.0)--(7.2,4.2)--cycle;
+        \fill[AuxiliaryC!18] (6.2,5.2)--(9.0,5.2)--(10.0,6.0)--(7.2,6.0)--cycle;
+        \draw[PrimaryC,line width=1.3pt] (6.2,3.4)--(9.0,3.4)--(10.0,4.2)--(10.0,6.0)--(7.2,6.0)--(6.2,5.2)--cycle;
+        \draw[PrimaryC,line width=1.1pt] (6.2,5.2)--(9.0,5.2)--(10.0,6.0);
+        \draw[PrimaryC,line width=1.1pt] (9.0,3.4)--(9.0,5.2);
+        \node[font=\swjtufont{diagram}\bfseries,text=PrimaryC] at (8.0,4.65) {车辆刚体};
+        % translation axes
+        \draw[->,AuxiliaryC,line width=1.5pt] (6.2,3.4)--(3.5,3.4)
+          node[left,font=\swjtufont{diagram},text=AuxiliaryC] {\(x\)};
+        \draw[->,AuxiliaryC,line width=1.5pt] (6.2,3.4)--(7.7,2.0)
+          node[right,font=\swjtufont{diagram},text=AuxiliaryC] {\(y\)};
+        \draw[->,AuxiliaryC,line width=1.5pt] (6.2,3.4)--(6.2,1.0)
+          node[below,font=\swjtufont{diagram},text=AuxiliaryC] {\(z\)};
+        % rotational arrows
+        \draw[->,IntersperseC,line width=1.3pt] (4.0,5.5) arc[start angle=210,end angle=500,radius=.65];
+        \node[font=\swjtufont{diagram},text=IntersperseC] at (3.8,6.25) {\(\phi\)};
+        \draw[->,IntersperseC,line width=1.3pt] (11.3,4.8) arc[start angle=40,end angle=330,radius=.62];
+        \node[font=\swjtufont{diagram},text=IntersperseC] at (12.1,5.45) {\(\theta\)};
+        \draw[->,IntersperseC,line width=1.3pt] (11.3,2.3) arc[start angle=25,end angle=315,radius=.62];
+        \node[font=\swjtufont{diagram},text=IntersperseC] at (12.1,1.9) {\(\psi\)};
+        \node[font=\swjtufont{body},text=NormalTextC,align=center] at (8.0,.25)
+          {三个平移自由度 \quad 三个转动自由度};
+      \end{tikzpicture}
+    \end{PPTPanel}
+  \end{column}
+\end{columns}
+\vfill
+\begin{BottomBand}
+  \centering
+  自由度选择 \(\longrightarrow\) 可描述的车辆运动 \(\longrightarrow\) 车桥耦合响应的预测能力
+\end{BottomBand}
+\end{SlideBody}
+
+% P3 — 车辆动力学模型分类与比较
+\subsection{车辆动力学建模与方程建立}
+
+\begin{SlideBody}
+\begin{columns}[T,onlytextwidth]
+  \begin{column}{.245\textwidth}
+    \begin{PPTPanel}{移动荷载}
+      \centering
+      \begin{tikzpicture}[x=.82cm,y=.82cm,>=Stealth]
+        \draw[NormalTextC,line width=1.5pt] (.2,1.1)--(7.0,1.1);
+        \draw[NormalTextC,line width=1.5pt] (.5,.65)--(.9,1.1)--(1.3,.65);
+        \draw[NormalTextC,line width=1.5pt] (5.9,.65)--(6.3,1.1)--(6.7,.65);
+        \draw[->,IntersperseC,line width=1.5pt] (2.5,3.3)--(2.5,1.35);
+        \draw[->,IntersperseC,line width=1.5pt] (4.5,3.3)--(4.5,1.35);
+        \node[font=\swjtufont{diagram},text=IntersperseC] at (3.5,3.65) {\(P(t)\)};
+      \end{tikzpicture}
+      \PanelBulletsStart
+        \item 给定轴重
+        \item 无车辆振动自由度
+      \PanelBulletsEnd
+      \vfill
+      {\swjtufont{body}\bfseries 适用：}\par
+      初步桥梁动力计算
+    \end{PPTPanel}
+  \end{column}
+  \begin{column}{.245\textwidth}
+    \begin{PPTPanel}{移动质量}
+      \centering
+      \begin{tikzpicture}[x=.82cm,y=.82cm,>=Stealth]
+        \fill[PanelFill] (2.2,2.0) rectangle (4.5,3.5);
+        \draw[AuxiliaryC,line width=1.2pt] (2.2,2.0) rectangle (4.5,3.5);
+        \node[font=\swjtufont{diagram},text=PrimaryC] at (3.35,2.75) {\(m\)};
+        \draw[->,IntersperseC,line width=1.4pt] (3.35,1.9)--(3.35,1.2);
+        \draw[NormalTextC,line width=1.5pt] (.2,1.1)--(7.0,1.1);
+        \draw[NormalTextC,line width=1.5pt] (.5,.65)--(.9,1.1)--(1.3,.65);
+        \draw[NormalTextC,line width=1.5pt] (5.9,.65)--(6.3,1.1)--(6.7,.65);
+      \end{tikzpicture}
+      \PanelBulletsStart
+        \item 考虑移动惯性
+        \item 无悬挂系统描述
+      \PanelBulletsEnd
+      \vfill
+      {\swjtufont{body}\bfseries 适用：}\par
+      移动质量效应分析
+    \end{PPTPanel}
+  \end{column}
+  \begin{column}{.245\textwidth}
+    \begin{PPTPanel}{简化车辆模型}
+      \centering
+      \begin{tikzpicture}[x=.82cm,y=.82cm,>=Stealth]
+        \fill[PanelFill] (2.0,3.1) rectangle (4.8,4.0);
+        \draw[AuxiliaryC,line width=1.1pt] (2.0,3.1) rectangle (4.8,4.0);
+        \node[font=\swjtufont{diagram}] at (3.4,3.55) {\(m_s\)};
+        \draw[IntersperseC,line width=1.2pt] (2.7,3.1)--(2.7,2.85)--++(.18,-.12)--++(-.36,-.16)--++(.36,-.16)--++(-.36,-.16)--(2.7,2.15);
+        \draw[SecondaryAuxiliaryC,line width=1.2pt] (4.0,3.1)--(4.0,2.8)--(3.8,2.8)--(3.8,2.35)--(4.2,2.35)--(4.2,2.8)--(4.0,2.8)--(4.0,2.15);
+        \fill[PanelFill] (2.0,1.25) rectangle (4.8,2.05);
+        \draw[AuxiliaryC,line width=1.1pt] (2.0,1.25) rectangle (4.8,2.05);
+        \node[font=\swjtufont{diagram}] at (3.4,1.65) {\(m_u\)};
+        \draw[NormalTextC,line width=1.5pt] (.2,.65)--(7.0,.65);
+      \end{tikzpicture}
+      \PanelBulletsStart
+        \item 保留悬挂动力学
+        \item 少自由度、效率高
+      \PanelBulletsEnd
+      \vfill
+      {\swjtufont{body}\bfseries 适用：}\par
+      基础车桥耦合
+    \end{PPTPanel}
+  \end{column}
+  \begin{column}{.245\textwidth}
+    \begin{PPTPanel}{多刚体车辆}
+      \centering
+      \begin{tikzpicture}[x=.82cm,y=.82cm,>=Stealth]
+        \fill[PanelFill] (.5,3.1) rounded rectangle (6.6,4.0);
+        \draw[AuxiliaryC,line width=1.1pt] (.5,3.1) rounded rectangle (6.6,4.0);
+        \node[font=\swjtufont{diagram}] at (3.55,3.55) {车体};
+        \draw[IntersperseC,line width=1.1pt] (1.4,3.1)--(1.4,2.7);
+        \draw[IntersperseC,line width=1.1pt] (5.6,3.1)--(5.6,2.7);
+        \fill[AuxiliaryC!10] (1.0,2.2) rectangle (2.2,2.7);
+        \fill[AuxiliaryC!10] (4.9,2.2) rectangle (6.1,2.7);
+        \draw[AuxiliaryC] (1.0,2.2) rectangle (2.2,2.7);
+        \draw[AuxiliaryC] (4.9,2.2) rectangle (6.1,2.7);
+        \foreach \x in {1.2,2.0,5.1,5.9}{
+          \filldraw[fill=white,draw=PrimaryC] (\x,1.7) circle (.25);
+        }
+        \draw[NormalTextC,line width=1.5pt] (.2,1.25)--(7.0,1.25);
+      \end{tikzpicture}
+      \PanelBulletsStart
+        \item 多部件、多自由度
+        \item 可描述空间耦合
+      \PanelBulletsEnd
+      \vfill
+      {\swjtufont{body}\bfseries 适用：}\par
+      复杂车辆与轨桥响应
+    \end{PPTPanel}
+  \end{column}
+\end{columns}
+\vfill
+\begin{BottomBand}
+  \centering
+  模型选择：\textcolor{PrimaryC}{研究目标} \(\times\) \textcolor{AuxiliaryC}{响应精度}
+  \(\times\) \textcolor{SecondaryAuxiliaryC}{计算效率}
+\end{BottomBand}
+\end{SlideBody}
+
+% P4 — 简化车辆动力学模型的建立
+\subsection{简单车辆模型的建立}
+
+\begin{SlideBody}
+\begin{columns}[T,onlytextwidth]
+  \begin{column}{.36\textwidth}
+    \begin{minipage}[t][10.65cm][s]{\linewidth}
+      \begin{PPTPanel}{建模假设}
+        \PanelBulletsStart
+          \item 竖向二自由度
+          \item 集中质量、刚体运动
+          \item 线性悬挂与黏性阻尼
+          \item 以静平衡位置为位移零点
+        \PanelBulletsEnd
+      \end{PPTPanel}
+      \vfill
+      \begin{PPTPanel}{主要参数}
+        \PanelBulletsStart
+          \item 簧上质量 \(m_s\)
+          \item 簧下质量 \(m_u\)
+          \item 悬挂刚度 \(k_s\)、阻尼 \(c_s\)
+          \item 轮轨法向力增量 \(\Delta F_N\)
+        \PanelBulletsEnd
+      \end{PPTPanel}
+    \end{minipage}
+  \end{column}
+  \begin{column}{.62\textwidth}
+    \begin{PPTPanel}{二自由度竖向车辆模型}
+      \centering
+      \begin{tikzpicture}[x=1cm,y=1cm,>=Stealth,line cap=round,line join=round]
+        \fill[PanelFill] (4.1,5.3) rounded rectangle (10.8,6.6);
+        \draw[AuxiliaryC,line width=1.4pt] (4.1,5.3) rounded rectangle (10.8,6.6);
+        \node[font=\swjtufont{larger}\bfseries,text=PrimaryC] at (7.45,5.95) {\(m_s\)};
+        \draw[->,AuxiliaryC,line width=1.3pt] (11.3,6.2)--(11.3,5.35)
+          node[right,font=\swjtufont{diagram},text=AuxiliaryC] {\(z_s\)};
+        % spring
+        \draw[IntersperseC,line width=1.6pt]
+          (5.7,5.3)--(5.7,5.05)--++(.22,-.15)--++(-.44,-.22)
+          --++(.44,-.22)--++(-.44,-.22)--++(.44,-.22)
+          --++(-.22,-.15)--(5.7,3.8);
+        % damper
+        \draw[SecondaryAuxiliaryC,line width=1.4pt] (8.5,5.3)--(8.5,4.95);
+        \draw[SecondaryAuxiliaryC,line width=1.4pt] (8.15,4.95) rectangle (8.85,4.45);
+        \draw[SecondaryAuxiliaryC,line width=1.4pt] (8.5,4.45)--(8.5,3.8);
+        \node[font=\swjtufont{diagram},text=IntersperseC] at (4.6,4.7) {\(k_s\)};
+        \node[font=\swjtufont{diagram},text=SecondaryAuxiliaryC] at (9.2,4.7) {\(c_s\)};
+        \fill[PanelFill] (4.1,2.5) rounded rectangle (10.8,3.8);
+        \draw[AuxiliaryC,line width=1.4pt] (4.1,2.5) rounded rectangle (10.8,3.8);
+        \node[font=\swjtufont{larger}\bfseries,text=PrimaryC] at (7.45,3.15) {\(m_u\)};
+        \draw[->,AuxiliaryC,line width=1.3pt] (11.3,3.4)--(11.3,2.55)
+          node[right,font=\swjtufont{diagram},text=AuxiliaryC] {\(z_u\)};
+        % wheel and rail
+        \filldraw[fill=white,draw=PrimaryC,line width=1.4pt] (7.45,1.65) circle (.55);
+        \filldraw[fill=PanelFill,draw=AuxiliaryC,line width=1pt] (7.45,1.65) circle (.2);
+        \draw[NormalTextC,line width=2pt] (3.3,.85)--(11.7,.85);
+        \foreach \x in {3.7,4.7,...,11.0}{
+          \draw[MutedTextC,line width=.8pt] (\x,.68)--++(.35,.34);
+        }
+        \draw[->,IntersperseC,line width=1.8pt] (7.45,.98)--(7.45,2.4);
+        \node[font=\swjtufont{diagram}\bfseries,text=IntersperseC,anchor=west] at (8.0,1.45) {\(\Delta F_N\)};
+        \node[font=\swjtufont{diagram},text=NormalTextC] at (7.4,.25) {轨道侧输入};
+      \end{tikzpicture}
+    \end{PPTPanel}
+  \end{column}
+\end{columns}
+\vfill
+\begin{BottomBand}
+  \centering
+  广义坐标：\(\displaystyle \mathbf q_v=\begin{bmatrix}z_s&z_u\end{bmatrix}^{\mathsf T}\)
+  \qquad
+  外力输入：\(\displaystyle \mathbf F_v=\begin{bmatrix}0&-\Delta F_N\end{bmatrix}^{\mathsf T}\)
+\end{BottomBand}
+\end{SlideBody}
+
+% P5 — 车辆运动方程推导与矩阵表达
+\subsection{车辆运动方程的建立}
+
+\begin{SlideBody}
+\begin{columns}[T,onlytextwidth]
+  \begin{column}{.29\textwidth}
+    \begin{PPTPanel}{受力分析}
+      \centering
+      \begin{tikzpicture}[x=.75cm,y=.75cm,>=Stealth,line cap=round,line join=round]
+        \fill[PanelFill] (1.0,5.2) rectangle (7.3,6.3);
+        \draw[AuxiliaryC,line width=1.1pt] (1.0,5.2) rectangle (7.3,6.3);
+        \node[font=\swjtufont{diagram}] at (4.15,5.75) {\(m_s\)};
+        \draw[IntersperseC,line width=1.4pt]
+          (2.6,5.2)--(2.6,4.95)--++(.18,-.14)--++(-.36,-.18)
+          --++(.36,-.18)--++(-.36,-.18)--(2.6,4.0);
+        \draw[SecondaryAuxiliaryC,line width=1.4pt] (5.1,5.2)--(5.1,4.8);
+        \draw[SecondaryAuxiliaryC,line width=1.4pt] (4.8,4.8) rectangle (5.4,4.35);
+        \draw[SecondaryAuxiliaryC,line width=1.4pt] (5.1,4.35)--(5.1,4.0);
+        \fill[PanelFill] (1.0,2.6) rectangle (7.3,4.0);
+        \draw[AuxiliaryC,line width=1.1pt] (1.0,2.6) rectangle (7.3,4.0);
+        \node[font=\swjtufont{diagram}] at (4.15,3.3) {\(m_u\)};
+        \draw[->,IntersperseC,line width=1.5pt] (4.15,1.0)--(4.15,2.45);
+        \node[font=\swjtufont{diagram},text=IntersperseC,anchor=west] at (4.45,1.55) {\(-\Delta F_N\)};
+        \node[font=\swjtufont{diagram},text=IntersperseC] at (1.9,4.55) {\(k_s\)};
+        \node[font=\swjtufont{diagram},text=SecondaryAuxiliaryC] at (5.9,4.55) {\(c_s\)};
+        \draw[->,AuxiliaryC,line width=1.1pt] (7.55,5.95)--(7.55,5.0)
+          node[right,font=\swjtufont{diagram}] {\(z_s\)};
+        \draw[->,AuxiliaryC,line width=1.1pt] (7.55,3.7)--(7.55,2.75)
+          node[right,font=\swjtufont{diagram}] {\(z_u\)};
+        \node[font=\swjtufont{caption},text=MutedTextC,align=center] at (4.15,.35)
+          {向下为正；接触力增量向上为正};
+      \end{tikzpicture}
+    \end{PPTPanel}
+  \end{column}
+  \begin{column}{.69\textwidth}
+    \begin{minipage}[t][8.55cm][s]{\linewidth}
+      \begin{PPTPanel}{簧上质量运动方程}
+        \[
+        m_s\ddot z_s+c_s(\dot z_s-\dot z_u)
+        +k_s(z_s-z_u)=0
+        \]
+      \end{PPTPanel}
+      \vfill
+      \begin{PPTPanel}{簧下质量运动方程}
+        \[
+        m_u\ddot z_u+c_s(\dot z_u-\dot z_s)
+        +k_s(z_u-z_s)=-\Delta F_N(t)
+        \]
+      \end{PPTPanel}
+      \vfill
+      \begin{PPTPanel}{矩阵标准形式}
+        \[
+        \mathbf M_v\ddot{\mathbf q}_v+
+        \mathbf C_v\dot{\mathbf q}_v+
+        \mathbf K_v\mathbf q_v=\mathbf F_v(t)
+        \]
+      \end{PPTPanel}
+    \end{minipage}
+  \end{column}
+\end{columns}
+\vfill
+\begin{PPTPanel}{系统矩阵与外力向量}
+  \centering
+  \begin{tabular}{c c c c c}
+    \(\displaystyle\mathbf M_v=\begin{bmatrix}m_s&0\\0&m_u\end{bmatrix}\) &
+    \(\displaystyle\mathbf C_v=c_s\begin{bmatrix}1&-1\\-1&1\end{bmatrix}\) &
+    \(\displaystyle\mathbf K_v=k_s\begin{bmatrix}1&-1\\-1&1\end{bmatrix}\) &
+    \(\displaystyle\mathbf q_v=\begin{bmatrix}z_s\\z_u\end{bmatrix}\) &
+    \(\displaystyle\mathbf F_v=\begin{bmatrix}0\\-\Delta F_N\end{bmatrix}\)
+  \end{tabular}
+\end{PPTPanel}
+\end{SlideBody}
+
+% P6 — 车辆运动方程与车桥耦合的联系
+\section{车辆运动与车桥耦合}
+\subsection{车辆方程与轮轨接口}
+
+\begin{SlideBody}
+\begin{columns}[T,onlytextwidth]
+  \begin{column}{.35\textwidth}
+    \begin{minipage}[t][9.8cm][s]{\linewidth}
+      \begin{PPTPanel}{耦合变量}
+        \PanelBulletsStart
+          \item 轮对位移 \(z_u(t)\)
+          \item 钢轨位移 \(z_r(x,t)\)
+          \item 轨道不平顺 \(r(x)\)
+          \item 轮轨力增量 \(\Delta F_N(t)\)
+        \PanelBulletsEnd
+      \end{PPTPanel}
+      \vfill
+      \begin{PPTPanel}{双向动力传递}
+        \PanelBulletsStart
+          \item 轮轨力经轨道结构传至桥梁
+          \item 桥梁变形改变钢轨运动
+          \item 钢轨运动反过来改变轮轨力
+        \PanelBulletsEnd
+      \end{PPTPanel}
+    \end{minipage}
+  \end{column}
+  \begin{column}{.63\textwidth}
+    \begin{PPTPanel}{车辆—轮轨—轨道—桥梁}
+      \centering
+      \begin{tikzpicture}[x=.92cm,y=.92cm,>=Stealth,line cap=round,line join=round]
+        % train body and suspension
+        \fill[PanelFill] (1.0,5.5) rounded rectangle (16.8,6.8);
+        \draw[AuxiliaryC,line width=1.2pt] (1.0,5.5) rounded rectangle (16.8,6.8);
+        \node[font=\swjtufont{diagram}\bfseries,text=PrimaryC] at (8.9,6.15) {车辆子系统};
+        \draw[IntersperseC,line width=1.2pt] (4.5,5.5)--(4.5,4.8)--++(.18,-.12)--++(-.36,-.15)--++(.36,-.15)--(4.5,4.1);
+        \draw[SecondaryAuxiliaryC,line width=1.2pt] (5.7,5.5)--(5.7,5.0)--(5.35,5.0)--(5.35,4.5)--(6.05,4.5)--(6.05,5.0)--(5.7,5.0)--(5.7,4.1);
+        \fill[PanelFill] (3.0,3.4) rectangle (7.3,4.1);
+        \draw[AuxiliaryC,line width=1.2pt] (3.0,3.4) rectangle (7.3,4.1);
+        \node[font=\swjtufont{diagram},text=PrimaryC] at (5.15,3.75) {轮对};
+        \filldraw[fill=white,draw=PrimaryC,line width=1.1pt] (5.15,2.8) circle (.42);
+        % rail
+        \draw[NormalTextC,line width=2.2pt] (.5,2.15)--(17.2,2.15);
+        \draw[AuxiliaryC,line width=1.2pt,dashed] (.5,2.0)--(17.2,2.0);
+        \node[font=\swjtufont{diagram},text=AuxiliaryC,anchor=west] at (13.4,2.5) {钢轨位移 \(z_r(x,t)\)};
+        \draw[IntersperseC,decorate,decoration={snake,amplitude=.8mm,segment length=4mm},line width=1.1pt]
+          (.5,2.9)--(17.2,2.9);
+        \node[font=\swjtufont{diagram},text=IntersperseC,anchor=west] at (12.5,3.2) {不平顺 \(r(x)\)};
+        % bridge beam and deformation
+        \fill[PanelFill] (1.2,.3) rectangle (16.5,.8);
+        \draw[AuxiliaryC,line width=1.2pt] (1.2,.3) rectangle (16.5,.8);
+        \draw[AuxiliaryC,line width=1.2pt] (1.2,.8) .. controls (5.0,.3) and (12.0,.3) .. (16.5,.8);
+        \draw[->,IntersperseC,line width=1.5pt] (5.15,3.2)--(5.15,2.05);
+        \node[font=\swjtufont{diagram},text=IntersperseC,anchor=west] at (5.55,2.55) {\(\Delta F_N\)};
+        \draw[->,AuxiliaryC,line width=1.3pt] (9.0,.95)--(9.0,1.75);
+        \node[font=\swjtufont{diagram},text=AuxiliaryC,anchor=west] at (9.35,1.2) {桥梁变形 \(w(x,t)\)};
+        \node[font=\swjtufont{diagram}\bfseries,text=PrimaryC] at (8.8,.05) {桥梁子系统};
+      \end{tikzpicture}
+    \end{PPTPanel}
+  \end{column}
+\end{columns}
+\vfill
+\begin{BottomBand}
+  \centering
+  \(\displaystyle \delta(t)=\delta_0+z_u(t)-z_r(x_c,t)-r(x_c),\quad x_c=vt\)
+  \qquad
+  \(\displaystyle F_N(t)=k_H[\delta(t)]_+^{3/2},\quad \Delta F_N=F_N-F_{N0}\)
+\end{BottomBand}
+\end{SlideBody}
+
+% ============================================================
+% Section 2: 最新研究进展
+% ============================================================
+\section{最新研究进展}
+\subsection{考虑车辆速度效应的车桥耦合建模}
+
+% P7 — Shi et al. (2026)
+\begin{SlideBody}
+\begin{columns}[T,onlytextwidth]
+  \begin{column}{.34\textwidth}
+    \begin{minipage}[t][10.65cm][s]{\linewidth}
+      \begin{PPTPanel}{研究问题}
+        传统车桥相互作用单元遗漏部分速度相关项。
+      \end{PPTPanel}
+      \vfill
+      \begin{PPTPanel}{创新方法}
+        \PanelBulletsStart
+          \item 以移动接触点描述相对运动
+          \item 纳入桥面斜率与曲率引起的速度效应
+        \PanelBulletsEnd
+      \end{PPTPanel}
+      \vfill
+      \begin{PPTPanel}{主要结论与拓展}
+        \PanelBulletsStart
+          \item 系统频率极值变化略有增强
+          \item 瞬时阻尼比可能出现异常
+          \item 重载高速工况需重点考虑
+        \PanelBulletsEnd
+      \end{PPTPanel}
+    \end{minipage}
+  \end{column}
+  \begin{column}{.64\textwidth}
+    \begin{minipage}[t][10.65cm][s]{\linewidth}
+      \begin{PPTPanel}{移动接触点与桥梁几何效应}
+        \centering
+        \begin{tikzpicture}[x=.92cm,y=.92cm,>=Stealth,line cap=round,line join=round]
+          \fill[PanelFill] (.4,4.3) rounded rectangle (17.6,5.6);
+          \draw[AuxiliaryC,line width=1pt] (.4,4.3) rounded rectangle (17.6,5.6);
+          \foreach \x in {1.0,2.5,4.0,5.5,7.0,8.5,10.0,11.5,13.0,14.5,16.0}{
+            \draw[AuxiliaryC,line width=.7pt] (\x,4.65) rectangle ++(1.0,.48);
+          }
+          \node[font=\swjtufont{diagram}\bfseries,text=PrimaryC] at (9.0,5.2) {移动车辆};
+          \draw[NormalTextC,line width=2pt] (.5,4.15)--(17.5,4.15);
+          \draw[AuxiliaryC,line width=1.2pt] (.5,3.2) .. controls (5.0,2.7) and (12.5,2.7) .. (17.5,3.2);
+          \draw[AuxiliaryC,dashed,line width=1pt] (.5,3.2)--(17.5,3.2);
+          \draw[->,IntersperseC,line width=1.4pt] (8.7,6.0)--(11.0,6.0)
+            node[midway,above,font=\swjtufont{diagram},text=IntersperseC] {\(v\)};
+          \filldraw[fill=white,draw=IntersperseC,line width=1.3pt] (8.7,4.15) circle (.12);
+          \draw[->,IntersperseC,line width=1.1pt] (8.7,4.05)--(8.7,3.45);
+          \node[font=\swjtufont{diagram},text=IntersperseC,anchor=west] at (9.0,3.65) {\(x_c=vt\)};
+          \node[font=\swjtufont{diagram},text=AuxiliaryC,anchor=west] at (11.0,2.75) {\(w(x,t)\)};
+          \node[font=\swjtufont{diagram},text=PrimaryC,anchor=west] at (.8,2.45)
+            {\(\theta=\partial w/\partial x,\quad \kappa=\partial^2w/\partial x^2\)};
+        \end{tikzpicture}
+      \end{PPTPanel}
+      \vfill
+      \begin{columns}[T,onlytextwidth]
+        \begin{column}{.49\textwidth}
+          \begin{PPTPanel}{时变频率}
+            \centering
+            \begin{tikzpicture}[x=.9cm,y=.75cm,>=Stealth]
+              \draw[->,NormalTextC] (.2,.3)--(7.4,.3) node[right,font=\swjtufont{diagram}] {\(t\)};
+              \draw[->,NormalTextC] (.2,.3)--(.2,2.5) node[above,font=\swjtufont{diagram}] {\(f(t)\)};
+              \draw[AuxiliaryC,line width=1.5pt] plot[smooth] coordinates
+                {(.4,.55)(1.2,.8)(2.0,1.9)(2.8,1.1)(3.8,.6)(4.8,1.0)(5.7,1.8)(6.8,.65)};
+              \draw[MutedTextC,dashed,line width=1.2pt] plot[smooth] coordinates
+                {(.4,.5)(1.2,.7)(2.0,1.35)(2.8,.95)(3.8,.55)(4.8,.8)(5.7,1.3)(6.8,.55)};
+            \end{tikzpicture}
+          \end{PPTPanel}
+        \end{column}
+        \begin{column}{.49\textwidth}
+          \begin{PPTPanel}{瞬时阻尼比}
+            \centering
+            \begin{tikzpicture}[x=.9cm,y=.75cm,>=Stealth]
+              \draw[->,NormalTextC] (.2,.3)--(7.4,.3) node[right,font=\swjtufont{diagram}] {\(t\)};
+              \draw[->,NormalTextC] (.2,.3)--(.2,2.5) node[above,font=\swjtufont{diagram}] {\(\zeta(t)\)};
+              \draw[AuxiliaryC,line width=1.5pt] plot[smooth] coordinates
+                {(.4,1.0)(1.2,.7)(2.0,1.2)(2.8,.85)(3.8,1.75)(4.8,.9)(5.7,1.25)(6.8,.75)};
+              \draw[MutedTextC,dashed,line width=1.2pt] plot[smooth] coordinates
+                {(.4,.9)(1.2,.65)(2.0,1.0)(2.8,.8)(3.8,1.25)(4.8,.8)(5.7,1.0)(6.8,.7)};
+            \end{tikzpicture}
+          \end{PPTPanel}
+        \end{column}
+      \end{columns}
+    \end{minipage}
+  \end{column}
+\end{columns}
+\vfill
+\begin{BottomBand}
+  \centering
+  \textcolor{PrimaryC}{研究启示：}移动接触运动学 \(\longrightarrow\) 速度相关项
+  \(\longrightarrow\) 时变频率与阻尼
+  \par
+  {\swjtufont{caption}\color{MutedTextC}
+  Shi et al., \emph{Mechanical Systems and Signal Processing}, 257 (2026), 114595.
+  \href{https://doi.org/10.1016/j.ymssp.2026.114595}{DOI: 10.1016/j.ymssp.2026.114595}.
+  曲线为概念示意，非论文原始数据。}
+\end{BottomBand}
+\end{SlideBody}
+
+\subsection{三维车轨桥分区耦合与随机响应}
+
+% P8 — Yuan & Luo (2026)
+\begin{SlideBody}
+\begin{columns}[T,onlytextwidth]
+  \begin{column}{.34\textwidth}
+    \begin{minipage}[t][9.45cm][s]{\linewidth}
+      \begin{PPTPanel}{研究问题}
+        \PanelBulletsStart
+          \item 三维车轨桥系统时变耦合
+          \item 随机响应呈非平稳、非高斯特征
+        \PanelBulletsEnd
+      \end{PPTPanel}
+      \vfill
+      \begin{PPTPanel}{创新方法}
+        \PanelBulletsStart
+          \item 车辆、轨道、桥梁非迭代分区
+          \item 降维概率密度演化方法（DR-PDEE）
+        \PanelBulletsEnd
+      \end{PPTPanel}
+      \vfill
+      \begin{PPTPanel}{主要结论}
+        \PanelBulletsStart
+          \item 避免反复组装整体时变矩阵
+          \item 以 10,000 组蒙特卡洛结果验证
+          \item 可描述选定位移响应的概率演化
+        \PanelBulletsEnd
+      \end{PPTPanel}
+    \end{minipage}
+  \end{column}
+  \begin{column}{.64\textwidth}
+    \begin{minipage}[t][9.45cm][s]{\linewidth}
+      \begin{PPTPanel}{三维车辆—轨道—桥梁分区模型}
+        \centering
+        \begin{tikzpicture}[x=.9cm,y=.9cm,>=Stealth,line cap=round,line join=round]
+          % vehicle
+          \fill[PanelFill] (.5,5.3) rounded rectangle (15.8,6.2);
+          \draw[AuxiliaryC,line width=1.1pt] (.5,5.3) rounded rectangle (15.8,6.2);
+          \node[font=\swjtufont{diagram}\bfseries,text=PrimaryC] at (8.1,5.75) {车辆子系统：7 个刚体};
+          \foreach \x in {2.0,4.2,6.4,8.6,10.8,13.0,15.0}{
+            \filldraw[fill=white,draw=PrimaryC,line width=.8pt] (\x,4.95) circle (.22);
+          }
+          % track
+          \fill[PanelFill] (.5,3.65) rectangle (15.8,4.25);
+          \draw[AuxiliaryC,line width=1.1pt] (.5,3.65) rectangle (15.8,4.25);
+          \node[font=\swjtufont{diagram}\bfseries,text=PrimaryC] at (8.1,3.95) {轨道子系统：钢轨与轨道支承};
+          % bridge
+          \fill[AuxiliaryC!8] (.5,1.8) rectangle (15.8,2.5);
+          \draw[AuxiliaryC,line width=1.1pt] (.5,1.8) rectangle (15.8,2.5);
+          \node[font=\swjtufont{diagram}\bfseries,text=PrimaryC] at (8.1,2.15) {桥梁子系统：结构动力模型};
+          % interfaces
+          \draw[<->,IntersperseC,line width=1.6pt] (8.1,4.85)--(8.1,4.32);
+          \node[font=\swjtufont{caption},text=IntersperseC,anchor=west] at (8.4,4.55) {时变轮轨接口};
+          \draw[<->,SecondaryAuxiliaryC,line width=1.6pt] (8.1,3.6)--(8.1,2.55);
+          \node[font=\swjtufont{caption},text=SecondaryAuxiliaryC,anchor=west] at (8.4,3.0) {轨桥接口};
+          \node[font=\swjtufont{diagram},text=NormalTextC,anchor=west] at (.7,1.15)
+            {车辆模型：51 自由度（含附加轮轨接口自由度）};
+        \end{tikzpicture}
+      \end{PPTPanel}
+      \vfill
+      \begin{PPTPanel}{随机响应的概率密度演化（方法示意）}
+        \centering
+        \begin{tikzpicture}[x=1cm,y=.8cm,>=Stealth]
+          \draw[->,NormalTextC] (.1,.25)--(16.0,.25) node[right,font=\swjtufont{diagram}] {\(t\)};
+          \foreach \x/\h/\col in {1.8/1.1/AuxiliaryC,5.4/1.55/SecondaryAuxiliaryC,9.2/1.25/IntersperseC,13.0/1.8/AlertedTextC}{
+            \draw[->,NormalTextC] (\x-.7,.25)--(\x-.7,2.35);
+            \draw[\col,line width=1.4pt]
+              plot[domain=-1.35:1.35,samples=45]
+              ({\x+\x/10*\pgfmathprintnumber{0}}, {.25+\h*exp(-(\x)^2)});
+          }
+          % Explicit bell curves, plotted in local coordinates for robustness.
+          \draw[AuxiliaryC,line width=1.4pt] plot[domain=0:3.6,samples=55] (\x,{.25+1.15*exp(-((\x-1.8)^2)/.38)});
+          \draw[SecondaryAuxiliaryC,line width=1.4pt] plot[domain=3.6:7.2,samples=55] (\x,{.25+1.45*exp(-((\x-5.4)^2)/.55)});
+          \draw[IntersperseC,line width=1.4pt] plot[domain=7.2:10.8,samples=55] (\x,{.25+1.20*exp(-((\x-9.0)^2)/.48)});
+          \draw[AlertedTextC,line width=1.4pt] plot[domain=10.8:14.8,samples=55] (\x,{.25+1.65*exp(-((\x-12.8)^2)/.60)});
+          \node[font=\swjtufont{diagram},text=NormalTextC] at (8.0,2.55) {\(p(w,t)\)};
+        \end{tikzpicture}
+      \end{PPTPanel}
+    \end{minipage}
+  \end{column}
+\end{columns}
+\vfill
+\begin{BottomBand}
+  \centering
+  车辆运动方程 \(\longrightarrow\) 子系统分区耦合 \(\longrightarrow\) 随机响应概率演化
+  \par
+  {\swjtufont{caption}\color{MutedTextC}
+  Yuan \& Luo, \emph{Mechanical Systems and Signal Processing}, 259 (2026), 114850.
+  \href{https://doi.org/10.1016/j.ymssp.2026.114850}{DOI: 10.1016/j.ymssp.2026.114850}.
+  概率曲线为方法示意，非论文原始数据。}
+\end{BottomBand}
+\end{SlideBody}
+
+% ============================================================
+% Section 3: 个人问题及思考
+% ============================================================
+\section{个人问题及思考}
+\subsection{速度相关项与随机耦合响应}
+
+% P9 — 个人研究问题
+\begin{SlideBody}
+\begin{columns}[T,onlytextwidth]
+  \begin{column}{.36\textwidth}
+    \begin{minipage}[t][10.55cm][s]{\linewidth}
+      \begin{PPTPanel}{研究问题}
+        车辆速度相关项是否会改变车桥耦合随机响应的概率分布？
+      \end{PPTPanel}
+      \vfill
+      \begin{PPTPanel}{研究方案}
+        \PanelBulletsStart
+          \item 基准模型：常规运动学表达
+          \item 改进模型：显式保留速度相关项
+          \item 保持随机输入与结构参数一致
+        \PanelBulletsEnd
+      \end{PPTPanel}
+      \vfill
+      \begin{PPTPanel}{评价指标}
+        桥梁位移与加速度、轮轨力、响应分位数、计算耗时。
+      \end{PPTPanel}
+    \end{minipage}
+  \end{column}
+  \begin{column}{.62\textwidth}
+    \begin{PPTPanel}{对照计算与敏感性分析}
+      \centering
+      \begin{tikzpicture}[x=.95cm,y=.95cm,>=Stealth,line cap=round,line join=round]
+        % left model
+        \fill[PanelFill] (.3,5.0) rounded rectangle (7.9,6.2);
+        \draw[AuxiliaryC,line width=1.1pt] (.3,5.0) rounded rectangle (7.9,6.2);
+        \node[font=\swjtufont{card-title}\bfseries,text=PrimaryC] at (4.1,5.8) {基准模型};
+        \node[font=\swjtufont{diagram},text=NormalTextC] at (4.1,5.35) {常规接触运动学};
+        % right model
+        \fill[SoftGreen] (9.5,5.0) rounded rectangle (17.1,6.2);
+        \draw[SecondaryAuxiliaryC,line width=1.1pt] (9.5,5.0) rounded rectangle (17.1,6.2);
+        \node[font=\swjtufont{card-title}\bfseries,text=PrimaryC] at (13.3,5.8) {改进模型};
+        \node[font=\swjtufont{diagram},text=NormalTextC] at (13.3,5.35) {显式保留速度项};
+        \draw[->,AuxiliaryC,line width=1.5pt] (8.0,5.6)--(9.4,5.6);
+        % shared inputs
+        \fill[PanelFill] (2.0,3.5) rounded rectangle (15.5,4.35);
+        \draw[AuxiliaryC!60!white] (2.0,3.5) rounded rectangle (15.5,4.35);
+        \node[font=\swjtufont{diagram},text=PrimaryC] at (8.75,3.92)
+          {同一车速、桥跨、车辆参数与轨道不平顺样本};
+        \draw[->,AuxiliaryC,line width=1.3pt] (4.1,5.0)--(4.1,4.4);
+        \draw[->,AuxiliaryC,line width=1.3pt] (13.3,5.0)--(13.3,4.4);
+        % outputs
+        \draw[->,IntersperseC,line width=1.3pt] (5.0,3.45)--(5.0,2.8);
+        \draw[->,IntersperseC,line width=1.3pt] (12.5,3.45)--(12.5,2.8);
+        \node[font=\swjtufont{diagram},text=IntersperseC,align=center] at (5.0,2.25)
+          {桥梁位移与加速度\\轮轨力};
+        \node[font=\swjtufont{diagram},text=IntersperseC,align=center] at (12.5,2.25)
+          {概率分布与高分位数\\计算耗时};
+        % bottom compare arrow
+        \draw[<->,PrimaryC,line width=1.5pt] (5.9,1.1)--(11.6,1.1);
+        \node[font=\swjtufont{diagram}\bfseries,text=PrimaryC] at (8.75,.55)
+          {误差敏感性与适用边界};
+      \end{tikzpicture}
+    \end{PPTPanel}
+  \end{column}
+\end{columns}
+\vfill
+\begin{BottomBand}
+  \centering
+  \textcolor{PrimaryC}{个人思考：}在保证关键响应精度的前提下，识别速度效应不可忽略的工况范围。
+\end{BottomBand}
+\end{SlideBody}
+
+\end{document}
