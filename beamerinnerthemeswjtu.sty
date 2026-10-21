@@ -75,20 +75,13 @@
         \ifx\insertsubtitle\@empty\else
           {\usebeamerfont{subtitle}\insertsubtitle\par}\medskip
         \fi
-        % 标签右对齐、内容左对齐；冒号共享同一列边界。
-        \ifx\insertauthor\@empty
-          \ifx\insertinstitute\@empty\else
-            \begin{tabular}{@{}r@{}l@{}}
-              \swjtubodyfont 汇报单位： & \swjtubodyfont\insertinstitute
-            \end{tabular}\par
-          \fi
-        \else
-          \begin{tabular}{@{}r@{}l@{}}
-            \swjtubodyfont 汇报人： & \swjtubodyfont\insertauthor
-            \ifx\insertinstitute\@empty\else
-              \\ \swjtubodyfont 汇报单位： & \swjtubodyfont\insertinstitute
-            \fi
-          \end{tabular}\par
+        % 元信息按自然段排版；空作者/空单位均可正常编译。
+        % Avoid conditionals spanning tabular alignment cells.
+        \ifx\insertauthor\@empty\else
+          {\swjtufont{body}\bfseries \insertauthor\par}
+        \fi
+        \ifx\insertinstitute\@empty\else
+          {\swjtufont{body}\insertinstitute\par}
         \fi
         \ifx\insertdate\@empty\else \smallskip\insertdate\par\fi
       };
