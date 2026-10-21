@@ -131,6 +131,8 @@
 % VALUE:: left | center.
 \DeclareOptionBeamer{SlideSize}{\PassOptionsToPackage{#1}{beamerstyleswjtu}}
 \DeclareOptionBeamer{ResearchCardTitleAlign}{\def\beamer@swjtu@ResearchCardTitleAlign{#1}}
+% Optional section outline page (hide by default for lighter presentations).
+\DeclareOptionBeamer{SectionTOC}{\def\beamer@swjtu@SectionTOC{#1}}
 
 %\PassOptionsToClass{aspectratio=169}{beamer}
 
@@ -146,7 +148,8 @@
   Background=true,%
   TextScale=standard,%
   SlideSize=ppt,%
-  ResearchCardTitleAlign=left%
+  ResearchCardTitleAlign=left,%
+  SectionTOC=hide%
 }
 \ProcessOptionsBeamer
 \if\EqualOptionsBeamer{CodeDisplay}{minted}%
@@ -1149,6 +1152,7 @@
     \tableofcontents[currentsection,hideallsubsections]%
   \fi%
 }
+\if\EqualOptionsBeamer{SectionTOC}{show}%
 \AtBeginSection[]{%
   \begingroup%
     \if\EqualOptionsBeamer{LanguageMode}{cn}
@@ -1162,6 +1166,7 @@
     \fi\fi
   \endgroup%
 }
+\fi
 % ----------------
 
 
