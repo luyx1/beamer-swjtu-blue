@@ -29,11 +29,16 @@
 %%%% ----------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesPackage{beamerthemeswjtu}[2025/10/06 v2.1b, SWJTU Beamer Theme(Main Theme)]
-% Resolve bundled assets from the directory of this theme file, rather than
-% from the directory in which the user's document happens to be compiled.
-\RequirePackage{currfile}
-\edef\swjtuthemedir{\currfiledir}
-\ifx\swjtuthemedir\@empty
+% Resolve bundled assets from the directory used to load this theme,
+% rather than from the caller's working directory.
+% \CurrentFilePath is provided by the LaTeX kernel while this file is read.
+\ifdefined\CurrentFilePath
+  \ifx\CurrentFilePath\@empty
+    \def\swjtuthemedir{./}
+  \else
+    \edef\swjtuthemedir{\CurrentFilePath/}
+  \fi
+\else
   \def\swjtuthemedir{./}
 \fi
 \edef\swjtufontpath{\swjtuthemedir fonts/}
