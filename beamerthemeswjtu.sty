@@ -131,6 +131,8 @@
 % VALUE:: left | center.
 \DeclareOptionBeamer{SlideSize}{\PassOptionsToPackage{#1}{beamerstyleswjtu}}
 \DeclareOptionBeamer{ResearchCardTitleAlign}{\def\beamer@swjtu@ResearchCardTitleAlign{#1}}
+% Optional section outline page (hide by default for lighter presentations).
+\DeclareOptionBeamer{SectionTOC}{\def\beamer@swjtu@SectionTOC{#1}}
 
 %\PassOptionsToClass{aspectratio=169}{beamer}
 
@@ -146,7 +148,8 @@
   Background=true,%
   TextScale=standard,%
   SlideSize=ppt,%
-  ResearchCardTitleAlign=center%
+  ResearchCardTitleAlign=left,%
+  SectionTOC=hide%
 }
 \ProcessOptionsBeamer
 \if\EqualOptionsBeamer{CodeDisplay}{minted}%
@@ -332,7 +335,7 @@
 
 \newcommand{\PPTDot}{%
   \tikz[baseline=-0.45ex,inner sep=0pt,outer sep=0pt]{%
-    \fill[PPTBulletBlue] (0,0) circle (\swjtudim{2.4pt});%
+    \fill[PPTBulletBlue] (0,0) circle (\swjtudim{1.5pt});%
   }%
 }
 \newcommand{\PPTSquare}{%
@@ -359,12 +362,12 @@
 }
 \newcommand{\beamer@swjtu@listsubbullet}{%
   \tikz[baseline=-0.45ex,inner sep=0pt,outer sep=0pt]{%
-    \fill[PPTBulletBlue] (0,0) circle (\swjtudim{1.65pt});%
+    \fill[PPTBulletBlue] (0,0) circle (\swjtudim{1.1pt});%
   }%
 }
 \newcommand{\beamer@swjtu@listthirdbullet}{%
   \tikz[baseline=-0.45ex,inner sep=0pt,outer sep=0pt]{%
-    \fill[PPTBulletBlue] (0,0) circle (\swjtudim{.95pt});%
+    \fill[PPTBulletBlue] (0,0) circle (\swjtudim{.75pt});%
   }%
 }
 
@@ -448,83 +451,33 @@
   \fi%
 }
 \newcommand{\beamer@swjtu@researchcard@title}[2]{%
-  % 整数编号共用标题字号；圆形尺寸随标题行距同步，不随卡片宽度变化。
-  \edef\beamer@swjtu@researchcard@titlelabelvalue{#1}%
-  \ifstrempty{\beamer@swjtu@researchcard@titlelabelvalue}{}{%
-    \expandafter\beamer@swjtu@researchcard@prepare
-      \expandafter{\beamer@swjtu@researchcard@titlelabelvalue}}%
-  \def\beamer@swjtu@researchcard@titlefont{%
-    \swjtucardtitlefont}%
-  \beamer@swjtu@researchcard@titlefont
-  \beamer@swjtu@researchcard@ringdiameter=\baselineskip
-  % 标题栏上下留白：调此数值改变底纹高度，不改变标题字号。
-  % 高度 = max(标题文字盒高度, 编号圆形高度) + 2 × 此留白。
-  \beamer@swjtu@researchcard@titlepadding=\swjtudim{1pt}
-  \beamer@swjtu@researchcard@titlegap=\swjtudim{3pt}
-  \def\beamer@swjtu@researchcard@circlefont{\swjtucardtitlefont}%
-  \ifbeamer@swjtu@researchcard@hasdisplaynumber
-    \sbox{\beamer@swjtu@researchcard@numberbox}{%
-      \beamer@swjtu@researchcard@badge{\beamer@swjtu@researchcard@displaynumber}}%
-    \beamer@swjtu@researchcard@ringdiameter=\wd\beamer@swjtu@researchcard@numberbox
-    \sbox{\beamer@swjtu@researchcard@titletext}{%
-      \parbox{\dimexpr\linewidth-\beamer@swjtu@researchcard@ringdiameter-\beamer@swjtu@researchcard@titlegap-\swjtudim{1pt}\relax}{%
-        \beamer@swjtu@researchcard@titlealignment
-        \color{PrimaryC}\beamer@swjtu@researchcard@titlefont\strut #2\strut\par}}%
-  \else
-    \sbox{\beamer@swjtu@researchcard@titletext}{%
-      \parbox{\linewidth}{%
-        \beamer@swjtu@researchcard@titlealignment
-        \color{PrimaryC}\beamer@swjtu@researchcard@titlefont\strut
-        \beamer@swjtu@researchcard@titlelabel{#2}\strut\par}}%
-  \fi
-  \beamer@swjtu@researchcard@titleheight=\dimexpr
-    \ht\beamer@swjtu@researchcard@titletext+\dp\beamer@swjtu@researchcard@titletext\relax
-  \ifbeamer@swjtu@researchcard@hasdisplaynumber
-    \ifdim\beamer@swjtu@researchcard@titleheight<\beamer@swjtu@researchcard@ringdiameter
-      \beamer@swjtu@researchcard@titleheight=\beamer@swjtu@researchcard@ringdiameter
-    \fi
-  \fi
-  \advance\beamer@swjtu@researchcard@titleheight by 2\beamer@swjtu@researchcard@titlepadding
-  \vbox to \beamer@swjtu@researchcard@titleheight{%
-    \vfil\hbox to \linewidth{%
-      \ifbeamer@swjtu@researchcard@hasdisplaynumber
-        \usebox{\beamer@swjtu@researchcard@numberbox}%
-        \hspace{\beamer@swjtu@researchcard@titlegap}%
-      \fi
-      % 只移动可见文字，显式保留原来的高度、深度，圆圈及标题栏不动。
-      \raisebox{\dimexpr(\dp\beamer@swjtu@researchcard@titletext-\ht\beamer@swjtu@researchcard@titletext)/2-\ResearchCardTitleShift\relax}%
-        [\dimexpr(\ht\beamer@swjtu@researchcard@titletext+\dp\beamer@swjtu@researchcard@titletext)/2\relax]%
-        [\dimexpr(\ht\beamer@swjtu@researchcard@titletext+\dp\beamer@swjtu@researchcard@titletext)/2\relax]{%
-        \usebox{\beamer@swjtu@researchcard@titletext}}\hfil}%
-    \vfil}%
+  % Legacy numbering argument is accepted but no badge or number is rendered.
+  \beamer@swjtu@researchcard@titlealignment
+  \swjtucardtitlefont\color{PrimaryC}#2%
 }
 
 \tcbset{%
   researchcard adaptive/.style={%
     enhanced jigsaw,%
-    colback=BackgroundC,colframe=ResearchCardOutlineC,%
-    boxrule=\swjtudim{.65pt},arc=\swjtudim{11pt},outer arc=\swjtudim{11pt},%
-    boxsep=0pt,left=\swjtudim{8pt},right=\swjtudim{8pt},top=\swjtudim{5pt},bottom=\swjtudim{5pt},%
-    toptitle=0pt,bottomtitle=0pt,lefttitle=\swjtudim{8pt},righttitle=\swjtudim{8pt},%
-    title filled=true,colbacktitle=ResearchCardHeaderC,titlerule=0pt,%
-    fonttitle=\normalfont\bfseries,coltitle=PrimaryC,%
+    colback=BackgroundC,colframe=BorderC!40,%
+    boxrule=\swjtudim{.35pt},%
+    arc=\swjtudim{1.5pt},outer arc=\swjtudim{1.5pt},%
+    boxsep=0pt,%
+    left=\swjtudim{8pt},right=\swjtudim{8pt},%
+    top=\swjtudim{6pt},bottom=\swjtudim{7pt},%
+    toptitle=\swjtudim{3pt},bottomtitle=\swjtudim{4pt},%
+    lefttitle=\swjtudim{8pt},righttitle=\swjtudim{8pt},%
+    title filled=false,colbacktitle=BackgroundC,titlerule=0pt,%
+    fonttitle=\mdseries,coltitle=PrimaryC,%
     fontupper=\color{NormalTextC}\swjtubodyfont,%
     fontlower=\color{NormalTextC}\swjtubodyfont,%
-    before=\noindent,after=\par,%
+    before=\par\smallskip\noindent,after=\par\smallskip,%
     parbox=false,%
-    interior style={top color=ResearchCardBodyTopC,%
-      bottom color=ResearchCardBodyBottomC,shading angle=90},%
-    frame style={draw=ResearchCardOutlineC,line width=\swjtudim{.65pt}},%
     before upper={%
-      % 仅收紧 ResearchCard 正文中一级 itemize 的文字缩进。
-      \setlength{\leftmargini}{\swjtudim{12pt}}%
+      \setlength{\leftmargini}{\swjtudim{13pt}}%
       \setlength{\labelwidth}{\dimexpr\leftmargini-\labelsep\relax}%
-      \setbeamertemplate{itemize item}{\PPTBulletSymbol{\beamer@swjtu@PPTBulletType}}%
-      \setbeamertemplate{itemize subitem}{\beamer@swjtu@listsubbullet}%
-      \setbeamercolor{itemize item}{fg=PrimaryC}%
-      \setbeamercolor{itemize subitem}{fg=PrimaryC}%
     },%
-    breakable,break at=.78\textheight,pad at break*=.5ex%
+    unbreakable%
   }%
 }
 
@@ -538,6 +491,26 @@
 }{ }
 
 % 学术三线表：底纹、规则线颜色与线宽统一由主题参数控制。
+% Lightweight scientific content primitives. These have no icons, automatic
+% numbers, title bars or decorative cards. Use them for ordinary slides.
+\newcommand{\ResearchLead}[1]{%
+  \par\noindent{\color{PrimaryC}\swjtufont{larger}\bfseries #1}\par\medskip%
+}
+\newcommand{\ResearchHeading}[1]{%
+  \par\noindent{\color{PrimaryC}\swjtufont{card-title}\bfseries #1}\par\smallskip%
+}
+\newtcolorbox{ResearchNote}[1][]{%
+  enhanced,boxrule=0pt,frame hidden,%
+  colback=AuxiliaryC!5!BackgroundC,%
+  borderline west={\swjtudim{2pt}}{0pt}{AuxiliaryC},%
+  arc=0pt,outer arc=0pt,boxsep=0pt,%
+  left=\swjtudim{10pt},right=\swjtudim{7pt},%
+  top=\swjtudim{5pt},bottom=\swjtudim{5pt},%
+  fontupper=\color{NormalTextC}\swjtubodyfont,%
+  before=\par\smallskip\noindent,after=\par\smallskip,%
+  #1%
+}
+
 \setlength{\tabcolsep}{\swjtudim{6.5pt}}% 单元格左右留白.
 \renewcommand{\arraystretch}{1.2}% 统一表格行高.
 \setlength{\extrarowheight}{\swjtudim{1pt}}% 增加上下呼吸空间.
@@ -641,11 +614,11 @@
 \setsansfont[
   Path=./fonts/,
   Extension=.ttf,
-  UprightFont=NotoSansSC-Bold,
+  UprightFont=NotoSansSC-Regular,
   BoldFont=NotoSansSC-Bold,
-  ItalicFont=NotoSansSC-Bold,
+  ItalicFont=NotoSansSC-Regular,
   BoldItalicFont=NotoSansSC-Bold
-]{NotoSansSC-Bold}
+]{NotoSansSC-Regular}
 
 % 数学字体设置.
 \if\EqualOptionsBeamer{MathFont}{XITS}%
@@ -662,14 +635,14 @@
   Extension=.ttf,
   Scale=0.956,
   BoldFont=NotoSansSC-Bold,
-  ItalicFont=NotoSansSC-Bold,
+  ItalicFont=NotoSansSC-Regular,
   BoldItalicFont=NotoSansSC-Bold
-]{NotoSansSC-Bold}
+]{NotoSansSC-Regular}
 \setCJKmonofont[
   Path=./fonts/,Extension=.ttf,Scale=0.956,
-  BoldFont=NotoSansSC-Bold,ItalicFont=NotoSansSC-Bold,
+  BoldFont=NotoSansSC-Bold,ItalicFont=NotoSansSC-Regular,
   BoldItalicFont=NotoSansSC-Bold
-]{NotoSansSC-Bold}
+]{NotoSansSC-Regular}
 \newCJKfontfamily\swjtutitlefont[
   Path=./fonts/,
   Extension=.ttf,
@@ -1179,6 +1152,7 @@
     \tableofcontents[currentsection,hideallsubsections]%
   \fi%
 }
+\if\EqualOptionsBeamer{SectionTOC}{show}%
 \AtBeginSection[]{%
   \begingroup%
     \if\EqualOptionsBeamer{LanguageMode}{cn}
@@ -1192,6 +1166,7 @@
     \fi\fi
   \endgroup%
 }
+\fi
 % ----------------
 
 

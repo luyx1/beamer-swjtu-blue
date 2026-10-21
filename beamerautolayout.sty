@@ -200,9 +200,9 @@
       { g__beamerautolayout_minwidth_\int_use:N \l_tmpa_int _dim }
       { \dim_use:N \l__beamerautolayout_block_minwidth_dim }
 
-    % Reference measurement: enough to distinguish dense text/formula blocks
-    % from content that needs a full-width row, and to observe natural image
-    % dimensions when the user did not force a width.
+    % Reference measurement is heuristic: use explicit columns for fragile or
+    % side-effecting material such as charts, counters and verbatim environments.
+    % The content is evaluated once here and once during final rendering.
     \dim_set:Nn \l__beamerautolayout_reference_width_dim { .48\linewidth }
     \vbox_set:Nn \l__beamerautolayout_measure_box
       {
@@ -424,33 +424,27 @@
       { \int_compare:nNnT { \int_use:N #2 } < { 2 } { \int_set:Nn #2 { 2 } } }
   }
 
+% The automatic grid controls geometry only; it must not force a card or
+% title badge onto every block. Complex charts are best placed in explicit
+% columns to avoid executing drawing commands once for measurement and again
+% for final rendering.
 \cs_new_protected:Npn \__beamerautolayout_render_block:nn #1#2
   {
     \begin{minipage}[t]{#2}
       \vspace{0pt}
-      % ResearchCard 会再次设置正文样式；兼容回退路径也继承主题字号。
-      \cs_if_exist:NT \swjtubodyfont { \swjtubodyfont }
-      \cs_if_exist:NTF \ResearchCard
+      \tl_if_empty:cF { g__beamerautolayout_title_#1_tl }
         {
-          \begin{ResearchCard}[unbreakable]
-            { \tl_use:c { g__beamerautolayout_title_#1_tl } }
-            \tl_use:c { g__beamerautolayout_body_#1_tl }
-          \end{ResearchCard}
+          \par\noindent
+          {\color{PrimaryC}
+           \cs_if_exist:NTF \swjtucardtitlefont
+             { \swjtucardtitlefont }
+             { \bfseries }
+           \tl_use:c { g__beamerautolayout_title_#1_tl }\par}
+          \vspace{\swjtudim{4pt}}
         }
-        {
-          % 主题未提供 ResearchCard 时保留原有渲染作为兼容回退。
-          \begin{beamercolorbox}[wd=\linewidth,sep=\l__beamerautolayout_padding_dim,rounded=true]{block title}
-            \usebeamerfont{block title}
-            \usebeamercolor[fg]{block title}
-            \tl_use:c { g__beamerautolayout_title_#1_tl }
-          \end{beamercolorbox}
-          \begin{beamercolorbox}[wd=\linewidth,sep=\l__beamerautolayout_padding_dim]{block body}
-            \usebeamerfont{block body}
-            \usebeamercolor[fg]{block body}
-            \tl_use:c { g__beamerautolayout_body_#1_tl }
-            \par
-          \end{beamercolorbox}
-        }
+      {\color{NormalTextC}
+       \cs_if_exist:NT \swjtubodyfont { \swjtubodyfont }
+       \tl_use:c { g__beamerautolayout_body_#1_tl }\par}
     \end{minipage}
   }
 

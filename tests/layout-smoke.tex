@@ -1,0 +1,41 @@
+% Compile-only smoke test for legacy and lightweight interfaces.
+\documentclass[UTF8,aspectratio=169]{beamer}
+\usetheme[
+  ColorDisplay=BSblue,Miniframes=none,ContentMuticols=false,
+  BIBMode=none,Background=false,SectionTOC=hide
+]{swjtu}
+\title{SWJTU 排版回归测试}
+\author{Template CI}
+\date{}
+\begin{document}
+\begin{frame}[t]{普通文字与极简强调}
+  \ResearchLead{原生正文、标题和公式}
+  这里是普通中文文字，与 \textbf{粗体强调} 形成层级。
+  \ResearchHeading{研究对象}
+  \[
+    \mathbf{M}\ddot{\boldsymbol{\xi}}+
+    \mathbf{C}\boldsymbol{\xi}=\mathbf{F}(t).
+  \]
+  \begin{ResearchNote}
+    无图标、无卡片圆形编号的重点说明。
+  \end{ResearchNote}
+\end{frame}
+\begin{frame}[t]{旧 ResearchCard 兼容}
+  \begin{ResearchCard}[1]{整数编号应隐藏}
+    旧接口正常接受；卡片仍可选用。
+  \end{ResearchCard}
+  \begin{ResearchCard}{未编号内容}
+    内容可直接编辑。
+  \end{ResearchCard}
+\end{frame}
+\begin{frame}[t]{简单自动网格}
+  \begin{autolayout}[mode=balanced,layout=2]
+    \begin{autoblock}{模型}
+      质量与惯量。
+    \end{autoblock}
+    \begin{autoblock}{评价量}
+      频率与运动响应。
+    \end{autoblock}
+  \end{autolayout}
+\end{frame}
+\end{document}
