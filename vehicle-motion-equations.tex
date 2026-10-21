@@ -21,7 +21,6 @@
 
 \usepackage{amsmath,amssymb,mathtools}
 \usepackage{tikz}
-\usepackage[most]{tcolorbox}
 \usetikzlibrary{arrows.meta,calc,positioning,decorations.pathmorphing,patterns}
 
 % Keep the existing SWJTU theme, but suppress all outer-matter elements
@@ -76,15 +75,6 @@
 }{
   \end{tcolorbox}
 }
-\newenvironment{SlideBody}{
-  \begin{frame}[plain,noframenumbering]
-  \vspace*{1.8cm}
-  \begin{minipage}[t][13.65cm][t]{\linewidth}
-  \vspace{0pt}
-}{
-  \end{minipage}
-  \end{frame}
-}
 \newcommand{\PanelBulletsStart}{%
   \begin{itemize}
   \setlength{\itemsep}{.12cm}
@@ -105,7 +95,10 @@
 \subsection{车辆结构与运动自由度}
 
 % P1 — 车辆结构体系与动力传递路径
-\begin{SlideBody}
+\begin{frame}[plain,noframenumbering]
+\vspace*{1.8cm}
+\begin{minipage}[t][13.65cm][t]{\linewidth}
+\vspace{0pt}
 \begin{columns}[T,onlytextwidth]
   \begin{column}{.37\textwidth}
     \begin{minipage}[t][10.65cm][s]{\linewidth}
@@ -182,12 +175,15 @@
   \(\leftrightarrow\) 转向架 \(\leftrightarrow\) 二系悬挂
   \(\leftrightarrow\) 车体
 \end{BottomBand}
-\end{SlideBody}
+\end{minipage}
+\end{frame}
 
 % P2 — 车辆运动自由度
-\subsection{车辆自由度与建模方法}
 
-\begin{SlideBody}
+\begin{frame}[plain,noframenumbering]
+\vspace*{1.8cm}
+\begin{minipage}[t][13.65cm][t]{\linewidth}
+\vspace{0pt}
 \begin{columns}[T,onlytextwidth]
   \begin{column}{.36\textwidth}
     \begin{minipage}[t][10.55cm][s]{\linewidth}
@@ -249,12 +245,16 @@
   \centering
   自由度选择 \(\longrightarrow\) 可描述的车辆运动 \(\longrightarrow\) 车桥耦合响应的预测能力
 \end{BottomBand}
-\end{SlideBody}
+\end{minipage}
+\end{frame}
 
 % P3 — 车辆动力学模型分类与比较
 \subsection{车辆动力学建模与方程建立}
 
-\begin{SlideBody}
+\begin{frame}[plain,noframenumbering]
+\vspace*{1.8cm}
+\begin{minipage}[t][13.65cm][t]{\linewidth}
+\vspace{0pt}
 \begin{columns}[T,onlytextwidth]
   \begin{column}{.24\textwidth}
     \begin{PPTPanel}{移动荷载}
@@ -354,10 +354,14 @@
   模型选择：\textcolor{PrimaryC}{研究目标} \(\times\) \textcolor{AuxiliaryC}{响应精度}
   \(\times\) \textcolor{SecondaryAuxiliaryC}{计算效率}
 \end{BottomBand}
-\end{SlideBody}
+\end{minipage}
+\end{frame}
 
 % P4 — 简化车辆动力学模型的建立
-\begin{SlideBody}
+\begin{frame}[plain,noframenumbering]
+\vspace*{1.8cm}
+\begin{minipage}[t][13.65cm][t]{\linewidth}
+\vspace{0pt}
 \begin{columns}[T,onlytextwidth]
   \begin{column}{.36\textwidth}
     \begin{minipage}[t][10.65cm][s]{\linewidth}
@@ -426,10 +430,14 @@
   \hspace{1em}
   外力输入：\(\displaystyle \mathbf F_v=\begin{bmatrix}0&-\Delta F_N\end{bmatrix}^{\mathsf T}\)
 \end{BottomBand}
-\end{SlideBody}
+\end{minipage}
+\end{frame}
 
 % P5 — 车辆运动方程推导与矩阵表达
-\begin{SlideBody}
+\begin{frame}[plain,noframenumbering]
+\vspace*{1.8cm}
+\begin{minipage}[t][13.65cm][t]{\linewidth}
+\vspace{0pt}
 \begin{columns}[T,onlytextwidth]
   \begin{column}{.29\textwidth}
     \begin{PPTPanel}{受力分析}
@@ -497,12 +505,16 @@
     \(\displaystyle\mathbf F_v=\begin{bmatrix}0\\-\Delta F_N\end{bmatrix}\)
   \end{tabular}
 \end{PPTPanel}
-\end{SlideBody}
+\end{minipage}
+\end{frame}
 
 % P6 — 车辆运动方程与车桥耦合的联系
 \subsection{车辆方程与轮轨接口}
 
-\begin{SlideBody}
+\begin{frame}[plain,noframenumbering]
+\vspace*{1.8cm}
+\begin{minipage}[t][13.65cm][t]{\linewidth}
+\vspace{0pt}
 \begin{columns}[T,onlytextwidth]
   \begin{column}{.35\textwidth}
     \begin{minipage}[t][9.8cm][s]{\linewidth}
@@ -565,7 +577,8 @@
   \hspace{1em}
   \(\displaystyle F_N(t)=k_H[\delta(t)]_+^{3/2},\quad \Delta F_N=F_N-F_{N0}\)
 \end{BottomBand}
-\end{SlideBody}
+\end{minipage}
+\end{frame}
 
 % ============================================================
 % Section 2: 最新研究进展
@@ -574,7 +587,10 @@
 \subsection{考虑车辆速度效应的车桥耦合建模}
 
 % P7 — Shi et al. (2026)
-\begin{SlideBody}
+\begin{frame}[plain,noframenumbering]
+\vspace*{1.8cm}
+\begin{minipage}[t][13.65cm][t]{\linewidth}
+\vspace{0pt}
 \begin{columns}[T,onlytextwidth]
   \begin{column}{.34\textwidth}
     \begin{minipage}[t][10.65cm][s]{\linewidth}
@@ -665,12 +681,16 @@
   \href{https://doi.org/10.1016/j.ymssp.2026.114595}{DOI: 10.1016/j.ymssp.2026.114595}.
   曲线为概念示意，非论文原始数据。}
 \end{BottomBand}
-\end{SlideBody}
+\end{minipage}
+\end{frame}
 
 \subsection{三维车轨桥分区耦合与随机响应}
 
 % P8 — Yuan & Luo (2026)
-\begin{SlideBody}
+\begin{frame}[plain,noframenumbering]
+\vspace*{1.8cm}
+\begin{minipage}[t][13.65cm][t]{\linewidth}
+\vspace{0pt}
 \begin{columns}[T,onlytextwidth]
   \begin{column}{.34\textwidth}
     \begin{minipage}[t][10.2cm][s]{\linewidth}
@@ -752,7 +772,8 @@
   \href{https://doi.org/10.1016/j.ymssp.2026.114850}{DOI: 10.1016/j.ymssp.2026.114850}.
   概率曲线为方法示意，非论文原始数据。}
 \end{BottomBand}
-\end{SlideBody}
+\end{minipage}
+\end{frame}
 
 % ============================================================
 % Section 3: 个人问题及思考
@@ -761,7 +782,10 @@
 \subsection{速度相关项与随机耦合响应}
 
 % P9 — 个人研究问题
-\begin{SlideBody}
+\begin{frame}[plain,noframenumbering]
+\vspace*{1.8cm}
+\begin{minipage}[t][13.65cm][t]{\linewidth}
+\vspace{0pt}
 \begin{columns}[T,onlytextwidth]
   \begin{column}{.36\textwidth}
     \begin{minipage}[t][10.55cm][s]{\linewidth}
@@ -831,6 +855,7 @@
   \centering
   \textcolor{PrimaryC}{个人思考：}在保证关键响应精度的前提下，识别速度效应不可忽略的工况范围。
 \end{BottomBand}
-\end{SlideBody}
+\end{minipage}
+\end{frame}
 
 \end{document}
