@@ -54,18 +54,18 @@
 % badge、cover-author、cover-date 仅保留给旧代码兼容，当前组件不使用它们。
 \ifnum\swjtu@scale@num=127
 \swjtusetfonts{
-  body=20pt,body-leading=32pt,
+  body=20pt,body-leading=27pt,
   frame-title=28pt,frame-title-leading=30pt,
-  card-title=24pt,card-title-leading=28pt,
+  card-title=23pt,card-title-leading=28pt,
   header=17pt,header-leading=20pt,footer=17pt,footer-leading=20pt,
-  caption=17pt,table=21pt,diagram=19pt,chart-label=23pt,chart-title=21pt,
+  caption=16pt,table=19pt,diagram=18pt,chart-label=18pt,chart-title=20pt,
   code=17pt,code-title=21pt,code-number=13pt,badge=21pt,
   cover-title=65pt,cover-title-leading=80pt,
   closing-title=75pt,closing-title-leading=90pt,
   closing-subtitle=60pt,closing-subtitle-leading=76pt,
   cover-subtitle=21pt,cover-author=21pt,cover-date=19pt,
   navigation=12pt,navigation-small=12pt,
-  small=21pt,footnote=19pt,tiny=13pt,label=13pt,
+  small=17pt,footnote=16pt,tiny=13pt,label=13pt,
   large=25pt,larger=30pt,display=37pt,huge=44pt,huge-title=53pt
 }
 \else
@@ -116,11 +116,11 @@
 \renewcommand{\LARGE}{\swjtufont{display}}
 \renewcommand{\huge}{\swjtufont{huge}}
 \renewcommand{\Huge}{\swjtufont{huge-title}}
-\newcommand{\swjtubodyfont}{\swjtufont{body}\bfseries}
+\newcommand{\swjtubodyfont}{\swjtufont{body}\mdseries}
 \newcommand{\swjtucardtitlefont}{\swjtufont{card-title}\bfseries}
 % Compatibility commands no longer override the user's central font settings.
 \newcommand{\swjtustandardtext}{\swjtubodyfont}
-\newcommand{\swjtufocustext}{\swjtubodyfont}
+\newcommand{\swjtufocustext}{\swjtufont{larger}\mdseries}
 \addtobeamertemplate{frame begin}{\swjtubodyfont}{}
 
 % Scale existing absolute list/display/paragraph spacing once, not by width.
