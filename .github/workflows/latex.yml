@@ -19,6 +19,11 @@ jobs:
         with:
           root_file: main.tex
           latexmk_use_xelatex: true
+      - name: Compile vehicle motion equations presentation
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: vehicle-motion-equations.tex
+          latexmk_use_xelatex: true
       - name: Compile legacy-interface smoke test
         uses: xu-cheng/latex-action@v3
         with:
