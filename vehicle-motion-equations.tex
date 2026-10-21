@@ -33,6 +33,7 @@
 \setbeamertemplate{background}{}
 \setbeamercolor{background canvas}{bg=white}
 \setbeamersize{text margin left=.7cm,text margin right=.7cm}
+\setlength{\columnsep}{.28cm}
 
 % Main body typography is 22 pt or larger. Citation text is intentionally
 % secondary but remains comfortably readable on the full-size PPT canvas.
@@ -255,7 +256,7 @@
 
 \begin{SlideBody}
 \begin{columns}[T,onlytextwidth]
-  \begin{column}{.245\textwidth}
+  \begin{column}{.24\textwidth}
     \begin{PPTPanel}{移动荷载}
       \centering
       \begin{tikzpicture}[x=.82cm,y=.82cm,>=Stealth]
@@ -275,7 +276,7 @@
       初步桥梁动力计算
     \end{PPTPanel}
   \end{column}
-  \begin{column}{.245\textwidth}
+  \begin{column}{.24\textwidth}
     \begin{PPTPanel}{移动质量}
       \centering
       \begin{tikzpicture}[x=.82cm,y=.82cm,>=Stealth]
@@ -296,7 +297,7 @@
       移动质量效应分析
     \end{PPTPanel}
   \end{column}
-  \begin{column}{.245\textwidth}
+  \begin{column}{.24\textwidth}
     \begin{PPTPanel}{简化车辆模型}
       \centering
       \begin{tikzpicture}[x=.82cm,y=.82cm,>=Stealth]
@@ -319,7 +320,7 @@
       基础车桥耦合
     \end{PPTPanel}
   \end{column}
-  \begin{column}{.245\textwidth}
+  \begin{column}{.24\textwidth}
     \begin{PPTPanel}{多刚体车辆}
       \centering
       \begin{tikzpicture}[x=.82cm,y=.82cm,>=Stealth]
@@ -735,12 +736,6 @@
         \centering
         \begin{tikzpicture}[x=1cm,y=.8cm,>=Stealth]
           \draw[->,NormalTextC] (.1,.25)--(16.0,.25) node[right,font=\swjtufont{diagram}] {\(t\)};
-          \foreach \x/\h/\col in {1.8/1.1/AuxiliaryC,5.4/1.55/SecondaryAuxiliaryC,9.2/1.25/IntersperseC,13.0/1.8/AlertedTextC}{
-            \draw[->,NormalTextC] (\x-.7,.25)--(\x-.7,2.35);
-            \draw[\col,line width=1.4pt]
-              plot[domain=-1.35:1.35,samples=45]
-              ({\x+\x/10*\pgfmathprintnumber{0}}, {.25+\h*exp(-(\x)^2)});
-          }
           % Explicit bell curves, plotted in local coordinates for robustness.
           \draw[AuxiliaryC,line width=1.4pt] plot[domain=0:3.6,samples=55] (\x,{.25+1.15*exp(-((\x-1.8)^2)/.38)});
           \draw[SecondaryAuxiliaryC,line width=1.4pt] plot[domain=3.6:7.2,samples=55] (\x,{.25+1.45*exp(-((\x-5.4)^2)/.55)});
