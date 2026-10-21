@@ -23,7 +23,7 @@
 
     latexmk -xelatex -interaction=nonstopmode -halt-on-error main.tex
 
-项目内置 Noto Sans SC 字体。主题会通过 LaTeX 文件搜索解析 `beamerthemeswjtu.sty` 的实际位置，并从同一目录加载 `fonts/` 与 `resources/`，不再依赖运行 XeLaTeX 时的当前工作目录。将整套主题安装到 TeX 搜索路径或通过 `TEXINPUTS` 引用时，请将所有 `.sty` 文件、`fonts/` 和 `resources/` 放在同一主题目录中。用户自己的图片仍优先从项目内的 `image/`、`images/`、`figure/`、`figures/` 和 `resources/` 查找。
+项目内置 Noto Sans SC 字体。主题优先使用 LaTeX 内核提供的当前文件路径解析主题目录，再从该目录加载 `fonts/` 与 `resources/`，不依赖编译时工作目录。请将所有 `.sty` 文件、`fonts/` 和 `resources/` 放在同一主题目录中，并确保 TeX 能找到这些 `.sty` 文件。若主题安装在全局 TeX 树、内核无法暴露安装路径，可在 `\\usetheme{swjtu}` 之前设置 `\\def\\SWJTUThemePath{../path/to/theme}`（填写实际目录，不要在末尾加斜杠）。用户自己的图片仍优先从项目内的 `image/`、`images/`、`figure/`、`figures/` 和 `resources/` 查找。
 
 默认 `CodeDisplay=listing`，无需 Python/Pygments 或 shell-escape；使用 `minted` 时需要额外安装配置。
 
