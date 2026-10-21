@@ -134,8 +134,8 @@
       \centering
       \begin{tikzpicture}[x=.98cm,y=.98cm,>=Stealth,line cap=round,line join=round]
         % Car body
-        \fill[PanelFill] (.5,5.7) rounded rectangle (18.0,7.0);
-        \draw[AuxiliaryC,line width=1.2pt] (.5,5.7) rounded rectangle (18.0,7.0);
+        \fill[PanelFill,rounded corners=3pt] (.5,5.7) rectangle (18.0,7.0);
+        \draw[AuxiliaryC,rounded corners=3pt,line width=1.2pt] (.5,5.7) rectangle (18.0,7.0);
         \foreach \x in {1.0,2.8,4.6,6.4,8.2,10.0,11.8,13.6,15.4,17.0}{
           \filldraw[fill=white,draw=AuxiliaryC,line width=.7pt]
             (\x,6.15) rectangle ++(1.15,.48);
@@ -177,7 +177,7 @@
 \vfill
 \begin{BottomBand}
   \centering
-  \textcolor{PrimaryC}{\bfseries 动力传递路径}\quad
+  \textcolor{PrimaryC}{\bfseries 动力传递路径}\hspace{.5em}
   轮轨力 \(\leftrightarrow\) 轮对 \(\leftrightarrow\) 一系悬挂
   \(\leftrightarrow\) 转向架 \(\leftrightarrow\) 二系悬挂
   \(\leftrightarrow\) 车体
@@ -239,7 +239,7 @@
         \draw[->,IntersperseC,line width=1.3pt] (11.3,2.3) arc[start angle=25,end angle=315,radius=.62];
         \node[font=\swjtufont{diagram},text=IntersperseC] at (12.1,1.9) {\(\psi\)};
         \node[font=\swjtufont{body},text=NormalTextC,align=center] at (8.0,.25)
-          {三个平移自由度 \quad 三个转动自由度};
+          {三个平移自由度 \hspace{1em} 三个转动自由度};
       \end{tikzpicture}
     \end{PPTPanel}
   \end{column}
@@ -324,8 +324,8 @@
     \begin{PPTPanel}{多刚体车辆}
       \centering
       \begin{tikzpicture}[x=.82cm,y=.82cm,>=Stealth]
-        \fill[PanelFill] (.5,3.1) rounded rectangle (6.6,4.0);
-        \draw[AuxiliaryC,line width=1.1pt] (.5,3.1) rounded rectangle (6.6,4.0);
+        \fill[PanelFill,rounded corners=3pt] (.5,3.1) rectangle (6.6,4.0);
+        \draw[AuxiliaryC,rounded corners=3pt,line width=1.1pt] (.5,3.1) rectangle (6.6,4.0);
         \node[font=\swjtufont{diagram}] at (3.55,3.55) {车体};
         \draw[IntersperseC,line width=1.1pt] (1.4,3.1)--(1.4,2.7);
         \draw[IntersperseC,line width=1.1pt] (5.6,3.1)--(5.6,2.7);
@@ -386,8 +386,8 @@
     \begin{PPTPanel}{二自由度竖向车辆模型}
       \centering
       \begin{tikzpicture}[x=1cm,y=1cm,>=Stealth,line cap=round,line join=round]
-        \fill[PanelFill] (4.1,5.3) rounded rectangle (10.8,6.6);
-        \draw[AuxiliaryC,line width=1.4pt] (4.1,5.3) rounded rectangle (10.8,6.6);
+        \fill[PanelFill,rounded corners=3pt] (4.1,5.3) rectangle (10.8,6.6);
+        \draw[AuxiliaryC,rounded corners=3pt,line width=1.4pt] (4.1,5.3) rectangle (10.8,6.6);
         \node[font=\swjtufont{larger}\bfseries,text=PrimaryC] at (7.45,5.95) {\(m_s\)};
         \draw[->,AuxiliaryC,line width=1.3pt] (11.3,6.2)--(11.3,5.35)
           node[right,font=\swjtufont{diagram},text=AuxiliaryC] {\(z_s\)};
@@ -402,8 +402,8 @@
         \draw[SecondaryAuxiliaryC,line width=1.4pt] (8.5,4.45)--(8.5,3.8);
         \node[font=\swjtufont{diagram},text=IntersperseC] at (4.6,4.7) {\(k_s\)};
         \node[font=\swjtufont{diagram},text=SecondaryAuxiliaryC] at (9.2,4.7) {\(c_s\)};
-        \fill[PanelFill] (4.1,2.5) rounded rectangle (10.8,3.8);
-        \draw[AuxiliaryC,line width=1.4pt] (4.1,2.5) rounded rectangle (10.8,3.8);
+        \fill[PanelFill,rounded corners=3pt] (4.1,2.5) rectangle (10.8,3.8);
+        \draw[AuxiliaryC,rounded corners=3pt,line width=1.4pt] (4.1,2.5) rectangle (10.8,3.8);
         \node[font=\swjtufont{larger}\bfseries,text=PrimaryC] at (7.45,3.15) {\(m_u\)};
         \draw[->,AuxiliaryC,line width=1.3pt] (11.3,3.4)--(11.3,2.55)
           node[right,font=\swjtufont{diagram},text=AuxiliaryC] {\(z_u\)};
@@ -425,7 +425,7 @@
 \begin{BottomBand}
   \centering
   广义坐标：\(\displaystyle \mathbf q_v=\begin{bmatrix}z_s&z_u\end{bmatrix}^{\mathsf T}\)
-  \qquad
+  \hspace{1em}
   外力输入：\(\displaystyle \mathbf F_v=\begin{bmatrix}0&-\Delta F_N\end{bmatrix}^{\mathsf T}\)
 \end{BottomBand}
 \end{SlideBody}
@@ -534,8 +534,8 @@
       \centering
       \begin{tikzpicture}[x=.92cm,y=.92cm,>=Stealth,line cap=round,line join=round]
         % train body and suspension
-        \fill[PanelFill] (1.0,5.5) rounded rectangle (16.8,6.8);
-        \draw[AuxiliaryC,line width=1.2pt] (1.0,5.5) rounded rectangle (16.8,6.8);
+        \fill[PanelFill,rounded corners=3pt] (1.0,5.5) rectangle (16.8,6.8);
+        \draw[AuxiliaryC,rounded corners=3pt,line width=1.2pt] (1.0,5.5) rectangle (16.8,6.8);
         \node[font=\swjtufont{diagram}\bfseries,text=PrimaryC] at (8.9,6.15) {车辆子系统};
         \draw[IntersperseC,line width=1.2pt] (4.5,5.5)--(4.5,4.8)--++(.18,-.12)--++(-.36,-.15)--++(.36,-.15)--(4.5,4.1);
         \draw[SecondaryAuxiliaryC,line width=1.2pt] (5.7,5.5)--(5.7,5.0)--(5.35,5.0)--(5.35,4.5)--(6.05,4.5)--(6.05,5.0)--(5.7,5.0)--(5.7,4.1);
@@ -567,7 +567,7 @@
 \begin{BottomBand}
   \centering
   \(\displaystyle \delta(t)=\delta_0+z_u(t)-z_r(x_c,t)-r(x_c),\quad x_c=vt\)
-  \qquad
+  \hspace{1em}
   \(\displaystyle F_N(t)=k_H[\delta(t)]_+^{3/2},\quad \Delta F_N=F_N-F_{N0}\)
 \end{BottomBand}
 \end{SlideBody}
@@ -608,8 +608,8 @@
       \begin{PPTPanel}{移动接触点与桥梁几何效应}
         \centering
         \begin{tikzpicture}[x=.92cm,y=.92cm,>=Stealth,line cap=round,line join=round]
-          \fill[PanelFill] (.4,4.3) rounded rectangle (17.6,5.6);
-          \draw[AuxiliaryC,line width=1pt] (.4,4.3) rounded rectangle (17.6,5.6);
+          \fill[PanelFill,rounded corners=3pt] (.4,4.3) rectangle (17.6,5.6);
+          \draw[AuxiliaryC,rounded corners=3pt,line width=1pt] (.4,4.3) rectangle (17.6,5.6);
           \foreach \x in {1.0,2.5,4.0,5.5,7.0,8.5,10.0,11.5,13.0,14.5,16.0}{
             \draw[AuxiliaryC,line width=.7pt] (\x,4.65) rectangle ++(1.0,.48);
           }
@@ -708,8 +708,8 @@
         \centering
         \begin{tikzpicture}[x=.9cm,y=.9cm,>=Stealth,line cap=round,line join=round]
           % vehicle
-          \fill[PanelFill] (.5,5.3) rounded rectangle (15.8,6.2);
-          \draw[AuxiliaryC,line width=1.1pt] (.5,5.3) rounded rectangle (15.8,6.2);
+          \fill[PanelFill,rounded corners=3pt] (.5,5.3) rectangle (15.8,6.2);
+          \draw[AuxiliaryC,rounded corners=3pt,line width=1.1pt] (.5,5.3) rectangle (15.8,6.2);
           \node[font=\swjtufont{diagram}\bfseries,text=PrimaryC] at (8.1,5.75) {车辆子系统：7 个刚体};
           \foreach \x in {2.0,4.2,6.4,8.6,10.8,13.0,15.0}{
             \filldraw[fill=white,draw=PrimaryC,line width=.8pt] (\x,4.95) circle (.22);
@@ -792,19 +792,19 @@
       \centering
       \begin{tikzpicture}[x=.95cm,y=.95cm,>=Stealth,line cap=round,line join=round]
         % left model
-        \fill[PanelFill] (.3,5.0) rounded rectangle (7.9,6.2);
-        \draw[AuxiliaryC,line width=1.1pt] (.3,5.0) rounded rectangle (7.9,6.2);
+        \fill[PanelFill,rounded corners=3pt] (.3,5.0) rectangle (7.9,6.2);
+        \draw[AuxiliaryC,rounded corners=3pt,line width=1.1pt] (.3,5.0) rectangle (7.9,6.2);
         \node[font=\swjtufont{card-title}\bfseries,text=PrimaryC] at (4.1,5.8) {基准模型};
         \node[font=\swjtufont{diagram},text=NormalTextC] at (4.1,5.35) {常规接触运动学};
         % right model
-        \fill[SoftGreen] (9.5,5.0) rounded rectangle (17.1,6.2);
-        \draw[SecondaryAuxiliaryC,line width=1.1pt] (9.5,5.0) rounded rectangle (17.1,6.2);
+        \fill[SoftGreen,rounded corners=3pt] (9.5,5.0) rectangle (17.1,6.2);
+        \draw[SecondaryAuxiliaryC,rounded corners=3pt,line width=1.1pt] (9.5,5.0) rectangle (17.1,6.2);
         \node[font=\swjtufont{card-title}\bfseries,text=PrimaryC] at (13.3,5.8) {改进模型};
         \node[font=\swjtufont{diagram},text=NormalTextC] at (13.3,5.35) {显式保留速度项};
         \draw[->,AuxiliaryC,line width=1.5pt] (8.0,5.6)--(9.4,5.6);
         % shared inputs
-        \fill[PanelFill] (2.0,3.5) rounded rectangle (15.5,4.35);
-        \draw[AuxiliaryC!60!white] (2.0,3.5) rounded rectangle (15.5,4.35);
+        \fill[PanelFill,rounded corners=3pt] (2.0,3.5) rectangle (15.5,4.35);
+        \draw[AuxiliaryC!60!white,rounded corners=3pt] (2.0,3.5) rectangle (15.5,4.35);
         \node[font=\swjtufont{diagram},text=PrimaryC] at (8.75,3.92)
           {同一车速、桥跨、车辆参数与轨道不平顺样本};
         \draw[->,AuxiliaryC,line width=1.3pt] (4.1,5.0)--(4.1,4.4);
