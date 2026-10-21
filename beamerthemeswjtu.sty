@@ -29,6 +29,15 @@
 %%%% ----------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesPackage{beamerthemeswjtu}[2025/10/06 v2.1b, SWJTU Beamer Theme(Main Theme)]
+% Resolve bundled assets from the directory of this theme file, rather than
+% from the directory in which the user's document happens to be compiled.
+\RequirePackage{currfile}
+\edef\swjtuthemedir{\currfiledir}
+\ifx\swjtuthemedir\@empty
+  \def\swjtuthemedir{./}
+\fi
+\edef\swjtufontpath{\swjtuthemedir fonts/}
+\edef\swjturesourcepath{\swjtuthemedir resources/}
 %%%% ----------------------------------------------------------------
 
 
@@ -227,28 +236,6 @@
 
 \RequirePackage{calc}% biblatex: 参考文献.
 
-% Resolve assets relative to this theme package, not the caller's working
-% directory. This works both when the theme is in the project and when it is
-% found through TEXINPUTS or an installed TeX tree.
-\ExplSyntaxOn
-\tl_new:N \g_swjtu_theme_dir_tl
-\tl_new:N \l_swjtu_theme_file_tl
-\tl_new:N \l_swjtu_theme_dir_tl
-\tl_new:N \l_swjtu_theme_name_tl
-\tl_new:N \l_swjtu_theme_ext_tl
-\file_get_full_name:nNTF { beamerthemeswjtu.sty } \l_swjtu_theme_file_tl
-  {
-    \file_parse_full_name:VNNN \l_swjtu_theme_file_tl
-      \l_swjtu_theme_dir_tl \l_swjtu_theme_name_tl \l_swjtu_theme_ext_tl
-    \tl_if_empty:NTF \l_swjtu_theme_dir_tl
-      { \tl_gset:Nn \g_swjtu_theme_dir_tl { ./ } }
-      { \tl_gset:Nx \g_swjtu_theme_dir_tl { \l_swjtu_theme_dir_tl / } }
-  }
-  { \tl_gset:Nn \g_swjtu_theme_dir_tl { ./ } }
-\cs_new:Npn \swjtuthemedir { \tl_use:N \g_swjtu_theme_dir_tl }
-\cs_new:Npn \swjtufontpath { \tl_use:N \g_swjtu_theme_dir_tl fonts/ }
-\cs_new:Npn \swjturesourcepath { \tl_use:N \g_swjtu_theme_dir_tl resources/ }
-\ExplSyntaxOff
 \ifbeamer@swjtu@contentmuticols
   \RequirePackage{multicol}% multicol: 双栏自动目录.
 \fi
