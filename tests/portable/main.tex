@@ -1,0 +1,44 @@
+% This file is intentionally compiled from tests/portable, not the repository root.
+% The theme is found via TEXINPUTS; bundled fonts and images must resolve from
+% the directory containing beamerthemeswjtu.sty.
+\documentclass[UTF8,aspectratio=169]{beamer}
+\usetheme[
+  ColorDisplay=BSblue,
+  Miniframes=none,
+  ContentMuticols=false,
+  BIBMode=none,
+  Background=false,
+  SectionTOC=hide
+]{swjtu}
+\title[跨目录测试]{主题资源跨目录解析测试}
+\author{SWJTU Theme CI}
+\institute{西南交通大学}
+\date{\today}
+
+\begin{document}
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+\begin{frame}[t]{字体与资源路径}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{.68\textwidth}
+      正常中文正文、\textbf{粗体文字}与数学公式：
+
+      \[
+        \operatorname{RAO}(\omega)
+        = \frac{|\hat{\xi}(\omega)|}{a}.
+      \]
+
+      此文件位于 \texttt{tests/portable/}，本目录没有复制主题的
+      \texttt{fonts/} 和 \texttt{resources/}。
+    \end{column}
+    \begin{column}{.24\textwidth}
+      \centering
+      \pgfuseimage{lg}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\ClosingPage{感谢聆听}{主题字体与图片已从主题目录加载}
+\end{document}

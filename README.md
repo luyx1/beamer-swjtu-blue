@@ -10,19 +10,22 @@
 - beamerstyleswjtu.sty：画幅、字重、字号、行距。
 - beamerautolayout.sty：可选的简单文本网格，默认输出无卡片外框的文字。
 - tests/layout-smoke.tex：组件回归编译示例。
+- tests/portable/main.tex：从独立项目目录编译的资源路径测试。
 
 ## 编译
 
 使用较新的 TeX Live，XeLaTeX 编译两遍以更新目录：
 
-    xelatex -interaction=nonstopmode -halt-on-error main.tex
-    xelatex -interaction=nonstopmode -halt-on-error main.tex
+    xelatex -recorder -interaction=nonstopmode -halt-on-error main.tex
+    xelatex -recorder -interaction=nonstopmode -halt-on-error main.tex
 
 或：
 
     latexmk -xelatex -interaction=nonstopmode -halt-on-error main.tex
 
-项目内置 Noto Sans SC 字体。默认 CodeDisplay=listing，无需 Python/Pygments 或 shell-escape，使用 minted 时需要额外安装配置。请保留 fonts/ 和 resources/ 目录。
+项目内置 Noto Sans SC 字体。主题通过 XeLaTeX 的 recorder 文件列表解析 `beamerthemeswjtu.sty` 的实际目录，并从同一目录加载 `fonts/` 与 `resources/`，因此可以从其他工作目录编译。直接运行 XeLaTeX 时请加 `-recorder`；`latexmk -xelatex` 会生成所需的 `.fls` 文件。请将所有 `.sty` 文件、`fonts/` 和 `resources/` 放在同一主题目录中，并确保 TeX 能找到这些 `.sty` 文件。若编译器没有生成 `.fls` 或特殊安装方式仍无法自动定位，可在 `\\usetheme{swjtu}` 之前设置 `\\def\\SWJTUThemePath{../path/to/theme}`（填写实际目录，不要在末尾加斜杠）。用户自己的图片仍优先从项目内的 `image/`、`images/`、`figure/`、`figures/` 和 `resources/` 查找。
+
+默认 `CodeDisplay=listing`，无需 Python/Pygments 或 shell-escape；使用 `minted` 时需要额外安装配置。
 
 ## 最简内容写法
 
@@ -52,6 +55,7 @@
 - beamercolorthemeswjtu.sty：PrimaryC、AuxiliaryC、NormalTextC 等颜色。
 - beamerstyleswjtu.sty：统一的字号与行距配置；正文为 Noto Sans SC Regular，标题用 Bold。
 - SectionTOC=hide：默认不自动在每一章插入目录页；需要时设置 SectionTOC=show。
+- `ClosingPage`：使用左对齐主标题、细线、较小副标题与轻量几何装饰；字体大小由 `closing-title` 和 `closing-subtitle` 统一控制。
 - Miniframes=none：不显示顶部迷你帧。
 
 一页展示一个主问题、一项主要证据或一条核心结论；让公式、曲线和模型优先使用主要版面。main.tex 的示意曲线和科研内容仅用于排版与功能演示，应替换为实际科研数据与结果。

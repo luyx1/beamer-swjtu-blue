@@ -29,6 +29,34 @@
 %%%% ----------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesPackage{beamerthemeswjtu}[2025/10/06 v2.1b, SWJTU Beamer Theme(Main Theme)]
+% Resolve bundled assets from the theme directory, not the caller's cwd.
+% The .fls recorder gives the physical path even when kpathsea hides it from
+% \CurrentFilePath. For unusual installs, \SWJTUThemePath remains an override.
+\providecommand{\SWJTUThemePath}{}
+\ifx\SWJTUThemePath\@empty
+  \def\swjtuthemedir{}
+  \RequirePackage{currfile-abspath}
+  \IfFileExists{\jobname.fls}{%
+    \getabspath{beamerthemeswjtu.sty}%
+    \edef\swjtuthemedir{\theabsdir}%
+  }{}
+  \ifx\swjtuthemedir\@empty
+    \ifdefined\CurrentFilePath
+      \edef\swjtu@currentfilepath{\CurrentFilePath}
+      \ifx\swjtu@currentfilepath\@empty
+        \def\swjtuthemedir{./}
+      \else
+        \edef\swjtuthemedir{\swjtu@currentfilepath/}
+      \fi
+    \else
+      \def\swjtuthemedir{./}
+    \fi
+  \fi
+\else
+  \edef\swjtuthemedir{\SWJTUThemePath/}
+\fi
+\edef\swjtufontpath{\swjtuthemedir fonts/}
+\edef\swjturesourcepath{\swjtuthemedir resources/}
 %%%% ----------------------------------------------------------------
 
 
@@ -226,6 +254,7 @@
 \fi\fi
 
 \RequirePackage{calc}% biblatex: 参考文献.
+
 \ifbeamer@swjtu@contentmuticols
   \RequirePackage{multicol}% multicol: 双栏自动目录.
 \fi
@@ -266,7 +295,7 @@
     every axis legend/.append style={font=\swjtufont{chart-label}}}%
 }
 % 设置图片路径为项目文件夹下 `image' `images' `figure' `figures'.
-\graphicspath{{image/}{images/}{figure/}{figures/}{resources/}}
+\graphicspath{{image/}{images/}{figure/}{figures/}{resources/}{\swjturesourcepath}}
 % 半透明化尚未出现的内容.
 \setbeamercovered{transparent}
 % 导航栏为空.
@@ -284,17 +313,17 @@
 % ----------------
 % 设置 "SWJTUname.pdf" 为图片 "logo".
 \pgfdeclareimage[width=\swjtudim{40pt}]%
-  {lg}{./resources/swjtu_logo.pdf}
+  {lg}{\swjturesourcepath swjtu_logo.pdf}
 % 设置 "SWJTUname.pdf" 为图片 "logo".
 \pgfdeclareimage[height=\swjtudim{36pt}]%
-  {lg-name}{./resources/swjtu_logo.pdf}
+  {lg-name}{\swjturesourcepath swjtu_logo.pdf}
 \pgfdeclareimage[height=\swjtudim{100pt}]%
-  {building}{./resources/swjtubuilding.png}
+  {building}{\swjturesourcepath swjtubuilding.png}
 \pgfdeclareimage[height=\swjtudim{50pt}]%
-  {verify}{./resources/swjtuverify.png}
+  {verify}{\swjturesourcepath swjtuverify.png}
 % SVG 封面装饰的矢量 PDF 版本；SVG 源文件保留在 resources/cover.svg.
 \pgfdeclareimage[width=\paperwidth,height=\paperheight]%
-  {swjtu-cover-bg}{./resources/cover-background.pdf}
+  {swjtu-cover-bg}{\swjturesourcepath cover-background.pdf}
 % 颜色主题 - swjtu.
 \usecolortheme{swjtu}
 % 外部主题 - swjtu.
@@ -610,9 +639,9 @@
 %\setmainfont[SmallCapsFont]{cmcsc10.mf}
 % 设置无衬线字体为 Computer Modern Unicode Bright 字体族(Opentype 格式).
 %\setsansfont{CMU Sans Serif}
-% 统一使用项目内置的 Noto Sans SC Bold；正文、标题和拉丁字符都采用同一粗体字形。
+% 使用随主题分发的 Noto Sans SC 字体，字体路径由主题文件位置动态解析。
 \setsansfont[
-  Path=./fonts/,
+  Path=\swjtufontpath,
   Extension=.ttf,
   UprightFont=NotoSansSC-Regular,
   BoldFont=NotoSansSC-Bold,
@@ -629,9 +658,9 @@
   \setmathfont{Latin Modern Math}
 \fi\fi
 
-% 中文正文和标题也固定到项目内置的 Noto Sans SC Bold。
+% 中文正文使用常规字重；粗体字形仅在明确请求粗体时使用。
 \setCJKsansfont[
-  Path=./fonts/,
+  Path=\swjtufontpath,
   Extension=.ttf,
   Scale=0.956,
   BoldFont=NotoSansSC-Bold,
@@ -639,12 +668,12 @@
   BoldItalicFont=NotoSansSC-Bold
 ]{NotoSansSC-Regular}
 \setCJKmonofont[
-  Path=./fonts/,Extension=.ttf,Scale=0.956,
+  Path=\swjtufontpath,Extension=.ttf,Scale=0.956,
   BoldFont=NotoSansSC-Bold,ItalicFont=NotoSansSC-Regular,
   BoldItalicFont=NotoSansSC-Bold
 ]{NotoSansSC-Regular}
 \newCJKfontfamily\swjtutitlefont[
-  Path=./fonts/,
+  Path=\swjtufontpath,
   Extension=.ttf,
   BoldFont=NotoSansSC-Bold,
   ItalicFont=NotoSansSC-Bold,
