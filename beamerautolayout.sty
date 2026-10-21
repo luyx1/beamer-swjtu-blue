@@ -432,7 +432,7 @@
   {
     \begin{minipage}[t]{#2}
       \vspace{0pt}
-      \tl_if_blank:cF { g__beamerautolayout_title_#1_tl }
+      \tl_if_empty:cF { g__beamerautolayout_title_#1_tl }
         {
           \par\noindent
           {\color{PrimaryC}
