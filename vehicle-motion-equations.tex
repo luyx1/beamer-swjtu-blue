@@ -40,7 +40,7 @@
   body=22pt,body-leading=27pt,
   card-title=25pt,card-title-leading=29pt,
   diagram=22pt,chart-label=20pt,chart-title=22pt,
-  caption=18pt,table=21pt,
+  caption=18pt,table=22pt,
   large=27pt,larger=31pt,display=35pt
 }
 \renewcommand{\normalsize}{\swjtufont{body}}
@@ -104,8 +104,8 @@
     \begin{minipage}[t][10.65cm][s]{\linewidth}
       \begin{PPTPanel}{车辆动力学组成}
         \PanelBulletsStart
-          \item 车体：承载质量与车体振动
-          \item 转向架：支承、导向与载荷分配
+          \item 车体：承载与车体振动
+          \item 转向架：支承与导向
           \item 轮对：轮轨接触与动力输入
         \PanelBulletsEnd
       \end{PPTPanel}
@@ -118,7 +118,7 @@
       \end{PPTPanel}
       \vfill
       \begin{PPTPanel}{主要动力学参数}
-        质量与转动惯量；悬挂刚度 \(k\)；阻尼 \(c\)。
+        质量、转动惯量；悬挂刚度 \(k\)、阻尼 \(c\)。
       \end{PPTPanel}
     \end{minipage}
   \end{column}
@@ -268,12 +268,12 @@
         \node[font=\swjtufont{diagram},text=IntersperseC] at (3.5,3.65) {\(P(t)\)};
       \end{tikzpicture}
       \PanelBulletsStart
-        \item 给定轴重
-        \item 无车辆振动自由度
+        \item 仅输入轴重
+        \item 无车辆动力自由度
       \PanelBulletsEnd
       \vfill
       {\swjtufont{body}\bfseries 适用：}\par
-      初步桥梁动力计算
+      桥梁初步计算
     \end{PPTPanel}
   \end{column}
   \begin{column}{.24\textwidth}
@@ -289,12 +289,12 @@
         \draw[NormalTextC,line width=1.5pt] (5.9,.65)--(6.3,1.1)--(6.7,.65);
       \end{tikzpicture}
       \PanelBulletsStart
-        \item 考虑移动惯性
-        \item 无悬挂系统描述
+        \item 计入移动惯性
+        \item 不含悬挂振动
       \PanelBulletsEnd
       \vfill
       {\swjtufont{body}\bfseries 适用：}\par
-      移动质量效应分析
+      移动质量效应
     \end{PPTPanel}
   \end{column}
   \begin{column}{.24\textwidth}
@@ -312,7 +312,7 @@
         \draw[NormalTextC,line width=1.5pt] (.2,.65)--(7.0,.65);
       \end{tikzpicture}
       \PanelBulletsStart
-        \item 保留悬挂动力学
+        \item 保留悬挂振动
         \item 少自由度、效率高
       \PanelBulletsEnd
       \vfill
@@ -340,7 +340,7 @@
       \end{tikzpicture}
       \PanelBulletsStart
         \item 多部件、多自由度
-        \item 可描述空间耦合
+        \item 空间耦合响应
       \PanelBulletsEnd
       \vfill
       {\swjtufont{body}\bfseries 适用：}\par
@@ -595,13 +595,13 @@
   \begin{column}{.34\textwidth}
     \begin{minipage}[t][10.65cm][s]{\linewidth}
       \begin{PPTPanel}{研究问题}
-        传统车桥相互作用单元遗漏部分速度相关项。
+        传统 VBI 单元遗漏速度相关项。
       \end{PPTPanel}
       \vfill
       \begin{PPTPanel}{创新方法}
         \PanelBulletsStart
-          \item 以移动接触点描述相对运动
-          \item 纳入桥面斜率与曲率引起的速度效应
+          \item 移动接触点相对运动
+          \item 加入斜率、曲率引起的速度项
         \PanelBulletsEnd
       \end{PPTPanel}
       \vfill
@@ -695,23 +695,23 @@
     \begin{minipage}[t][10.2cm][s]{\linewidth}
       \begin{PPTPanel}{研究问题}
         \PanelBulletsStart
-          \item 三维车轨桥系统时变耦合
-          \item 随机响应呈非平稳、非高斯特征
+          \item 三维车轨桥时变耦合
+          \item 响应非平稳、非高斯
         \PanelBulletsEnd
       \end{PPTPanel}
       \vfill
       \begin{PPTPanel}{创新方法}
         \PanelBulletsStart
-          \item 车辆、轨道、桥梁非迭代分区
-          \item 降维概率密度演化方法（DR-PDEE）
+          \item 车辆/轨道/桥梁非迭代分区
+          \item DR-PDEE 降维概率密度演化
         \PanelBulletsEnd
       \end{PPTPanel}
       \vfill
       \begin{PPTPanel}{主要结论}
         \PanelBulletsStart
-          \item 避免反复组装整体时变矩阵
+          \item 避免反复组装时变总矩阵
           \item 以 10,000 组蒙特卡洛结果验证
-          \item 可描述选定位移响应的概率演化
+          \item 描述位移响应概率演化
         \PanelBulletsEnd
       \end{PPTPanel}
     \end{minipage}
@@ -809,7 +809,7 @@
     \begin{minipage}[t][10.55cm][s]{\linewidth}
       \begin{PPTPanel}{对照计算与敏感性分析}
         \centering
-        \begin{tikzpicture}[x=.95cm,y=.95cm,>=Stealth,line cap=round,line join=round]
+        \begin{tikzpicture}[x=.95cm,y=.85cm,>=Stealth,line cap=round,line join=round]
           % left model
           \fill[PanelFill,rounded corners=3pt] (.3,5.0) rectangle (7.9,6.2);
           \draw[AuxiliaryC,rounded corners=3pt,line width=1.1pt] (.3,5.0) rectangle (7.9,6.2);
