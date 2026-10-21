@@ -31,15 +31,22 @@
 \ProvidesPackage{beamerthemeswjtu}[2025/10/06 v2.1b, SWJTU Beamer Theme(Main Theme)]
 % Resolve bundled assets from the directory used to load this theme,
 % rather than from the caller's working directory.
-% \CurrentFilePath is provided by the LaTeX kernel while this file is read.
-\ifdefined\CurrentFilePath
-  \ifx\CurrentFilePath\@empty
-    \def\swjtuthemedir{./}
+% For a kpathsea-installed theme whose path is hidden by TeX, users may set
+% \SWJTUThemePath before \usetheme, without hard-coding paths in this package.
+\providecommand{\SWJTUThemePath}{}
+\ifx\SWJTUThemePath\@empty
+  \ifdefined\CurrentFilePath
+    \edef\swjtu@currentfilepath{\CurrentFilePath}
+    \ifx\swjtu@currentfilepath\@empty
+      \def\swjtuthemedir{./}
+    \else
+      \edef\swjtuthemedir{\swjtu@currentfilepath/}
+    \fi
   \else
-    \edef\swjtuthemedir{\CurrentFilePath/}
+    \def\swjtuthemedir{./}
   \fi
 \else
-  \def\swjtuthemedir{./}
+  \edef\swjtuthemedir{\SWJTUThemePath/}
 \fi
 \edef\swjtufontpath{\swjtuthemedir fonts/}
 \edef\swjturesourcepath{\swjtuthemedir resources/}
