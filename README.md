@@ -10,6 +10,7 @@
 - beamerstyleswjtu.sty：画幅、字重、字号、行距。
 - beamerautolayout.sty：可选的简单文本网格，默认输出无卡片外框的文字。
 - tests/layout-smoke.tex：组件回归编译示例。
+- tests/portable/main.tex：从独立项目目录编译的资源路径测试。
 
 ## 编译
 
@@ -22,7 +23,9 @@
 
     latexmk -xelatex -interaction=nonstopmode -halt-on-error main.tex
 
-项目内置 Noto Sans SC 字体。默认 CodeDisplay=listing，无需 Python/Pygments 或 shell-escape，使用 minted 时需要额外安装配置。请保留 fonts/ 和 resources/ 目录。
+项目内置 Noto Sans SC 字体。主题会通过 LaTeX 文件搜索解析 `beamerthemeswjtu.sty` 的实际位置，并从同一目录加载 `fonts/` 与 `resources/`，不再依赖运行 XeLaTeX 时的当前工作目录。将整套主题安装到 TeX 搜索路径或通过 `TEXINPUTS` 引用时，请将所有 `.sty` 文件、`fonts/` 和 `resources/` 放在同一主题目录中。用户自己的图片仍优先从项目内的 `image/`、`images/`、`figure/`、`figures/` 和 `resources/` 查找。
+
+默认 `CodeDisplay=listing`，无需 Python/Pygments 或 shell-escape；使用 `minted` 时需要额外安装配置。
 
 ## 最简内容写法
 
@@ -52,6 +55,7 @@
 - beamercolorthemeswjtu.sty：PrimaryC、AuxiliaryC、NormalTextC 等颜色。
 - beamerstyleswjtu.sty：统一的字号与行距配置；正文为 Noto Sans SC Regular，标题用 Bold。
 - SectionTOC=hide：默认不自动在每一章插入目录页；需要时设置 SectionTOC=show。
+- `ClosingPage`：使用左对齐主标题、细线、较小副标题与轻量几何装饰；字体大小由 `closing-title` 和 `closing-subtitle` 统一控制。
 - Miniframes=none：不显示顶部迷你帧。
 
 一页展示一个主问题、一项主要证据或一条核心结论；让公式、曲线和模型优先使用主要版面。main.tex 的示意曲线和科研内容仅用于排版与功能演示，应替换为实际科研数据与结果。
