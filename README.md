@@ -23,7 +23,7 @@
 
     latexmk -xelatex -interaction=nonstopmode -halt-on-error main.tex
 
-项目内置 Noto Sans SC 字体。主题通过 XeLaTeX 的 recorder 文件列表解析 `beamerthemeswjtu.sty` 的实际目录，并从同一目录加载 `fonts/` 与 `resources/`，因此可以从其他工作目录编译。直接运行 XeLaTeX 时请加 `-recorder`；`latexmk -xelatex` 会生成所需的 `.fls` 文件。请将所有 `.sty` 文件、`fonts/` 和 `resources/` 放在同一主题目录中，并确保 TeX 能找到这些 `.sty` 文件。若编译器没有生成 `.fls` 或特殊安装方式仍无法自动定位，可在 `\\usetheme{swjtu}` 之前设置 `\\def\\SWJTUThemePath{../path/to/theme}`（填写实际目录，不要在末尾加斜杠）。用户自己的图片仍优先从项目内的 `image/`、`images/`、`figure/`、`figures/` 和 `resources/` 查找。
+项目内置 Noto Sans SC 字体。主题通过 XeLaTeX 的 recorder 文件列表解析 `beamerthemeswjtu.sty` 的实际目录，并从同一目录加载 `fonts/` 与 `resources/`，因此可以从其他工作目录编译。直接运行 XeLaTeX 时请加 `-recorder`；`latexmk -xelatex` 会生成所需的 `.fls` 文件。请将所有 `.sty` 文件、`fonts/` 和 `resources/` 放在同一主题目录中，并确保 TeX 能找到这些 `.sty` 文件。若编译器没有生成 `.fls` 或特殊安装方式仍无法自动定位，可在 `\usetheme{swjtu}` 之前设置 `\def\SWJTUThemePath{../path/to/theme}`（填写实际目录，不要在末尾加斜杠）。用户自己的图片仍优先从项目内的 `image/`、`images/`、`figure/`、`figures/` 和 `resources/` 查找。
 
 默认 `CodeDisplay=listing`，无需 Python/Pygments 或 shell-escape；使用 `minted` 时需要额外安装配置。
 
