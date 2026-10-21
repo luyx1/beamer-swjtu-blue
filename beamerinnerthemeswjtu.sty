@@ -91,9 +91,9 @@
 \setbeamertemplate{title page}[SWJTU title page theme]
 % ----------------
 
-% ClosingPage：复用统一字体与配色，局部隐藏页眉、页脚和导航。
-% 无参数时使用课题组汇报结束语；两个花括号参数用于自定义文字。
-\NewDocumentCommand{\ClosingPage}{ G{汇报完毕} G{敬请批评指正} }{%
+% ClosingPage：编辑式收尾页，与正文的模块化内容区形成区别。
+% 通过留白、左对齐标题、细线和轻量几何装饰建立层次；不依赖外部图片。
+\NewDocumentCommand{\ClosingPage}{ G{感谢聆听} G{欢迎交流与指正} }{%
   \begingroup
     \setbeamertemplate{background}{}%
     \setbeamercolor{background canvas}{bg=BackgroundC}%
@@ -102,16 +102,61 @@
     \setbeamertemplate{navigation symbols}{}%
     \begin{frame}[plain,noframenumbering]
       \begin{tikzpicture}[remember picture,overlay]
-        \node[anchor=center,inner sep=0pt,outer sep=0pt] at (current page.center) {%
-          \begin{minipage}{.8\paperwidth}
-            \centering
-            {\color{PrimaryC}\swjtufont{closing-title}\bfseries #1\par}%
-            \vspace{7mm}%
-            {\color{AuxiliaryC}\rule{35mm}{0.8pt}\par}%
-            \vspace{7mm}%
-            {\color{TableBodyTextC}\swjtufont{closing-subtitle}\mdseries #2\par}%
-          \end{minipage}%
-        };
+        % Narrow brand rail and a quiet right-side field.
+        \fill[PrimaryC]
+          (current page.north west)
+          rectangle ([xshift=\swjtudim{2pt}]current page.south west);
+        \fill[AuxiliaryC!4]
+          ([xshift=.80\paperwidth]current page.north west)
+          rectangle (current page.south east);
+
+        % Abstract line work adds movement without introducing another card.
+        \draw[AuxiliaryC!22,line width=\swjtudim{.7pt}]
+          ([xshift=.76\paperwidth,yshift=-.24\paperheight]current page.north west)
+          .. controls
+            ([xshift=.83\paperwidth,yshift=-.16\paperheight]current page.north west)
+            and
+            ([xshift=.92\paperwidth,yshift=-.34\paperheight]current page.north west)
+          .. ([xshift=.97\paperwidth,yshift=-.27\paperheight]current page.north west);
+        \draw[AuxiliaryC!16,line width=\swjtudim{.7pt}]
+          ([xshift=.76\paperwidth,yshift=-.34\paperheight]current page.north west)
+          .. controls
+            ([xshift=.84\paperwidth,yshift=-.26\paperheight]current page.north west)
+            and
+            ([xshift=.91\paperwidth,yshift=-.43\paperheight]current page.north west)
+          .. ([xshift=.97\paperwidth,yshift=-.36\paperheight]current page.north west);
+        \draw[AuxiliaryC!12,line width=\swjtudim{.7pt}]
+          ([xshift=.76\paperwidth,yshift=-.44\paperheight]current page.north west)
+          .. controls
+            ([xshift=.84\paperwidth,yshift=-.36\paperheight]current page.north west)
+            and
+            ([xshift=.92\paperwidth,yshift=-.53\paperheight]current page.north west)
+          .. ([xshift=.97\paperwidth,yshift=-.46\paperheight]current page.north west);
+
+        \node[anchor=west,inner sep=0pt]
+          at ([xshift=.105\paperwidth,yshift=-.255\paperheight]current page.north west)
+          {\color{AuxiliaryC}\swjtufont{caption}\bfseries
+            SOUTHWEST JIAOTONG UNIVERSITY};
+
+        \node[anchor=west,align=left,text width=.66\paperwidth,inner sep=0pt]
+          at ([xshift=.105\paperwidth,yshift=-.405\paperheight]current page.north west)
+          {\color{PrimaryC}\swjtufont{closing-title}\bfseries #1};
+
+        \draw[PrimaryC,line width=\swjtudim{1.2pt}]
+          ([xshift=.105\paperwidth,yshift=-.525\paperheight]current page.north west)
+          -- ([xshift=.235\paperwidth,yshift=-.525\paperheight]current page.north west);
+
+        \node[anchor=west,align=left,text width=.66\paperwidth,inner sep=0pt]
+          at ([xshift=.105\paperwidth,yshift=-.605\paperheight]current page.north west)
+          {\color{NormalTextC}\swjtufont{closing-subtitle}\mdseries #2};
+
+        \node[anchor=west,inner sep=0pt]
+          at ([xshift=.105\paperwidth,yshift=-.865\paperheight]current page.north west)
+          {\color{MutedTextC}\swjtufont{caption}\insertinstitute};
+
+        \node[anchor=east,inner sep=0pt]
+          at ([xshift=-.085\paperwidth,yshift=-.865\paperheight]current page.north east)
+          {\color{MutedTextC}\swjtufont{caption}\insertdate};
       \end{tikzpicture}%
     \end{frame}
   \endgroup
