@@ -1,7 +1,7 @@
 % !TeX encoding = UTF-8
 % !TeX TS-program = xelatex
 % 车辆运动方程课堂汇报：独立正文稿
-% 基于仓库现有 SWJTU Beamer 主题；不修改母版文件。
+% 使用通用 Academic Beamer 主题。
 % 仅包含正文区域：无封面、页眉、导航栏、页面标题、页脚及页码。
 % Compile from repository root:
 %   xelatex -interaction=nonstopmode -halt-on-error vehicle-motion-equations.tex
@@ -10,20 +10,20 @@
 \documentclass[UTF8,aspectratio=169]{beamer}
 
 \usetheme[
-  ColorDisplay=BSblue,
+  ColorDisplay=Blue,
   Miniframes=none,
   ContentMuticols=false,
   BIBMode=none,
   Background=false,
   ResearchCardTitleAlign=left,
   SectionTOC=hide
-]{swjtu}
+]{academic}
 
 \usepackage{amsmath,amssymb,mathtools}
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta,calc,positioning,decorations.pathmorphing,patterns}
 
-% Keep the existing SWJTU theme, but suppress all outer-matter elements
+% Suppress outer-matter elements for these body-only slides.
 % for these body-only slides.
 \setbeamertemplate{headline}{}
 \setbeamertemplate{footline}{}
@@ -36,14 +36,14 @@
 
 % Main body typography is 22 pt or larger. Citation text is intentionally
 % secondary but remains comfortably readable on the full-size PPT canvas.
-\swjtusetfonts{
+\academicsetfonts{
   body=22pt,body-leading=27pt,
   card-title=25pt,card-title-leading=29pt,
   diagram=22pt,chart-label=20pt,chart-title=22pt,
   caption=18pt,table=22pt,
   large=27pt,larger=31pt,display=35pt
 }
-\renewcommand{\normalsize}{\swjtufont{body}}
+\renewcommand{\normalsize}{\academicfont{body}}
 \colorlet{PanelFill}{AuxiliaryC!5!white}
 \colorlet{PanelHead}{AuxiliaryC!10!white}
 \colorlet{PanelBorder}{AuxiliaryC!55!white}
@@ -57,7 +57,7 @@
   colbacktitle=PanelHead,
   coltitle=PrimaryC,
   title={#1},
-  fonttitle=\swjtufont{card-title}\bfseries,
+  fonttitle=\academicfont{card-title}\bfseries,
   boxrule=.65pt,
   arc=1.6mm,
   left=2.5mm,right=2.5mm,
@@ -133,7 +133,7 @@
           \filldraw[fill=white,draw=AuxiliaryC,line width=.7pt]
             (\x,6.15) rectangle ++(1.15,.48);
         }
-        \node[font=\swjtufont{diagram}\bfseries,text=PrimaryC] at (9.2,6.65) {车体};
+        \node[font=\academicfont{diagram}\bfseries,text=PrimaryC] at (9.2,6.65) {车体};
         % Secondary suspensions
         \foreach \x in {3.7,5.0,13.3,14.6}{
           \draw[IntersperseC,line width=1.2pt]
@@ -142,7 +142,7 @@
         }
         \draw[MutedTextC,line width=1pt] (2.5,4.35) rectangle (6.2,4.65);
         \draw[MutedTextC,line width=1pt] (12.1,4.35) rectangle (15.8,4.65);
-        \node[font=\swjtufont{diagram},text=NormalTextC] at (9.2,4.0) {转向架};
+        \node[font=\academicfont{diagram},text=NormalTextC] at (9.2,4.0) {转向架};
         % Primary suspensions and wheels
         \foreach \x in {3.0,4.4,12.6,14.0}{
           \draw[SecondaryAuxiliaryC,line width=1.2pt]
@@ -157,12 +157,12 @@
         \foreach \x in {1.0,2.2,...,17.6}{
           \draw[MutedTextC,line width=.9pt] (\x,2.1)--++(.38,.3);
         }
-        \node[font=\swjtufont{diagram},text=SecondaryAuxiliaryC] at (9.2,1.55) {轮轨接触};
+        \node[font=\academicfont{diagram},text=SecondaryAuxiliaryC] at (9.2,1.55) {轮轨接触};
         \draw[->,IntersperseC,line width=1.2pt] (9.2,1.72)--(9.2,2.55);
-        \node[font=\swjtufont{caption},text=IntersperseC,anchor=west] at (9.5,2.0) {轮轨力};
-        \node[font=\swjtufont{caption},text=NormalTextC] at (2.2,5.0) {二系悬挂};
-        \node[font=\swjtufont{caption},text=NormalTextC] at (2.1,3.65) {一系悬挂};
-        \node[font=\swjtufont{caption},text=NormalTextC] at (16.4,3.0) {轮对};
+        \node[font=\academicfont{caption},text=IntersperseC,anchor=west] at (9.5,2.0) {轮轨力};
+        \node[font=\academicfont{caption},text=NormalTextC] at (2.2,5.0) {二系悬挂};
+        \node[font=\academicfont{caption},text=NormalTextC] at (2.1,3.65) {一系悬挂};
+        \node[font=\academicfont{caption},text=NormalTextC] at (16.4,3.0) {轮对};
       \end{tikzpicture}
     \end{PPTPanel}
   \end{column}
@@ -219,22 +219,22 @@
         \draw[PrimaryC,line width=1.3pt] (6.2,3.4)--(9.0,3.4)--(10.0,4.2)--(10.0,6.0)--(7.2,6.0)--(6.2,5.2)--cycle;
         \draw[PrimaryC,line width=1.1pt] (6.2,5.2)--(9.0,5.2)--(10.0,6.0);
         \draw[PrimaryC,line width=1.1pt] (9.0,3.4)--(9.0,5.2);
-        \node[font=\swjtufont{diagram}\bfseries,text=PrimaryC] at (8.0,4.65) {车辆刚体};
+        \node[font=\academicfont{diagram}\bfseries,text=PrimaryC] at (8.0,4.65) {车辆刚体};
         % translation axes
         \draw[->,AuxiliaryC,line width=1.5pt] (6.2,3.4)--(3.5,3.4)
-          node[left,font=\swjtufont{diagram},text=AuxiliaryC] {\(x\)};
+          node[left,font=\academicfont{diagram},text=AuxiliaryC] {\(x\)};
         \draw[->,AuxiliaryC,line width=1.5pt] (6.2,3.4)--(7.7,2.0)
-          node[right,font=\swjtufont{diagram},text=AuxiliaryC] {\(y\)};
+          node[right,font=\academicfont{diagram},text=AuxiliaryC] {\(y\)};
         \draw[->,AuxiliaryC,line width=1.5pt] (6.2,3.4)--(6.2,1.0)
-          node[below,font=\swjtufont{diagram},text=AuxiliaryC] {\(z\)};
+          node[below,font=\academicfont{diagram},text=AuxiliaryC] {\(z\)};
         % rotational arrows
         \draw[->,IntersperseC,line width=1.3pt] (4.0,5.5) arc[start angle=210,end angle=500,radius=.65];
-        \node[font=\swjtufont{diagram},text=IntersperseC] at (3.8,6.25) {\(\phi\)};
+        \node[font=\academicfont{diagram},text=IntersperseC] at (3.8,6.25) {\(\phi\)};
         \draw[->,IntersperseC,line width=1.3pt] (11.3,4.8) arc[start angle=40,end angle=330,radius=.62];
-        \node[font=\swjtufont{diagram},text=IntersperseC] at (12.1,5.45) {\(\theta\)};
+        \node[font=\academicfont{diagram},text=IntersperseC] at (12.1,5.45) {\(\theta\)};
         \draw[->,IntersperseC,line width=1.3pt] (11.3,2.3) arc[start angle=25,end angle=315,radius=.62];
-        \node[font=\swjtufont{diagram},text=IntersperseC] at (12.1,1.9) {\(\psi\)};
-        \node[font=\swjtufont{body},text=NormalTextC,align=center] at (8.0,.25)
+        \node[font=\academicfont{diagram},text=IntersperseC] at (12.1,1.9) {\(\psi\)};
+        \node[font=\academicfont{body},text=NormalTextC,align=center] at (8.0,.25)
           {三个平移自由度 \hspace{1em} 三个转动自由度};
       \end{tikzpicture}
     \end{PPTPanel}
@@ -265,14 +265,14 @@
         \draw[NormalTextC,line width=1.5pt] (5.9,.65)--(6.3,1.1)--(6.7,.65);
         \draw[->,IntersperseC,line width=1.5pt] (2.5,3.3)--(2.5,1.35);
         \draw[->,IntersperseC,line width=1.5pt] (4.5,3.3)--(4.5,1.35);
-        \node[font=\swjtufont{diagram},text=IntersperseC] at (3.5,3.65) {\(P(t)\)};
+        \node[font=\academicfont{diagram},text=IntersperseC] at (3.5,3.65) {\(P(t)\)};
       \end{tikzpicture}
       \PanelBulletsStart
         \item 仅输入轴重
         \item 无车辆动力自由度
       \PanelBulletsEnd
       \vfill
-      {\swjtufont{body}\bfseries 适用：}\par
+      {\academicfont{body}\bfseries 适用：}\par
       桥梁初步计算
     \end{PPTPanel}
   \end{column}
@@ -282,7 +282,7 @@
       \begin{tikzpicture}[x=.82cm,y=.82cm,>=Stealth]
         \fill[PanelFill] (2.2,2.0) rectangle (4.5,3.5);
         \draw[AuxiliaryC,line width=1.2pt] (2.2,2.0) rectangle (4.5,3.5);
-        \node[font=\swjtufont{diagram},text=PrimaryC] at (3.35,2.75) {\(m\)};
+        \node[font=\academicfont{diagram},text=PrimaryC] at (3.35,2.75) {\(m\)};
         \draw[->,IntersperseC,line width=1.4pt] (3.35,1.9)--(3.35,1.2);
         \draw[NormalTextC,line width=1.5pt] (.2,1.1)--(7.0,1.1);
         \draw[NormalTextC,line width=1.5pt] (.5,.65)--(.9,1.1)--(1.3,.65);
@@ -293,7 +293,7 @@
         \item 不含悬挂振动
       \PanelBulletsEnd
       \vfill
-      {\swjtufont{body}\bfseries 适用：}\par
+      {\academicfont{body}\bfseries 适用：}\par
       移动质量效应
     \end{PPTPanel}
   \end{column}
@@ -303,12 +303,12 @@
       \begin{tikzpicture}[x=.82cm,y=.82cm,>=Stealth]
         \fill[PanelFill] (2.0,3.1) rectangle (4.8,4.0);
         \draw[AuxiliaryC,line width=1.1pt] (2.0,3.1) rectangle (4.8,4.0);
-        \node[font=\swjtufont{diagram}] at (3.4,3.55) {\(m_s\)};
+        \node[font=\academicfont{diagram}] at (3.4,3.55) {\(m_s\)};
         \draw[IntersperseC,line width=1.2pt] (2.7,3.1)--(2.7,2.85)--++(.18,-.12)--++(-.36,-.16)--++(.36,-.16)--++(-.36,-.16)--(2.7,2.15);
         \draw[SecondaryAuxiliaryC,line width=1.2pt] (4.0,3.1)--(4.0,2.8)--(3.8,2.8)--(3.8,2.35)--(4.2,2.35)--(4.2,2.8)--(4.0,2.8)--(4.0,2.15);
         \fill[PanelFill] (2.0,1.25) rectangle (4.8,2.05);
         \draw[AuxiliaryC,line width=1.1pt] (2.0,1.25) rectangle (4.8,2.05);
-        \node[font=\swjtufont{diagram}] at (3.4,1.65) {\(m_u\)};
+        \node[font=\academicfont{diagram}] at (3.4,1.65) {\(m_u\)};
         \draw[NormalTextC,line width=1.5pt] (.2,.65)--(7.0,.65);
       \end{tikzpicture}
       \PanelBulletsStart
@@ -316,7 +316,7 @@
         \item 少自由度、效率高
       \PanelBulletsEnd
       \vfill
-      {\swjtufont{body}\bfseries 适用：}\par
+      {\academicfont{body}\bfseries 适用：}\par
       基础车桥耦合
     \end{PPTPanel}
   \end{column}
@@ -326,7 +326,7 @@
       \begin{tikzpicture}[x=.82cm,y=.82cm,>=Stealth]
         \fill[PanelFill,rounded corners=3pt] (.5,3.1) rectangle (6.6,4.0);
         \draw[AuxiliaryC,rounded corners=3pt,line width=1.1pt] (.5,3.1) rectangle (6.6,4.0);
-        \node[font=\swjtufont{diagram}] at (3.55,3.55) {车体};
+        \node[font=\academicfont{diagram}] at (3.55,3.55) {车体};
         \draw[IntersperseC,line width=1.1pt] (1.4,3.1)--(1.4,2.7);
         \draw[IntersperseC,line width=1.1pt] (5.6,3.1)--(5.6,2.7);
         \fill[AuxiliaryC!10] (1.0,2.2) rectangle (2.2,2.7);
@@ -343,7 +343,7 @@
         \item 空间耦合响应
       \PanelBulletsEnd
       \vfill
-      {\swjtufont{body}\bfseries 适用：}\par
+      {\academicfont{body}\bfseries 适用：}\par
       复杂车辆与轨桥响应
     \end{PPTPanel}
   \end{column}
@@ -390,9 +390,9 @@
       \begin{tikzpicture}[x=1cm,y=1.15cm,>=Stealth,line cap=round,line join=round]
         \fill[PanelFill,rounded corners=3pt] (4.1,5.3) rectangle (10.8,6.6);
         \draw[AuxiliaryC,rounded corners=3pt,line width=1.4pt] (4.1,5.3) rectangle (10.8,6.6);
-        \node[font=\swjtufont{larger}\bfseries,text=PrimaryC] at (7.45,5.95) {\(m_s\)};
+        \node[font=\academicfont{larger}\bfseries,text=PrimaryC] at (7.45,5.95) {\(m_s\)};
         \draw[->,AuxiliaryC,line width=1.3pt] (11.3,6.2)--(11.3,5.35)
-          node[right,font=\swjtufont{diagram},text=AuxiliaryC] {\(z_s\)};
+          node[right,font=\academicfont{diagram},text=AuxiliaryC] {\(z_s\)};
         % spring
         \draw[IntersperseC,line width=1.6pt]
           (5.7,5.3)--(5.7,5.05)--++(.22,-.15)--++(-.44,-.22)
@@ -402,13 +402,13 @@
         \draw[SecondaryAuxiliaryC,line width=1.4pt] (8.5,5.3)--(8.5,4.95);
         \draw[SecondaryAuxiliaryC,line width=1.4pt] (8.15,4.95) rectangle (8.85,4.45);
         \draw[SecondaryAuxiliaryC,line width=1.4pt] (8.5,4.45)--(8.5,3.8);
-        \node[font=\swjtufont{diagram},text=IntersperseC] at (4.6,4.7) {\(k_s\)};
-        \node[font=\swjtufont{diagram},text=SecondaryAuxiliaryC] at (9.2,4.7) {\(c_s\)};
+        \node[font=\academicfont{diagram},text=IntersperseC] at (4.6,4.7) {\(k_s\)};
+        \node[font=\academicfont{diagram},text=SecondaryAuxiliaryC] at (9.2,4.7) {\(c_s\)};
         \fill[PanelFill,rounded corners=3pt] (4.1,2.5) rectangle (10.8,3.8);
         \draw[AuxiliaryC,rounded corners=3pt,line width=1.4pt] (4.1,2.5) rectangle (10.8,3.8);
-        \node[font=\swjtufont{larger}\bfseries,text=PrimaryC] at (7.45,3.15) {\(m_u\)};
+        \node[font=\academicfont{larger}\bfseries,text=PrimaryC] at (7.45,3.15) {\(m_u\)};
         \draw[->,AuxiliaryC,line width=1.3pt] (11.3,3.4)--(11.3,2.55)
-          node[right,font=\swjtufont{diagram},text=AuxiliaryC] {\(z_u\)};
+          node[right,font=\academicfont{diagram},text=AuxiliaryC] {\(z_u\)};
         % wheel and rail
         \filldraw[fill=white,draw=PrimaryC,line width=1.4pt] (7.45,1.65) circle (.55);
         \filldraw[fill=PanelFill,draw=AuxiliaryC,line width=1pt] (7.45,1.65) circle (.2);
@@ -417,8 +417,8 @@
           \draw[MutedTextC,line width=.8pt] (\x,.68)--++(.35,.34);
         }
         \draw[->,IntersperseC,line width=1.8pt] (7.45,.98)--(7.45,2.4);
-        \node[font=\swjtufont{diagram}\bfseries,text=IntersperseC,anchor=west] at (8.0,1.45) {\(\Delta F_N\)};
-        \node[font=\swjtufont{diagram},text=NormalTextC] at (7.4,.25) {轨道侧输入};
+        \node[font=\academicfont{diagram}\bfseries,text=IntersperseC,anchor=west] at (8.0,1.45) {\(\Delta F_N\)};
+        \node[font=\academicfont{diagram},text=NormalTextC] at (7.4,.25) {轨道侧输入};
       \end{tikzpicture}
     \end{PPTPanel}
   \end{column}
@@ -445,7 +445,7 @@
       \begin{tikzpicture}[x=.75cm,y=.75cm,>=Stealth,line cap=round,line join=round]
         \fill[PanelFill] (1.0,5.2) rectangle (7.3,6.3);
         \draw[AuxiliaryC,line width=1.1pt] (1.0,5.2) rectangle (7.3,6.3);
-        \node[font=\swjtufont{diagram}] at (4.15,5.75) {\(m_s\)};
+        \node[font=\academicfont{diagram}] at (4.15,5.75) {\(m_s\)};
         \draw[IntersperseC,line width=1.4pt]
           (2.6,5.2)--(2.6,4.95)--++(.18,-.14)--++(-.36,-.18)
           --++(.36,-.18)--++(-.36,-.18)--(2.6,4.0);
@@ -454,16 +454,16 @@
         \draw[SecondaryAuxiliaryC,line width=1.4pt] (5.1,4.35)--(5.1,4.0);
         \fill[PanelFill] (1.0,2.6) rectangle (7.3,4.0);
         \draw[AuxiliaryC,line width=1.1pt] (1.0,2.6) rectangle (7.3,4.0);
-        \node[font=\swjtufont{diagram}] at (4.15,3.3) {\(m_u\)};
+        \node[font=\academicfont{diagram}] at (4.15,3.3) {\(m_u\)};
         \draw[->,IntersperseC,line width=1.5pt] (4.15,1.0)--(4.15,2.45);
-        \node[font=\swjtufont{diagram},text=IntersperseC,anchor=west] at (4.45,1.55) {\(-\Delta F_N\)};
-        \node[font=\swjtufont{diagram},text=IntersperseC] at (1.9,4.55) {\(k_s\)};
-        \node[font=\swjtufont{diagram},text=SecondaryAuxiliaryC] at (5.9,4.55) {\(c_s\)};
+        \node[font=\academicfont{diagram},text=IntersperseC,anchor=west] at (4.45,1.55) {\(-\Delta F_N\)};
+        \node[font=\academicfont{diagram},text=IntersperseC] at (1.9,4.55) {\(k_s\)};
+        \node[font=\academicfont{diagram},text=SecondaryAuxiliaryC] at (5.9,4.55) {\(c_s\)};
         \draw[->,AuxiliaryC,line width=1.1pt] (7.55,5.95)--(7.55,5.0)
-          node[right,font=\swjtufont{diagram}] {\(z_s\)};
+          node[right,font=\academicfont{diagram}] {\(z_s\)};
         \draw[->,AuxiliaryC,line width=1.1pt] (7.55,3.7)--(7.55,2.75)
-          node[right,font=\swjtufont{diagram}] {\(z_u\)};
-        \node[font=\swjtufont{caption},text=MutedTextC,align=center] at (4.15,.35)
+          node[right,font=\academicfont{diagram}] {\(z_u\)};
+        \node[font=\academicfont{caption},text=MutedTextC,align=center] at (4.15,.35)
           {向下为正；接触力增量向上为正};
       \end{tikzpicture}
     \end{PPTPanel}
@@ -543,29 +543,29 @@
         % train body and suspension
         \fill[PanelFill,rounded corners=3pt] (1.0,5.5) rectangle (16.8,6.8);
         \draw[AuxiliaryC,rounded corners=3pt,line width=1.2pt] (1.0,5.5) rectangle (16.8,6.8);
-        \node[font=\swjtufont{diagram}\bfseries,text=PrimaryC] at (8.9,6.15) {车辆子系统};
+        \node[font=\academicfont{diagram}\bfseries,text=PrimaryC] at (8.9,6.15) {车辆子系统};
         \draw[IntersperseC,line width=1.2pt] (4.5,5.5)--(4.5,4.8)--++(.18,-.12)--++(-.36,-.15)--++(.36,-.15)--(4.5,4.1);
         \draw[SecondaryAuxiliaryC,line width=1.2pt] (5.7,5.5)--(5.7,5.0)--(5.35,5.0)--(5.35,4.5)--(6.05,4.5)--(6.05,5.0)--(5.7,5.0)--(5.7,4.1);
         \fill[PanelFill] (3.0,3.4) rectangle (7.3,4.1);
         \draw[AuxiliaryC,line width=1.2pt] (3.0,3.4) rectangle (7.3,4.1);
-        \node[font=\swjtufont{diagram},text=PrimaryC] at (5.15,3.75) {轮对};
+        \node[font=\academicfont{diagram},text=PrimaryC] at (5.15,3.75) {轮对};
         \filldraw[fill=white,draw=PrimaryC,line width=1.1pt] (5.15,2.8) circle (.42);
         % rail
         \draw[NormalTextC,line width=2.2pt] (.5,2.15)--(17.2,2.15);
         \draw[AuxiliaryC,line width=1.2pt,dashed] (.5,2.0)--(17.2,2.0);
-        \node[font=\swjtufont{diagram},text=AuxiliaryC,anchor=west] at (13.4,2.5) {钢轨位移 \(z_r(x,t)\)};
+        \node[font=\academicfont{diagram},text=AuxiliaryC,anchor=west] at (13.4,2.5) {钢轨位移 \(z_r(x,t)\)};
         \draw[IntersperseC,decorate,decoration={snake,amplitude=.8mm,segment length=4mm},line width=1.1pt]
           (.5,2.9)--(17.2,2.9);
-        \node[font=\swjtufont{diagram},text=IntersperseC,anchor=west] at (12.5,3.2) {不平顺 \(r(x)\)};
+        \node[font=\academicfont{diagram},text=IntersperseC,anchor=west] at (12.5,3.2) {不平顺 \(r(x)\)};
         % bridge beam and deformation
         \fill[PanelFill] (1.2,.3) rectangle (16.5,.8);
         \draw[AuxiliaryC,line width=1.2pt] (1.2,.3) rectangle (16.5,.8);
         \draw[AuxiliaryC,line width=1.2pt] (1.2,.8) .. controls (5.0,.3) and (12.0,.3) .. (16.5,.8);
         \draw[->,IntersperseC,line width=1.5pt] (5.15,3.2)--(5.15,2.05);
-        \node[font=\swjtufont{diagram},text=IntersperseC,anchor=west] at (5.55,2.55) {\(\Delta F_N\)};
+        \node[font=\academicfont{diagram},text=IntersperseC,anchor=west] at (5.55,2.55) {\(\Delta F_N\)};
         \draw[->,AuxiliaryC,line width=1.3pt] (9.0,.95)--(9.0,1.75);
-        \node[font=\swjtufont{diagram},text=AuxiliaryC,anchor=west] at (9.35,1.2) {桥梁变形 \(w(x,t)\)};
-        \node[font=\swjtufont{diagram}\bfseries,text=PrimaryC] at (8.8,.05) {桥梁子系统};
+        \node[font=\academicfont{diagram},text=AuxiliaryC,anchor=west] at (9.35,1.2) {桥梁变形 \(w(x,t)\)};
+        \node[font=\academicfont{diagram}\bfseries,text=PrimaryC] at (8.8,.05) {桥梁子系统};
       \end{tikzpicture}
     \end{PPTPanel}
   \end{column}
@@ -624,17 +624,17 @@
           \foreach \x in {1.0,2.5,4.0,5.5,7.0,8.5,10.0,11.5,13.0,14.5,16.0}{
             \draw[AuxiliaryC,line width=.7pt] (\x,4.65) rectangle ++(1.0,.48);
           }
-          \node[font=\swjtufont{diagram}\bfseries,text=PrimaryC] at (9.0,5.2) {移动车辆};
+          \node[font=\academicfont{diagram}\bfseries,text=PrimaryC] at (9.0,5.2) {移动车辆};
           \draw[NormalTextC,line width=2pt] (.5,4.15)--(17.5,4.15);
           \draw[AuxiliaryC,line width=1.2pt] (.5,3.2) .. controls (5.0,2.7) and (12.5,2.7) .. (17.5,3.2);
           \draw[AuxiliaryC,dashed,line width=1pt] (.5,3.2)--(17.5,3.2);
           \draw[->,IntersperseC,line width=1.4pt] (8.7,6.0)--(11.0,6.0)
-            node[midway,above,font=\swjtufont{diagram},text=IntersperseC] {\(v\)};
+            node[midway,above,font=\academicfont{diagram},text=IntersperseC] {\(v\)};
           \filldraw[fill=white,draw=IntersperseC,line width=1.3pt] (8.7,4.15) circle (.12);
           \draw[->,IntersperseC,line width=1.1pt] (8.7,4.05)--(8.7,3.45);
-          \node[font=\swjtufont{diagram},text=IntersperseC,anchor=west] at (9.0,3.65) {\(x_c=vt\)};
-          \node[font=\swjtufont{diagram},text=AuxiliaryC,anchor=west] at (11.0,2.75) {\(w(x,t)\)};
-          \node[font=\swjtufont{diagram},text=PrimaryC,anchor=west] at (.8,2.45)
+          \node[font=\academicfont{diagram},text=IntersperseC,anchor=west] at (9.0,3.65) {\(x_c=vt\)};
+          \node[font=\academicfont{diagram},text=AuxiliaryC,anchor=west] at (11.0,2.75) {\(w(x,t)\)};
+          \node[font=\academicfont{diagram},text=PrimaryC,anchor=west] at (.8,2.45)
             {\(\theta=\partial w/\partial x,\quad \kappa=\partial^2w/\partial x^2\)};
         \end{tikzpicture}
       \end{PPTPanel}
@@ -644,8 +644,8 @@
         \begin{PPTPanel}{时变频率}
           \centering
           \begin{tikzpicture}[x=.9cm,y=.75cm,>=Stealth]
-            \draw[->,NormalTextC] (.2,.3)--(7.4,.3) node[right,font=\swjtufont{diagram}] {\(t\)};
-            \draw[->,NormalTextC] (.2,.3)--(.2,2.5) node[above,font=\swjtufont{diagram}] {\(f(t)\)};
+            \draw[->,NormalTextC] (.2,.3)--(7.4,.3) node[right,font=\academicfont{diagram}] {\(t\)};
+            \draw[->,NormalTextC] (.2,.3)--(.2,2.5) node[above,font=\academicfont{diagram}] {\(f(t)\)};
             \draw[AuxiliaryC,line width=1.5pt] plot[smooth] coordinates
               {(.4,.55)(1.2,.8)(2.0,1.9)(2.8,1.1)(3.8,.6)(4.8,1.0)(5.7,1.8)(6.8,.65)};
             \draw[MutedTextC,dashed,line width=1.2pt] plot[smooth] coordinates
@@ -657,8 +657,8 @@
         \begin{PPTPanel}{瞬时阻尼比}
           \centering
           \begin{tikzpicture}[x=.9cm,y=.75cm,>=Stealth]
-            \draw[->,NormalTextC] (.2,.3)--(7.4,.3) node[right,font=\swjtufont{diagram}] {\(t\)};
-            \draw[->,NormalTextC] (.2,.3)--(.2,2.5) node[above,font=\swjtufont{diagram}] {\(\zeta(t)\)};
+            \draw[->,NormalTextC] (.2,.3)--(7.4,.3) node[right,font=\academicfont{diagram}] {\(t\)};
+            \draw[->,NormalTextC] (.2,.3)--(.2,2.5) node[above,font=\academicfont{diagram}] {\(\zeta(t)\)};
             \draw[AuxiliaryC,line width=1.5pt] plot[smooth] coordinates
               {(.4,1.0)(1.2,.7)(2.0,1.2)(2.8,.85)(3.8,1.75)(4.8,.9)(5.7,1.25)(6.8,.75)};
             \draw[MutedTextC,dashed,line width=1.2pt] plot[smooth] coordinates
@@ -675,7 +675,7 @@
   \textcolor{PrimaryC}{研究启示：}移动接触运动学 \(\longrightarrow\) 速度相关项
   \(\longrightarrow\) 时变频率与阻尼
   \par
-  {\swjtufont{caption}\color{MutedTextC}
+  {\academicfont{caption}\color{MutedTextC}
   Shi et al., \emph{Mechanical Systems and Signal Processing}, 257 (2026), 114595.
   \href{https://doi.org/10.1016/j.ymssp.2026.114595}{DOI: 10.1016/j.ymssp.2026.114595}.
   曲线为概念示意，非论文原始数据。}
@@ -724,24 +724,24 @@
           % vehicle
           \fill[PanelFill,rounded corners=3pt] (.5,5.3) rectangle (15.8,6.2);
           \draw[AuxiliaryC,rounded corners=3pt,line width=1.1pt] (.5,5.3) rectangle (15.8,6.2);
-          \node[font=\swjtufont{diagram}\bfseries,text=PrimaryC] at (8.1,5.75) {车辆子系统：7 个刚体};
+          \node[font=\academicfont{diagram}\bfseries,text=PrimaryC] at (8.1,5.75) {车辆子系统：7 个刚体};
           \foreach \x in {2.0,4.2,6.4,8.6,10.8,13.0,15.0}{
             \filldraw[fill=white,draw=PrimaryC,line width=.8pt] (\x,4.95) circle (.22);
           }
           % track
           \fill[PanelFill] (.5,3.65) rectangle (15.8,4.25);
           \draw[AuxiliaryC,line width=1.1pt] (.5,3.65) rectangle (15.8,4.25);
-          \node[font=\swjtufont{diagram}\bfseries,text=PrimaryC] at (8.1,3.95) {轨道子系统：钢轨与轨道支承};
+          \node[font=\academicfont{diagram}\bfseries,text=PrimaryC] at (8.1,3.95) {轨道子系统：钢轨与轨道支承};
           % bridge
           \fill[AuxiliaryC!8] (.5,1.8) rectangle (15.8,2.5);
           \draw[AuxiliaryC,line width=1.1pt] (.5,1.8) rectangle (15.8,2.5);
-          \node[font=\swjtufont{diagram}\bfseries,text=PrimaryC] at (8.1,2.15) {桥梁子系统：结构动力模型};
+          \node[font=\academicfont{diagram}\bfseries,text=PrimaryC] at (8.1,2.15) {桥梁子系统：结构动力模型};
           % interfaces
           \draw[<->,IntersperseC,line width=1.6pt] (8.1,4.85)--(8.1,4.32);
-          \node[font=\swjtufont{caption},text=IntersperseC,anchor=west] at (8.4,4.55) {时变轮轨接口};
+          \node[font=\academicfont{caption},text=IntersperseC,anchor=west] at (8.4,4.55) {时变轮轨接口};
           \draw[<->,SecondaryAuxiliaryC,line width=1.6pt] (8.1,3.6)--(8.1,2.55);
-          \node[font=\swjtufont{caption},text=SecondaryAuxiliaryC,anchor=west] at (8.4,3.0) {轨桥接口};
-          \node[font=\swjtufont{diagram},text=NormalTextC,anchor=west] at (.7,1.15)
+          \node[font=\academicfont{caption},text=SecondaryAuxiliaryC,anchor=west] at (8.4,3.0) {轨桥接口};
+          \node[font=\academicfont{diagram},text=NormalTextC,anchor=west] at (.7,1.15)
             {车辆模型：51 自由度（含附加轮轨接口自由度）};
         \end{tikzpicture}
       \end{PPTPanel}
@@ -749,13 +749,13 @@
       \begin{PPTPanel}{随机响应的概率密度演化（方法示意）}
         \centering
         \begin{tikzpicture}[x=1cm,y=.8cm,>=Stealth]
-          \draw[->,NormalTextC] (.1,.25)--(16.0,.25) node[right,font=\swjtufont{diagram}] {\(t\)};
+          \draw[->,NormalTextC] (.1,.25)--(16.0,.25) node[right,font=\academicfont{diagram}] {\(t\)};
           % Explicit bell curves, plotted in local coordinates for robustness.
           \draw[AuxiliaryC,line width=1.4pt] plot[domain=0:3.6,samples=55] (\x,{.25+1.15*exp(-((\x-1.8)^2)/.38)});
           \draw[SecondaryAuxiliaryC,line width=1.4pt] plot[domain=3.6:7.2,samples=55] (\x,{.25+1.45*exp(-((\x-5.4)^2)/.55)});
           \draw[IntersperseC,line width=1.4pt] plot[domain=7.2:10.8,samples=55] (\x,{.25+1.20*exp(-((\x-9.0)^2)/.48)});
           \draw[AlertedTextC,line width=1.4pt] plot[domain=10.8:14.8,samples=55] (\x,{.25+1.65*exp(-((\x-12.8)^2)/.60)});
-          \node[font=\swjtufont{diagram},text=NormalTextC] at (8.0,2.55) {\(p(w,t)\)};
+          \node[font=\academicfont{diagram},text=NormalTextC] at (8.0,2.55) {\(p(w,t)\)};
         \end{tikzpicture}
       \end{PPTPanel}
     \end{minipage}
@@ -766,7 +766,7 @@
   \centering
   车辆运动方程 \(\longrightarrow\) 子系统分区耦合 \(\longrightarrow\) 随机响应概率演化
   \par
-  {\swjtufont{caption}\color{MutedTextC}
+  {\academicfont{caption}\color{MutedTextC}
   Yuan \& Luo, \emph{Mechanical Systems and Signal Processing}, 259 (2026), 114850.
   \href{https://doi.org/10.1016/j.ymssp.2026.114850}{DOI: 10.1016/j.ymssp.2026.114850}.
   概率曲线为方法示意，非论文原始数据。}
@@ -813,30 +813,30 @@
           % left model
           \fill[PanelFill,rounded corners=3pt] (.3,5.0) rectangle (7.9,6.2);
           \draw[AuxiliaryC,rounded corners=3pt,line width=1.1pt] (.3,5.0) rectangle (7.9,6.2);
-          \node[font=\swjtufont{card-title}\bfseries,text=PrimaryC] at (4.1,5.8) {基准模型};
-          \node[font=\swjtufont{diagram},text=NormalTextC] at (4.1,5.35) {常规接触运动学};
+          \node[font=\academicfont{card-title}\bfseries,text=PrimaryC] at (4.1,5.8) {基准模型};
+          \node[font=\academicfont{diagram},text=NormalTextC] at (4.1,5.35) {常规接触运动学};
           % right model
           \fill[SoftGreen,rounded corners=3pt] (9.5,5.0) rectangle (17.1,6.2);
           \draw[SecondaryAuxiliaryC,rounded corners=3pt,line width=1.1pt] (9.5,5.0) rectangle (17.1,6.2);
-          \node[font=\swjtufont{card-title}\bfseries,text=PrimaryC] at (13.3,5.8) {改进模型};
-          \node[font=\swjtufont{diagram},text=NormalTextC] at (13.3,5.35) {显式保留速度项};
+          \node[font=\academicfont{card-title}\bfseries,text=PrimaryC] at (13.3,5.8) {改进模型};
+          \node[font=\academicfont{diagram},text=NormalTextC] at (13.3,5.35) {显式保留速度项};
           \draw[->,AuxiliaryC,line width=1.5pt] (8.0,5.6)--(9.4,5.6);
           % shared inputs
           \fill[PanelFill,rounded corners=3pt] (2.0,3.5) rectangle (15.5,4.35);
           \draw[AuxiliaryC!60!white,rounded corners=3pt] (2.0,3.5) rectangle (15.5,4.35);
-          \node[font=\swjtufont{diagram},text=PrimaryC] at (8.75,3.92)
+          \node[font=\academicfont{diagram},text=PrimaryC] at (8.75,3.92)
             {同一车速、桥跨、车辆参数与轨道不平顺样本};
           \draw[->,AuxiliaryC,line width=1.3pt] (4.1,5.0)--(4.1,4.4);
           \draw[->,AuxiliaryC,line width=1.3pt] (13.3,5.0)--(13.3,4.4);
           % outputs
           \draw[->,IntersperseC,line width=1.3pt] (5.0,3.45)--(5.0,2.8);
           \draw[->,IntersperseC,line width=1.3pt] (12.5,3.45)--(12.5,2.8);
-          \node[font=\swjtufont{diagram},text=IntersperseC,align=center] at (5.0,2.25)
+          \node[font=\academicfont{diagram},text=IntersperseC,align=center] at (5.0,2.25)
             {桥梁位移与加速度\\轮轨力};
-          \node[font=\swjtufont{diagram},text=IntersperseC,align=center] at (12.5,2.25)
+          \node[font=\academicfont{diagram},text=IntersperseC,align=center] at (12.5,2.25)
             {概率分布与高分位数\\计算耗时};
           \draw[<->,PrimaryC,line width=1.5pt] (5.9,1.1)--(11.6,1.1);
-          \node[font=\swjtufont{diagram}\bfseries,text=PrimaryC] at (8.75,.55)
+          \node[font=\academicfont{diagram}\bfseries,text=PrimaryC] at (8.75,.55)
             {误差敏感性与适用边界};
         \end{tikzpicture}
       \end{PPTPanel}
