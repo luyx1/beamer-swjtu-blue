@@ -1,17 +1,17 @@
 % !TeX encoding = UTF-8
 % !TeX TS-program = xelatex
-% 西南交通大学 Beamer 模板主示例
+% 通用 Beamer 模板主示例
 
 \documentclass[hyperref, UTF8, CJK, aspectratio=169]{beamer}
 
-% --------西南交通大学 Beamer 主题--------
+% --------通用 Beamer 主题--------
 \usetheme[
-  ColorDisplay=BSblue,
+  ColorDisplay=Blue,
   Miniframes=follow,
   ContentMuticols=true,
   BIBMode=none,
   Background=false,
-]{swjtu}
+]{academic}
 
 \usepackage{amsmath,amssymb}
 \usepackage{booktabs}
@@ -19,16 +19,16 @@
 \usepackage{tabularx}
 \usepackage{pgfplots}
 \usetikzlibrary{arrows.meta}
-\pgfplotsset{compat=1.18,every axis/.append style={font=\swjtufont{chart-label}}}
-\pgfplotscreateplotcyclelist{swjtuChartCycle}{%
+\pgfplotsset{compat=1.18,every axis/.append style={font=\academicfont{chart-label}}}
+\pgfplotscreateplotcyclelist{academicChartCycle}{%
   {ChartPrimaryC,solid,thick},%
   {ChartSecondaryC,dashed,thick},%
   {ChartContrastC,dashdotted,thick},%
   {ChartFourthC,densely dashdotted,thick}%
 }
 \pgfplotsset{%
-  swjtu chart/.style={%
-    cycle list name=swjtuChartCycle,
+  academic chart/.style={%
+    cycle list name=academicChartCycle,
     axis background/.style={fill=white},
     axis line style={draw=ChartAxisC},
     tick label style={color=ChartAxisC},
@@ -39,10 +39,10 @@
 }
 
 % 调色板示例页使用的色块标签。
-\newcommand{\swjtuswatch}[3]{%
+\newcommand{\academicswatch}[3]{%
   \noindent\tikz[baseline=-.5ex]\filldraw[draw=BorderC,fill=#1]
     (0,0) rectangle (.85em,.65em);%
-  \hspace{.35em}{\swjtufont{label}\texttt{#1}}\enspace{\swjtufont{label} #3}\enspace{\swjtufont{caption} #2}\par%
+  \hspace{.35em}{\academicfont{label}\texttt{#1}}\enspace{\academicfont{label} #3}\enspace{\academicfont{caption} #2}\par%
 }
 
 % --------封面信息--------
@@ -107,13 +107,13 @@
 \begin{frame}{统一字号接口与局部强调}
   \begin{columns}[T,onlytextwidth]
     \begin{column}{.48\textwidth}
-      {\swjtustandardtext
+      {\academicstandardtext
       \begin{ResearchCard}{统一正文接口}
-        深灰蓝正文；\alert{砖橙一级重点}，\swjtuemphblue{工程蓝二级重点}。
+        深灰蓝正文；\alert{砖橙一级重点}，\academicemphblue{工程蓝二级重点}。
       \end{ResearchCard}}
     \end{column}
     \begin{column}{.48\textwidth}
-      {\swjtufocustext
+      {\academicfocustext
       \begin{ResearchCard}{统一标题字号}
         页面标题和卡片标题均通过统一接口设置。
       \end{ResearchCard}}
@@ -206,21 +206,21 @@
 \begin{frame}{表格配色模块}
   \begin{table}
     \centering
-    \swjtufont{table}
-    \swjtutablebegin
+    \academicfont{table}
+    \academictablebegin
     \begin{tabular}{lcc}
-      \swjtutabletoprule
+      \academictabletoprule
       \rowcolor{TableHeaderC}
-      \swjtutableheader{项目} & \swjtutableheader{设置} & \swjtutableheader{结果} \\
-      \swjtutableheadrule
+      \academictableheader{项目} & \academictableheader{设置} & \academictableheader{结果} \\
+      \academictableheadrule
       条目 A & 待填写 & 待填写 \\
-      \swjtutablebodyrule
+      \academictablebodyrule
       条目 B & 待填写 & 待填写 \\
-      \swjtutablebodyrule
+      \academictablebodyrule
       条目 C & 待填写 & 待填写 \\
-      \swjtutablebottomrule
+      \academictablebottomrule
     \end{tabular}
-    \swjtutableend
+    \academictableend
   \end{table}
   \vspace{.5em}
   \begin{ResearchCard}{表格颜色}
@@ -246,20 +246,20 @@ peak = np.max(np.abs(response))
 \subsection{图表主线与对比线}
 \begin{frame}{图表配色模块}
   \centering
-  \begin{tikzpicture}[x=\swjtudim{1cm},y=\swjtudim{1cm}]
+  \begin{tikzpicture}[x=\academicdim{1cm},y=\academicdim{1cm}]
     \begin{axis}[
-      swjtu chart,
+      academic chart,
       width=.86\linewidth,
       height=.54\textheight,
       xlabel={自变量 $x$},
       ylabel={输出量 $y$},
       legend columns=3,
-      legend to name=swjtu-main-chart-legend,
+      legend to name=academic-main-chart-legend,
       clip mode=individual,
       grid=major,
     ]
       \addplot coordinates {(0,0.10) (1,0.35) (2,0.55) (3,0.62) (4,0.48)};
-      \node[anchor=south west,text=PrimaryC,font=\swjtufont{caption}] at (axis cs:3,0.62) {示例点};
+      \node[anchor=south west,text=PrimaryC,font=\academicfont{caption}] at (axis cs:3,0.62) {示例点};
       \addlegendentry{方案 A}
       \addplot coordinates {(0,0.08) (1,0.25) (2,0.42) (3,0.50) (4,0.40)};
       \addlegendentry{方案 B}
@@ -268,47 +268,47 @@ peak = np.max(np.abs(response))
     \end{axis}
   \end{tikzpicture}
   \par\smallskip
-  \pgfplotslegendfromname{swjtu-main-chart-legend}
+  \pgfplotslegendfromname{academic-main-chart-legend}
   \par\smallskip
-  {\swjtufont{caption}\color{AuxiliaryC}示意数据仅用于展示图表样式，使用时请替换为实际数据。}
+  {\academicfont{caption}\color{AuxiliaryC}示意数据仅用于展示图表样式，使用时请替换为实际数据。}
 \end{frame}
 
 \subsection{研究流程图}
 \begin{frame}{研究流程图模块}
   \centering
-  \begin{tikzpicture}[x=\swjtudim{1cm},y=\swjtudim{1cm},
+  \begin{tikzpicture}[x=\academicdim{1cm},y=\academicdim{1cm},
     flow step/.style={
       draw=AuxiliaryC,
-      rounded corners=\swjtudim{1.4mm},
-      line width=\swjtudim{.75pt},
-      minimum width=\swjtudim{2.10cm},
-      minimum height=\swjtudim{1.42cm},
-      text width=\swjtudim{1.88cm},
+      rounded corners=\academicdim{1.4mm},
+      line width=\academicdim{.75pt},
+      minimum width=\academicdim{2.10cm},
+      minimum height=\academicdim{1.42cm},
+      text width=\academicdim{1.88cm},
       align=center,
-      inner sep=\swjtudim{3.5pt},
-      font=\swjtufont{diagram},
+      inner sep=\academicdim{3.5pt},
+      font=\academicfont{diagram},
       text=NormalTextC
     },
-    flow arrow/.style={-{Stealth[length=\swjtudim{2mm}]},draw=IntersperseC,line width=\swjtudim{1pt}},
-    flow feedback/.style={-{Stealth[length=\swjtudim{1.8mm}]},draw=AuxiliaryC,line width=\swjtudim{.8pt}}
+    flow arrow/.style={-{Stealth[length=\academicdim{2mm}]},draw=IntersperseC,line width=\academicdim{1pt}},
+    flow feedback/.style={-{Stealth[length=\academicdim{1.8mm}]},draw=AuxiliaryC,line width=\academicdim{.8pt}}
   ]
-    \node[flow step,fill=BlockQuestionC] (question) at (-4.8,0) {\textcolor{PrimaryC}{\bfseries 01\quad 研究目标}\\[-\swjtudim{1pt}]\swjtufont{caption} 明确目标与研究范围};
-    \node[flow step,fill=BlockDefinitionC] (theory) at (-2.4,0) {\textcolor{PrimaryC}{\bfseries 02\quad 研究方案}\\[-\swjtudim{1pt}]\swjtufont{caption} 确定假设与方法};
-    \node[flow step,fill=BlockFormulaC] (model) at (0,0) {\textcolor{PrimaryC}{\bfseries 03\quad 分析实施}\\[-\swjtudim{1pt}]\swjtufont{caption} 开展分析或计算};
-    \node[flow step,fill=BlockExampleC] (validation) at (2.4,0) {\textcolor{PrimaryC}{\bfseries 04\quad 结果验证}\\[-\swjtudim{1pt}]\swjtufont{caption} 检查结果与误差};
-    \node[flow step,fill=BlockConclusionC] (conclusion) at (4.8,0) {\textcolor{PrimaryC}{\bfseries 05\quad 主要结论}\\[-\swjtudim{1pt}]\swjtufont{caption} 整理主要发现};
+    \node[flow step,fill=BlockQuestionC] (question) at (-4.8,0) {\textcolor{PrimaryC}{\bfseries 01\quad 研究目标}\\[-\academicdim{1pt}]\academicfont{caption} 明确目标与研究范围};
+    \node[flow step,fill=BlockDefinitionC] (theory) at (-2.4,0) {\textcolor{PrimaryC}{\bfseries 02\quad 研究方案}\\[-\academicdim{1pt}]\academicfont{caption} 确定假设与方法};
+    \node[flow step,fill=BlockFormulaC] (model) at (0,0) {\textcolor{PrimaryC}{\bfseries 03\quad 分析实施}\\[-\academicdim{1pt}]\academicfont{caption} 开展分析或计算};
+    \node[flow step,fill=BlockExampleC] (validation) at (2.4,0) {\textcolor{PrimaryC}{\bfseries 04\quad 结果验证}\\[-\academicdim{1pt}]\academicfont{caption} 检查结果与误差};
+    \node[flow step,fill=BlockConclusionC] (conclusion) at (4.8,0) {\textcolor{PrimaryC}{\bfseries 05\quad 主要结论}\\[-\academicdim{1pt}]\academicfont{caption} 整理主要发现};
 
     \draw[flow arrow] (question.east) -- (theory.west);
     \draw[flow arrow] (theory.east) -- (model.west);
     \draw[flow arrow] (model.east) -- (validation.west);
     \draw[flow arrow] (validation.east) -- (conclusion.west);
     \draw[flow feedback] (validation.south) -- ++(0,-.48) -|
-      node[pos=.56,below=\swjtudim{1pt},fill=BackgroundC,inner sep=\swjtudim{1.5pt},font=\swjtufont{caption},text=NormalTextC]
+      node[pos=.56,below=\academicdim{1pt},fill=BackgroundC,inner sep=\academicdim{1.5pt},font=\academicfont{caption},text=NormalTextC]
       {检查后调整方法并复算} (model.south);
   \end{tikzpicture}
 
   \vspace{.7em}
-  {\swjtufont{caption}\color{AuxiliaryC}流程节点可按实际工作内容增删，并调整顺序与反馈关系。}
+  {\academicfont{caption}\color{AuxiliaryC}流程节点可按实际工作内容增删，并调整顺序与反馈关系。}
 \end{frame}
 
 \subsection{主题色与模块色总览}
@@ -316,43 +316,43 @@ peak = np.max(np.abs(response))
   \begin{columns}[T,onlytextwidth]
     \begin{column}{.32\textwidth}
       \textbf{基础颜色}\par\smallskip
-      \swjtuswatch{PrimaryC}{学术深蓝}{\#173B75}
-      \swjtuswatch{AuxiliaryC}{工程蓝}{\#235F9E}
-      \swjtuswatch{SecondaryAuxiliaryC}{海松绿}{\#146F68}
-      \swjtuswatch{IntersperseC}{砖橙色}{\#B45929}
-      \swjtuswatch{NormalTextC}{正文色}{\#243B55}
-      \swjtuswatch{AlertedTextC}{重要数据}{\#B45929}
-      \swjtuswatch{MutedTextC}{次要文字}{\#52606C}
-      \swjtuswatch{BackgroundC}{背景色}{\#FFFFFF}
-      \swjtuswatch{BorderC}{分隔线}{\#7895AF}
+      \academicswatch{PrimaryC}{学术深蓝}{\#173B75}
+      \academicswatch{AuxiliaryC}{工程蓝}{\#235F9E}
+      \academicswatch{SecondaryAuxiliaryC}{海松绿}{\#146F68}
+      \academicswatch{IntersperseC}{砖橙色}{\#B45929}
+      \academicswatch{NormalTextC}{正文色}{\#243B55}
+      \academicswatch{AlertedTextC}{重要数据}{\#B45929}
+      \academicswatch{MutedTextC}{次要文字}{\#52606C}
+      \academicswatch{BackgroundC}{背景色}{\#FFFFFF}
+      \academicswatch{BorderC}{分隔线}{\#7895AF}
     \end{column}
     \begin{column}{.34\textwidth}
       \textbf{内容模块}\par\smallskip
-      \swjtuswatch{BlockNormalBgC}{普通/定理}{\#FFFFFF}
-      \swjtuswatch{BlockWarmBgC}{结论白底}{\#FFFFFF}
-      \swjtuswatch{BlockCoolBgC}{理论/问题白底}{\#FFFFFF}
-      \swjtuswatch{BlockDefinitionC}{定义}{\#FFFFFF}
-      \swjtuswatch{BlockTheoremC}{定理}{\#FFFFFF}
-      \swjtuswatch{BlockLemmaC}{引理}{\#FFFFFF}
-      \swjtuswatch{BlockConditionC}{条件}{\#FFFFFF}
-      \swjtuswatch{BlockExampleC}{示例}{\#FFFFFF}
-      \swjtuswatch{BlockFormulaC}{公式}{\#FFFFFF}
-      \swjtuswatch{BlockConclusionC}{结论}{\#FFFFFF}
-      \swjtuswatch{BlockQuestionC}{问题}{\#FFFFFF}
+      \academicswatch{BlockNormalBgC}{普通/定理}{\#FFFFFF}
+      \academicswatch{BlockWarmBgC}{结论白底}{\#FFFFFF}
+      \academicswatch{BlockCoolBgC}{理论/问题白底}{\#FFFFFF}
+      \academicswatch{BlockDefinitionC}{定义}{\#FFFFFF}
+      \academicswatch{BlockTheoremC}{定理}{\#FFFFFF}
+      \academicswatch{BlockLemmaC}{引理}{\#FFFFFF}
+      \academicswatch{BlockConditionC}{条件}{\#FFFFFF}
+      \academicswatch{BlockExampleC}{示例}{\#FFFFFF}
+      \academicswatch{BlockFormulaC}{公式}{\#FFFFFF}
+      \academicswatch{BlockConclusionC}{结论}{\#FFFFFF}
+      \academicswatch{BlockQuestionC}{问题}{\#FFFFFF}
     \end{column}
     \begin{column}{.34\textwidth}
       \textbf{表格、图表与代码}\par\smallskip
-      \swjtuswatch{TableHeaderC}{表头背景}{\#F2F6FB}
-      \swjtuswatch{TableRuleC}{顶部/底部线}{\#235F9E}
-      \swjtuswatch{TableRowRuleC}{表头分界线}{\#7294B5}
-      \swjtuswatch{ChartPrimaryC}{主曲线}{\#235F9E}
-      \swjtuswatch{ChartSecondaryC}{第二曲线}{\#B45929}
-      \swjtuswatch{ChartContrastC}{第三曲线}{\#146F68}
-      \swjtuswatch{ChartFourthC}{第四曲线}{\#70528B}
-      \swjtuswatch{ChartAxisC}{坐标轴}{\#243B55}
-      \swjtuswatch{ChartGridC}{网格线}{\#A5B4C2}
-      \swjtuswatch{CodeCommentC}{代码注释}{\#146F68}
-      \swjtuswatch{HighlightCodeLineC}{重点行}{\#E6F0FA}
+      \academicswatch{TableHeaderC}{表头背景}{\#F2F6FB}
+      \academicswatch{TableRuleC}{顶部/底部线}{\#235F9E}
+      \academicswatch{TableRowRuleC}{表头分界线}{\#7294B5}
+      \academicswatch{ChartPrimaryC}{主曲线}{\#235F9E}
+      \academicswatch{ChartSecondaryC}{第二曲线}{\#B45929}
+      \academicswatch{ChartContrastC}{第三曲线}{\#146F68}
+      \academicswatch{ChartFourthC}{第四曲线}{\#70528B}
+      \academicswatch{ChartAxisC}{坐标轴}{\#243B55}
+      \academicswatch{ChartGridC}{网格线}{\#A5B4C2}
+      \academicswatch{CodeCommentC}{代码注释}{\#146F68}
+      \academicswatch{HighlightCodeLineC}{重点行}{\#E6F0FA}
     \end{column}
   \end{columns}
 \end{frame}
@@ -364,41 +364,41 @@ peak = np.max(np.abs(response))
   \begin{columns}[T,onlytextwidth]
     \begin{column}{.52\textwidth}
       \centering
-      \begin{tikzpicture}[x=\swjtudim{1cm},y=\swjtudim{1cm},
-        model box/.style={draw=AuxiliaryC,line width=\swjtudim{.8pt},
-          rounded corners=\swjtudim{1mm},minimum height=\swjtudim{1cm},text width=\swjtudim{1.35cm},
-          align=center,font=\swjtufont{caption},text=NormalTextC},
-        model arrow/.style={-{Stealth[length=\swjtudim{1.8mm}]},draw=IntersperseC,line width=\swjtudim{.8pt}}
+      \begin{tikzpicture}[x=\academicdim{1cm},y=\academicdim{1cm},
+        model box/.style={draw=AuxiliaryC,line width=\academicdim{.8pt},
+          rounded corners=\academicdim{1mm},minimum height=\academicdim{1cm},text width=\academicdim{1.35cm},
+          align=center,font=\academicfont{caption},text=NormalTextC},
+        model arrow/.style={-{Stealth[length=\academicdim{1.8mm}]},draw=IntersperseC,line width=\academicdim{.8pt}}
       ]
         \node[model box,fill=BlockConditionC] (input) at (-2.15,0) {输入参数};
-        \node[model box,fill=BlockDefinitionC,minimum width=\swjtudim{1.8cm}] (model) at (0,0) {研究对象\\模型};
+        \node[model box,fill=BlockDefinitionC,minimum width=\academicdim{1.8cm}] (model) at (0,0) {研究对象\\模型};
         \node[model box,fill=BlockExampleC] (output) at (2.15,0) {输出结果};
         \draw[model arrow] (input.east) -- (model.west);
         \draw[model arrow] (model.east) -- (output.west);
       \end{tikzpicture}
       \par\vspace{.2em}
-      {\swjtufont{caption}\color{AuxiliaryC}通用模型示意，可替换为理论模型、计算模型或有限元网格。}
+      {\academicfont{caption}\color{AuxiliaryC}通用模型示意，可替换为理论模型、计算模型或有限元网格。}
     \end{column}
     \begin{column}{.45\textwidth}
       \begin{ResearchCard}{假设：示例假设}
         此处填写模型假设、适用范围和需要说明的限制。
       \end{ResearchCard}
       \vspace{.35em}
-      \swjtufont{table}
-      \swjtutablebegin
+      \academicfont{table}
+      \academictablebegin
       \begin{tabular}{@{}ll@{}}
-        \swjtutabletoprule
+        \academictabletoprule
         \rowcolor{TableHeaderC}
-        \swjtutableheader{参数项} & \swjtutableheader{符号 / 来源} \\
-        \swjtutableheadrule
+        \academictableheader{参数项} & \academictableheader{符号 / 来源} \\
+        \academictableheadrule
         参数 A & $p_A$ / 数据来源 \\
-        \swjtutablebodyrule
+        \academictablebodyrule
         参数 B & $p_B$ / 数据来源 \\
-        \swjtutablebodyrule
+        \academictablebodyrule
         控制变量 & $c$ / 工况设置 \\
-        \swjtutablebottomrule
+        \academictablebottomrule
       \end{tabular}
-      \swjtutableend
+      \academictableend
     \end{column}
   \end{columns}
 \end{frame}
@@ -408,46 +408,46 @@ peak = np.max(np.abs(response))
   \begin{columns}[T,onlytextwidth]
     \begin{column}{.48\textwidth}
       \centering
-      \begin{tikzpicture}[x=\swjtudim{1cm},y=\swjtudim{1cm},
-        rig box/.style={draw=AuxiliaryC,rounded corners=\swjtudim{1mm},
-          fill=BlockConditionC,minimum height=\swjtudim{8mm},text=NormalTextC,
-          font=\swjtufont{caption},align=center},
-        rig arrow/.style={-{Stealth[length=\swjtudim{1.8mm}]},draw=IntersperseC,line width=\swjtudim{.8pt}}
+      \begin{tikzpicture}[x=\academicdim{1cm},y=\academicdim{1cm},
+        rig box/.style={draw=AuxiliaryC,rounded corners=\academicdim{1mm},
+          fill=BlockConditionC,minimum height=\academicdim{8mm},text=NormalTextC,
+          font=\academicfont{caption},align=center},
+        rig arrow/.style={-{Stealth[length=\academicdim{1.8mm}]},draw=IntersperseC,line width=\academicdim{.8pt}}
       ]
-        \node[rig box,minimum width=\swjtudim{1.5cm}] (drive) at (-1.8,.45) {输入 / 加载};
-        \node[draw=PrimaryC,line width=\swjtudim{1pt},fill=BlockDefinitionC,circle,
-          minimum size=\swjtudim{1.12cm},font=\swjtufont{caption},text=PrimaryC] (object) at (0,.45) {研究对象};
-        \node[rig box,minimum width=\swjtudim{1.5cm}] (acq) at (1.85,.45) {测量 / 采集};
+        \node[rig box,minimum width=\academicdim{1.5cm}] (drive) at (-1.8,.45) {输入 / 加载};
+        \node[draw=PrimaryC,line width=\academicdim{1pt},fill=BlockDefinitionC,circle,
+          minimum size=\academicdim{1.12cm},font=\academicfont{caption},text=PrimaryC] (object) at (0,.45) {研究对象};
+        \node[rig box,minimum width=\academicdim{1.5cm}] (acq) at (1.85,.45) {测量 / 采集};
         \draw[rig arrow] (drive.east) -- (object.west);
         \draw[rig arrow] (object.east) -- (acq.west);
-        \draw[AuxiliaryC,line width=\swjtudim{2pt}] (-.68,-.48) -- (.68,-.48);
-        \node[font=\swjtufont{caption},text=NormalTextC] at (0,-.7) {试验平台};
+        \draw[AuxiliaryC,line width=\academicdim{2pt}] (-.68,-.48) -- (.68,-.48);
+        \node[font=\academicfont{caption},text=NormalTextC] at (0,-.7) {试验平台};
         \draw[rig arrow] (.32,-.36) -- (.32,.05)
-          node[midway,right=\swjtudim{1pt},text=NormalTextC,font=\swjtufont{caption}] {$u$};
+          node[midway,right=\academicdim{1pt},text=NormalTextC,font=\academicfont{caption}] {$u$};
       \end{tikzpicture}
       \par\vspace{.2em}
-      {\swjtufont{caption}\color{AuxiliaryC}装置示意可替换为实际设备图、测点或实验流程。}
+      {\academicfont{caption}\color{AuxiliaryC}装置示意可替换为实际设备图、测点或实验流程。}
       \vspace{.4em}
-      \swjtutablebegin
+      \academictablebegin
       \begin{tabular}{@{}lc@{}}
-        \swjtutabletoprule
+        \academictabletoprule
         \rowcolor{TableHeaderC}
-        \swjtutableheader{评价指标} & \swjtutableheader{实测 / 计算} \\
-        \swjtutableheadrule
+        \academictableheader{评价指标} & \academictableheader{实测 / 计算} \\
+        \academictableheadrule
         指标 A & 待填写 \\
-        \swjtutablebodyrule
+        \academictablebodyrule
         指标 B & 待填写 \\
-        \swjtutablebodyrule
+        \academictablebodyrule
         指标 C & 待填写 \\
-        \swjtutablebottomrule
+        \academictablebottomrule
       \end{tabular}
-      \swjtutableend
+      \academictableend
     \end{column}
     \begin{column}{.49\textwidth}
       \centering
-      \begin{tikzpicture}[x=\swjtudim{1cm},y=\swjtudim{1cm}]
+      \begin{tikzpicture}[x=\academicdim{1cm},y=\academicdim{1cm}]
         \begin{axis}[
-          swjtu chart,
+          academic chart,
           width=\linewidth,
           height=.49\textheight,
           xlabel={参数变化率（\%）},
@@ -457,14 +457,14 @@ peak = np.max(np.abs(response))
           ytick={.7,.9,1.1,1.3},
           grid=major,
           title={敏感性分析示意},
-          title style={font=\swjtufont{chart-title},text=PrimaryC}
+          title style={font=\academicfont{chart-title},text=PrimaryC}
         ]
-          \addplot+[ChartPrimaryC,mark=*,line width=\swjtudim{1.1pt}]
+          \addplot+[ChartPrimaryC,mark=*,line width=\academicdim{1.1pt}]
             coordinates {(-20,.76) (-10,.88) (0,1.00) (10,1.14) (20,1.30)};
         \end{axis}
       \end{tikzpicture}
       \par\vspace{-.2em}
-      {\swjtufont{caption}\color{AuxiliaryC}示意数据仅用于展示敏感性分析图样式。}
+      {\academicfont{caption}\color{AuxiliaryC}示意数据仅用于展示敏感性分析图样式。}
     \end{column}
   \end{columns}
 \end{frame}
