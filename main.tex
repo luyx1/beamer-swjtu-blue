@@ -1,33 +1,33 @@
 % !TeX encoding = UTF-8
 % !TeX TS-program = xelatex
-% SWJTU: clean scientific slides / 原生 LaTeX 科研汇报示例
+% 通用学术汇报排版示例
 % 所有科研内容均为示意，用于验证文字、公式、图表与表格的直接编译。
 \documentclass[UTF8,aspectratio=169]{beamer}
 
 \usetheme[
-  ColorDisplay=BSblue,
+  ColorDisplay=Blue,
   Miniframes=none,
   ContentMuticols=false,
   BIBMode=none,
   Background=false,
   ResearchCardTitleAlign=left,
   SectionTOC=hide
-]{swjtu}
+]{academic}
 
 \usepackage{amsmath,amssymb,booktabs,tabularx}
 \usepackage{pgfplots}
 \usetikzlibrary{arrows.meta,calc}
 \pgfplotsset{compat=1.18}
 \pgfplotsset{
-  swjtu response/.style={
+  academic response/.style={
     axis lines=left,
     axis line style={draw=ChartAxisC},
-    tick label style={color=ChartAxisC,font=\swjtufont{caption}},
-    label style={color=ChartAxisC,font=\swjtufont{caption}},
+    tick label style={color=ChartAxisC,font=\academicfont{caption}},
+    label style={color=ChartAxisC,font=\academicfont{caption}},
     grid=major,
     grid style={draw=ChartGridC!55},
-    legend style={draw=none,fill=white,font=\swjtufont{caption}},
-    line width=\swjtudim{1pt},
+    legend style={draw=none,fill=white,font=\academicfont{caption}},
+    line width=\academicdim{1pt},
     no markers
   }
 }
@@ -35,7 +35,7 @@
 \title[浮体水动力响应]{浮体水动力响应研究}
 \subtitle{科研汇报排版示例 · 全部内容可直接编辑}
 \author{汇报人}
-\institute{西南交通大学}
+\institute{单位名称}
 \date{\today}
 
 \begin{document}
@@ -75,29 +75,29 @@
   \begin{columns}[T,onlytextwidth]
     \begin{column}{.61\textwidth}
       \centering
-      \begin{tikzpicture}[x=\swjtudim{1cm},y=\swjtudim{1cm},
+      \begin{tikzpicture}[x=\academicdim{1cm},y=\academicdim{1cm},
         >=Stealth,thick]
         \fill[AuxiliaryC!6] (-3.3,-1.4) rectangle (3.3,.5);
-        \draw[AuxiliaryC,line width=\swjtudim{1pt}]
+        \draw[AuxiliaryC,line width=\academicdim{1pt}]
           plot[domain=-3.3:3.3,samples=70]
           (\x,{.17*sin(145*\x)});
-        \filldraw[fill=AuxiliaryC!15,draw=PrimaryC,line width=\swjtudim{1pt}]
+        \filldraw[fill=AuxiliaryC!15,draw=PrimaryC,line width=\academicdim{1pt}]
           (-1.25,.4) -- (1.25,.4) -- (.95,-.55)
           -- (-.95,-.55) -- cycle;
         \draw[PrimaryC,dashed] (0,-.6) -- (0,1.9);
-        \draw[->,IntersperseC,line width=\swjtudim{1.2pt}]
+        \draw[->,IntersperseC,line width=\academicdim{1.2pt}]
           (1.65,-.35) -- (1.65,1.2)
-          node[above,text=NormalTextC,font=\swjtufont{caption}]
+          node[above,text=NormalTextC,font=\academicfont{caption}]
           {$\xi_3$};
-        \draw[->,AuxiliaryC,line width=\swjtudim{1.1pt}]
+        \draw[->,AuxiliaryC,line width=\academicdim{1.1pt}]
           (-.15,1.15) arc[start angle=150,end angle=-115,radius=.65];
-        \node[above,text=NormalTextC,font=\swjtufont{caption}]
+        \node[above,text=NormalTextC,font=\academicfont{caption}]
           at (-1.25,1.2) {$\xi_5$};
-        \node[text=NormalTextC,font=\swjtufont{caption}]
+        \node[text=NormalTextC,font=\academicfont{caption}]
           at (0,-1.05) {浮体（剖面示意）};
       \end{tikzpicture}
       \par\smallskip
-      {\swjtufont{caption}\color{MutedTextC}
+      {\academicfont{caption}\color{MutedTextC}
         水线、结构与自由度均由 TikZ 绘制；示意图不代表实际模型。}
     \end{column}
     \begin{column}{.35\textwidth}
@@ -175,7 +175,7 @@
     \begin{column}{.66\textwidth}
       \begin{tikzpicture}
         \begin{axis}[
-          swjtu response,
+          academic response,
           width=\linewidth,height=.60\textheight,
           xlabel={频率比 $\omega/\omega_n$},
           ylabel={归一化幅值},
@@ -190,7 +190,7 @@
           \addlegendentry{较大阻尼}
         \end{axis}
       \end{tikzpicture}
-      {\swjtufont{caption}\color{MutedTextC}
+      {\academicfont{caption}\color{MutedTextC}
         归一化单自由度模型绘制的说明性曲线，非试验结果。}
     \end{column}
     \begin{column}{.30\textwidth}
@@ -215,7 +215,7 @@
       \ResearchHeading{较小阻尼}
       \begin{tikzpicture}
         \begin{axis}[
-          swjtu response,width=\linewidth,height=.48\textheight,
+          academic response,width=\linewidth,height=.48\textheight,
           xlabel={$\omega/\omega_n$},ylabel={归一化幅值},
           xmin=.4,xmax=1.8,ymin=0,ymax=5
         ]
@@ -228,7 +228,7 @@
       \ResearchHeading{较大阻尼}
       \begin{tikzpicture}
         \begin{axis}[
-          swjtu response,width=\linewidth,height=.48\textheight,
+          academic response,width=\linewidth,height=.48\textheight,
           xlabel={$\omega/\omega_n$},ylabel={归一化幅值},
           xmin=.4,xmax=1.8,ymin=0,ymax=5
         ]
@@ -239,7 +239,7 @@
     \end{column}
   \end{columns}
   \vspace{.15em}
-  {\swjtufont{caption}\color{MutedTextC}
+  {\academicfont{caption}\color{MutedTextC}
     两图统一坐标范围，确保视觉比较有效；示意曲线由 PGFPlots 生成。}
 \end{frame}
 
@@ -248,7 +248,7 @@
   \begin{columns}[T,onlytextwidth]
     \begin{column}{.62\textwidth}
       \ResearchHeading{参数组织示例}
-      {\swjtufont{table}
+      {\academicfont{table}
       \begin{tabularx}{\linewidth}{@{}lXX@{}}
         \toprule
         参数 & 工况 A & 工况 B\\
