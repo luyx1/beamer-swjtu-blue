@@ -1,18 +1,18 @@
 % This file is intentionally compiled from tests/portable, not the repository root.
 % The theme is found via TEXINPUTS; bundled fonts and images must resolve from
-% the directory containing beamerthemeswjtu.sty.
+% the directory containing beamerthemeacademic.sty.
 \documentclass[UTF8,aspectratio=169]{beamer}
 \usetheme[
-  ColorDisplay=BSblue,
+  ColorDisplay=Blue,
   Miniframes=none,
   ContentMuticols=false,
   BIBMode=none,
   Background=false,
   SectionTOC=hide
-]{swjtu}
+]{academic}
 \title[跨目录测试]{主题资源跨目录解析测试}
-\author{SWJTU Theme CI}
-\institute{西南交通大学}
+\author{Template CI}
+\institute{单位名称}
 \date{\today}
 
 \begin{document}
@@ -35,7 +35,11 @@
     \end{column}
     \begin{column}{.24\textwidth}
       \centering
-      \pgfuseimage{lg}
+      \begin{tikzpicture}[x=.7cm,y=.7cm]
+        \draw[PrimaryC,line width=1.2pt] (-1.0,-.65) rectangle (1.0,.65);
+        \draw[AuxiliaryC,line width=1.2pt] (-.75,.25)--(.75,.25);
+        \draw[IntersperseC,line width=1.4pt] (-.65,-.25)--(0,.15)--(.65,-.25);
+      \end{tikzpicture}
     \end{column}
   \end{columns}
 \end{frame}
