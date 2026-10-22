@@ -1,0 +1,204 @@
+% This is file `beamercolorthemeacademic.sty'.
+% Copyright (C) 2021-2024 by Linrong Wu.
+% Version: 2026/10/12 v2.1 Academic Blue Engineering palette.
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+%
+% 本文件为 Academic Beamer Theme 颜色主题宏包文件.
+% 当前色板为 Academic Blue Engineering，所有颜色集中定义于此处.
+%%%% ----------------------------------------------------------------
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+\ProvidesPackage{beamercolorthemeacademic}[2026/10/12 v2.1 Academic Blue Engineering palette]
+%%%% ----------------------------------------------------------------
+
+% ----------------
+% Declare of Options
+% ColorDisplay is retained for source compatibility. The redesigned theme
+% intentionally uses one fixed palette for every display mode.
+% ----------------
+\DeclareOptionBeamer{ColorDisplay}{\def\beamer@academic@ColorDisplay{#1}}
+\ExecuteOptionsBeamer{ColorDisplay=Blue}
+\ProcessOptionsBeamer
+% ----------------
+
+% ----------------
+% Declare of Packages
+% ----------------
+\RequirePackage{xcolor}% xcolor: 设置颜色.
+\RequirePackage{colortbl}% colortbl: 为表格单元格与交替行着色.
+% ----------------
+
+\mode<presentation>
+
+% ----------------
+% Academic Blue Engineering palette
+% ----------------
+% 基础颜色.
+\definecolor{PrimaryC}{HTML}{173B75}
+\definecolor{AuxiliaryC}{HTML}{235F9E}
+\definecolor{SecondaryAuxiliaryC}{HTML}{146F68}
+\definecolor{IntersperseC}{HTML}{B45929}
+\definecolor{AlertedTextC}{HTML}{B45929}
+\definecolor{NormalTextC}{HTML}{243B55}
+\definecolor{MutedTextC}{HTML}{52606C}
+\definecolor{BackgroundC}{HTML}{FFFFFF}
+\definecolor{BorderC}{HTML}{7895AF}
+
+% 内容模块背景.
+\definecolor{BlockNormalBgC}{HTML}{FFFFFF}
+\definecolor{BlockWarmBgC}{HTML}{FFFFFF}
+\definecolor{BlockCoolBgC}{HTML}{FFFFFF}
+\colorlet{BlockDefinitionC}{BackgroundC}
+\colorlet{BlockTheoremC}{BackgroundC}
+\colorlet{BlockLemmaC}{BackgroundC}
+\colorlet{BlockConditionC}{BackgroundC}
+\colorlet{BlockExampleC}{BackgroundC}
+\colorlet{BlockFormulaC}{BackgroundC}
+\colorlet{BlockConclusionC}{BackgroundC}
+\colorlet{BlockQuestionC}{BackgroundC}
+
+% 科研图表颜色.
+\colorlet{ChartPrimaryC}{AuxiliaryC}
+\colorlet{ChartSecondaryC}{IntersperseC}
+\colorlet{ChartContrastC}{SecondaryAuxiliaryC}
+\definecolor{ChartFourthC}{HTML}{70528B}
+\definecolor{ChartAxisC}{HTML}{243B55}
+\definecolor{ChartGridC}{HTML}{A5B4C2}
+
+% 代码颜色.
+\colorlet{CodeCommentC}{SecondaryAuxiliaryC}
+\definecolor{CodeTitleBgC}{HTML}{EDF4FB}
+\definecolor{CodeBodyBgC}{HTML}{F5F8FC}
+\definecolor{CodeBorderC}{HTML}{CEDAE7}
+\definecolor{CodeLineNumberC}{HTML}{8293A8}
+\definecolor{HighlightCodeLineC}{HTML}{E6F0FA}
+
+% 表格颜色：深蓝表头、蓝白交替正文和分层学术规则线.
+\colorlet{TableHeaderTextC}{white}
+\definecolor{TableHeaderC}{HTML}{235F9E}
+\definecolor{TableBodyC}{HTML}{FFFFFF}
+\definecolor{TableStripeC}{HTML}{EEF4FA}
+% TableAlternateC 供既有非表格示意图使用，保持兼容；表格条纹使用 TableStripeC.
+\colorlet{TableAlternateC}{TableBodyC}
+\definecolor{TableRuleC}{HTML}{235F9E}
+\definecolor{TableHeaderRuleC}{HTML}{9BB8D5}
+\definecolor{TableRowRuleC}{HTML}{D5E2EF}
+\definecolor{TableBodyTextC}{HTML}{202A35}
+\colorlet{TableImportantC}{AlertedTextC}
+
+% 旧变量兼容：保留自定义宏接口，但不再引入旧的高饱和颜色.
+\colorlet{NomalTextC}{NormalTextC}
+\colorlet{academicred}{IntersperseC}
+\colorlet{academicgrey}{MutedTextC}
+\colorlet{academicblue}{PrimaryC}
+\colorlet{academicgreen}{SecondaryAuxiliaryC}
+\colorlet{academicyellow}{IntersperseC}
+\colorlet{academicred20}{academicred!20!white}
+\colorlet{academicred30}{academicred!30!white}
+\colorlet{academicred40}{academicred!40!white}
+\colorlet{academicred50}{academicred!50!white}
+\colorlet{academicred10}{academicred!10!white}
+\colorlet{academicred60}{academicred!60!white}
+\colorlet{academicred70}{academicred!70!white}
+\colorlet{academicred80}{academicred!80!white}
+\colorlet{academicred90}{academicred!90!white}
+\colorlet{academicgrey10}{academicgrey!10!white}
+\colorlet{academicgrey20}{academicgrey!20!white}
+\colorlet{academicgrey30}{academicgrey!30!white}
+\colorlet{academicgrey40}{academicgrey!40!white}
+\colorlet{academicgrey50}{academicgrey!50!white}
+\colorlet{academicgrey60}{academicgrey!60!white}
+\colorlet{academicgrey70}{academicgrey!70!white}
+\colorlet{academicgrey80}{academicgrey!80!white}
+\colorlet{academicgrey90}{academicgrey!90!white}
+\colorlet{academicblue10}{academicblue!10!white}
+\colorlet{academicblue20}{academicblue!20!white}
+\colorlet{academicblue30}{academicblue!30!white}
+\colorlet{academicblue40}{academicblue!40!white}
+\colorlet{academicblue50}{academicblue!50!white}
+\colorlet{academicblue60}{academicblue!60!white}
+\colorlet{academicblue70}{academicblue!70!white}
+\colorlet{academicblue80}{academicblue!80!white}
+\colorlet{academicblue90}{academicblue!90!white}
+\colorlet{academicgreen10}{academicgreen!10!white}
+\colorlet{academicgreen20}{academicgreen!20!white}
+\colorlet{academicgreen30}{academicgreen!30!white}
+\colorlet{academicgreen40}{academicgreen!40!white}
+\colorlet{academicgreen50}{academicgreen!50!white}
+\colorlet{academicgreen60}{academicgreen!60!white}
+\colorlet{academicgreen70}{academicgreen!70!white}
+\colorlet{academicgreen80}{academicgreen!80!white}
+\colorlet{academicgreen90}{academicgreen!90!white}
+\colorlet{academicyellow10}{academicyellow!10!white}
+\colorlet{academicyellow20}{academicyellow!20!white}
+\colorlet{academicyellow30}{academicyellow!30!white}
+\colorlet{academicyellow40}{academicyellow!40!white}
+\colorlet{academicyellow50}{academicyellow!50!white}
+\colorlet{academicyellow60}{academicyellow!60!white}
+\colorlet{academicyellow70}{academicyellow!70!white}
+\colorlet{academicyellow80}{academicyellow!80!white}
+\colorlet{academicyellow90}{academicyellow!90!white}
+% ----------------
+
+% ----------------
+% Beamer Theme Color Layout
+% ----------------
+% 基本颜色设置.
+\setbeamercolor{structure}{fg=PrimaryC}
+\setbeamercolor{background canvas}{bg=BackgroundC}
+
+% 调色板颜色设置.
+\setbeamercolor{palette primary}   {fg=white, bg=PrimaryC}
+\setbeamercolor{palette secondary} {fg=NormalTextC, bg=BackgroundC}
+\setbeamercolor{palette tertiary}  {fg=AlertedTextC, bg=BackgroundC}
+\setbeamercolor{palette quaternary}{fg=AuxiliaryC, bg=BackgroundC}
+
+% 页眉页脚颜色设置.
+\setbeamercolor{section in head/foot}    {fg=white, bg=PrimaryC}
+% 左侧小节导航位于白色背景，不能继承右侧章节栏的白色前景。
+\setbeamercolor{subsection in head/foot} {fg=PrimaryC, bg=BackgroundC}
+\setbeamercolor{mini frame}             {fg=PrimaryC, bg=BackgroundC}
+\setbeamercolor{frametitle}              {fg=PrimaryC}
+\setbeamercolor{framesubtitle}           {fg=AuxiliaryC}
+\setbeamercolor{author in head/foot}     {fg=MutedTextC, bg=BackgroundC}
+\setbeamercolor{title in head/foot}      {fg=MutedTextC, bg=BackgroundC}
+\setbeamercolor{framenumber in head/foot}{fg=PrimaryC, bg=BackgroundC}
+
+% 封面颜色设置.
+\setbeamercolor{title}          {bg=BackgroundC, fg=PrimaryC}
+\setbeamercolor{subtitle}       {bg=BackgroundC, fg=AuxiliaryC}
+\setbeamercolor{author}         {bg=BackgroundC, fg=MutedTextC}
+\setbeamercolor{date}           {bg=BackgroundC, fg=MutedTextC}
+\setbeamercolor{titlepageheader}{bg=BackgroundC, fg=MutedTextC}
+\setbeamercolor{titlepagefooter}{bg=BackgroundC, fg=MutedTextC}
+
+% 标准 Beamer 区块颜色：标题与正文共享纯白内容区.
+\setbeamercolor*{block title}        {fg=PrimaryC, bg=BlockNormalBgC}
+\setbeamercolor*{block body}         {fg=NormalTextC, bg=BlockNormalBgC}
+\setbeamercolor*{block title example}{fg=AuxiliaryC, bg=BlockNormalBgC}
+\setbeamercolor*{block body example} {fg=NormalTextC, bg=BlockNormalBgC}
+\setbeamercolor*{block title alerted}{fg=PrimaryC, bg=BlockWarmBgC}
+\setbeamercolor*{block body alerted} {fg=NormalTextC, bg=BlockWarmBgC}
+
+% 列表和正文颜色设置.
+\setbeamercolor{item}                {fg=PrimaryC}
+\setbeamercolor{item projected}      {fg=white, bg=PrimaryC}
+\setbeamercolor{enumerate item}      {fg=PrimaryC}
+\setbeamercolor{enumerate subitem}   {fg=PrimaryC}
+\setbeamercolor{enumerate subsubitem}{fg=PrimaryC}
+\setbeamercolor*{normal text}        {fg=NormalTextC, bg=BackgroundC}
+\setbeamercolor*{alerted text}       {fg=AlertedTextC}
+
+% 普通 booktabs 边界线默认采用主题深蓝；表头分界线由主题命令切换为浅蓝.
+\arrayrulecolor{TableRuleC}
+% ----------------
+
+%%%% ----------------------------------------------------------------
+\endinput
+%%%% ----------------------------------------------------------------
+% End of file `beamercolorthemeacademic.sty'.
