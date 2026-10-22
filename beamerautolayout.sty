@@ -9,7 +9,7 @@
 \RequirePackage{expl3}
 \RequirePackage{xparse}
 
-\providecommand{\swjtudim}[1]{#1}
+\providecommand{\academicdim}[1]{#1}
 \ExplSyntaxOn
 
 % --------------------------------------------------------------------------
@@ -115,9 +115,9 @@
     \tl_clear:N \l__beamerautolayout_id_tl
     \bool_set_false:N \l__beamerautolayout_lock_bool
     \bool_set_false:N \l__beamerautolayout_debug_bool
-    \dim_set:Nn \l__beamerautolayout_gap_dim { \swjtudim{6pt} }
-    \dim_set:Nn \l__beamerautolayout_row_gap_dim { \swjtudim{6pt} }
-    \dim_set:Nn \l__beamerautolayout_padding_dim { \swjtudim{4pt} }
+    \dim_set:Nn \l__beamerautolayout_gap_dim { \academicdim{6pt} }
+    \dim_set:Nn \l__beamerautolayout_row_gap_dim { \academicdim{6pt} }
+    \dim_set:Nn \l__beamerautolayout_padding_dim { \academicdim{4pt} }
   }
 
 \cs_new_protected:Npn \__beamerautolayout_set_block_defaults:
@@ -211,7 +211,7 @@
         \parindent=0pt
         \noindent
         % 主题提供统一字号时，测量必须与最终卡片正文使用同一字号。
-        \cs_if_exist:NT \swjtubodyfont { \swjtubodyfont }
+        \cs_if_exist:NT \academicbodyfont { \academicbodyfont }
         #2
         \par
       }
@@ -436,14 +436,14 @@
         {
           \par\noindent
           {\color{PrimaryC}
-           \cs_if_exist:NTF \swjtucardtitlefont
-             { \swjtucardtitlefont }
+           \cs_if_exist:NTF \academiccardtitlefont
+             { \academiccardtitlefont }
              { \bfseries }
            \tl_use:c { g__beamerautolayout_title_#1_tl }\par}
-          \vspace{\swjtudim{4pt}}
+          \vspace{\academicdim{4pt}}
         }
       {\color{NormalTextC}
-       \cs_if_exist:NT \swjtubodyfont { \swjtubodyfont }
+       \cs_if_exist:NT \academicbodyfont { \academicbodyfont }
        \tl_use:c { g__beamerautolayout_body_#1_tl }\par}
     \end{minipage}
   }
